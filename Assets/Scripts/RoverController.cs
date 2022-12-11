@@ -16,10 +16,11 @@ public class RoverController : MonoBehaviour
     private float coyoteTime = 0.2f;
     private float coyoteCounter;
     private float roverSpeed = 10.0f;
-    private float speedMult = 1.0f;
+    private float speedMult = 4.0f;
     private float jumpForce = 500f;
     private Vector3 moveDir;
 
+    public GameObject scanner;
     private float landSpeed;
 
     private void Start()
@@ -35,15 +36,20 @@ public class RoverController : MonoBehaviour
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - groundOffset, transform.position.z), 0.1f, ground);
 
         if (isGrounded)
+        {
+            if (folloCam != null)
+                moveDir = folloCam.transform.forward * -PlayerInputManager.instance.inputX + folloCam.transform.right * PlayerInputManager.instance.inputY;
+
             coyoteCounter = coyoteTime;
+        }
         else
             coyoteCounter -= Time.deltaTime;
 
-        if (folloCam != null)
-            moveDir = folloCam.transform.forward * PlayerInputManager.instance.inputY + folloCam.transform.right * PlayerInputManager.instance.inputX;
-
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
+
+        if (PlayerInputManager.instance.scan && scanner != null)
+            Instantiate(scanner, transform.position, Quaternion.identity);
     }
 
     void FixedUpdate()
@@ -51,7 +57,7 @@ public class RoverController : MonoBehaviour
         if (rb == null)
             return;
 
-        rb.AddForce(moveDir.normalized * roverSpeed * speedMult, ForceMode.Acceleration);
+        rb.AddTorque(moveDir.normalized * roverSpeed * speedMult);
         if (isGrounded && PlayerInputManager.instance.jump)
             rb.AddForce(Vector3.up * jumpForce);
     }

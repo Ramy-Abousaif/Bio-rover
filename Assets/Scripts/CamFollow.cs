@@ -16,5 +16,7 @@ public class CamFollow : MonoBehaviour
     {
         transform.position = rover.transform.position;
         transform.eulerAngles = new Vector3(0, cam.transform.eulerAngles.y, 0);
+
+        Debug.Log((cam.transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? "Camera is underwater" : "Camera is not underwater");
     }
 }
