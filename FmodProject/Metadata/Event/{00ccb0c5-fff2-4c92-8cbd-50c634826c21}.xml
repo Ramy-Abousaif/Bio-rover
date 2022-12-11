@@ -108,9 +108,6 @@
 		<relationship name="modulators">
 			<destination>{c8c5523b-c7de-49bb-9b42-b4ae92c19bd0}</destination>
 		</relationship>
-		<relationship name="audioFile">
-			<destination>{a0604472-6202-46fb-9874-cf7c54e95457}</destination>
-		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{4d03e889-5729-4018-8fa0-3c31cea74329}">
 		<property name="volume">

@@ -95,9 +95,6 @@
 		<relationship name="fadeOutCurve">
 			<destination>{c4dfee49-96a4-45f1-bced-faea00c70904}</destination>
 		</relationship>
-		<relationship name="audioFile">
-			<destination>{e771689f-bdc8-43ab-9046-42618b7108fa}</destination>
-		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{38a05af6-8ab2-4516-bab4-b829e5c20236}">
 		<property name="name">

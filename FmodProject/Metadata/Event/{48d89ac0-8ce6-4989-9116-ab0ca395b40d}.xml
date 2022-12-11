@@ -111,9 +111,6 @@
 		<property name="pitch">
 			<value>4.5</value>
 		</property>
-		<relationship name="audioFile">
-			<destination>{1c4a8215-7032-4a95-8fb4-4ec1fb10556b}</destination>
-		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{689ae24e-0ebc-4e7f-9b6b-da9891a25ae0}">
 		<property name="name">
