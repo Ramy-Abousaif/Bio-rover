@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{faffe631-a044-4b28-8faa-03aacda3b64c}">
+		<property name="assetPath">
+			<value>SFX/248729-Sci-Fi_Bio_Weapon_Shot_2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.25</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d4702460-b65d-408b-bc37-62a736c156e6}</destination>
+		</relationship>
+	</object>
+</objects>

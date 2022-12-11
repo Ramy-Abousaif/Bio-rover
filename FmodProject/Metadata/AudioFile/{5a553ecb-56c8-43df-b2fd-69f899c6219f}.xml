@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{5a553ecb-56c8-43df-b2fd-69f899c6219f}">
+		<property name="assetPath">
+			<value>SFX/456424-DSGN_Arcade_interface_5.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.024</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d4702460-b65d-408b-bc37-62a736c156e6}</destination>
+		</relationship>
+	</object>
+</objects>
