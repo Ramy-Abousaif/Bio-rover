@@ -9,6 +9,7 @@ public class PlayerInputManager : MonoBehaviour
     // Inputs
     public float inputX;
     public float inputY;
+    public bool jump;
 
     private void Awake()
     {
@@ -28,5 +29,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         inputX = Input.GetAxis("Horizontal");
         inputY = Input.GetAxis("Vertical");
+        jump = Input.GetKey(KeyCode.Space);
     }
 }

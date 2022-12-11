@@ -1,31 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class RoverController : MonoBehaviour
 {
-    private Camera cam;
+    private CinemachineImpulseSource impulse;
     private Rigidbody rb;
+    public Transform folloCam;
 
+    public LayerMask ground;
+    private bool isGrounded = false;
+    private bool landed = true;
+    private float groundOffset = 3f;
+    private float coyoteTime = 0.2f;
+    private float coyoteCounter;
     private float roverSpeed = 10.0f;
     private float speedMult = 1.0f;
+    private float jumpForce = 500f;
     private Vector3 moveDir;
+
+    private float landSpeed;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        cam = Camera.main;
+        impulse = GetComponent<CinemachineImpulseSource>();
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        moveDir = cam.transform.forward * PlayerInputManager.instance.inputY + cam.transform.right * PlayerInputManager.instance.inputX;
+        isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - groundOffset, transform.position.z), 0.1f, ground);
+
+        if (isGrounded)
+            coyoteCounter = coyoteTime;
+        else
+            coyoteCounter -= Time.deltaTime;
+
+        if (folloCam != null)
+            moveDir = folloCam.transform.forward * PlayerInputManager.instance.inputY + folloCam.transform.right * PlayerInputManager.instance.inputX;
+
+        if (Mathf.Abs(rb.velocity.y) > 0.1f)
+            landSpeed = Mathf.Abs(rb.velocity.y);
     }
 
     void FixedUpdate()
     {
+        if (rb == null)
+            return;
+
         rb.AddForce(moveDir.normalized * roverSpeed * speedMult, ForceMode.Acceleration);
+        if (isGrounded && PlayerInputManager.instance.jump)
+            rb.AddForce(Vector3.up * jumpForce);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(landSpeed > 4f)
+        {
+            impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
+            impulse.GenerateImpulse();
+            impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
+        }
     }
 }
