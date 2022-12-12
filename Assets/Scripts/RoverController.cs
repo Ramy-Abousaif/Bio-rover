@@ -14,6 +14,8 @@ public class RoverController : MonoBehaviour
     private bool landed = true;
     private float groundOffset = 3f;
     private float coyoteTime = 0.2f;
+    private float scanCooldown = 2.0f;
+    private float scanTimer = 0.0f;
     private float coyoteCounter;
     private float roverSpeed = 10.0f;
     private float speedMult = 4.0f;
@@ -22,6 +24,8 @@ public class RoverController : MonoBehaviour
 
     public GameObject scanner;
     private float landSpeed;
+    private float currentSpeed;
+    private float prevSpeed;
 
     private void Start()
     {
@@ -29,10 +33,13 @@ public class RoverController : MonoBehaviour
         Cursor.visible = false;
         impulse = GetComponent<CinemachineImpulseSource>();
         rb = GetComponent<Rigidbody>();
+        scanTimer = scanCooldown;
     }
 
     void Update()
     {
+        scanTimer += Time.deltaTime;
+        float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - groundOffset, transform.position.z), 0.1f, ground);
 
         if (isGrounded)
@@ -45,11 +52,17 @@ public class RoverController : MonoBehaviour
         else
             coyoteCounter -= Time.deltaTime;
 
+        if (currentSpeed > 8f)
+            prevSpeed = currentSpeed;
+
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (PlayerInputManager.instance.scan && scanner != null)
+        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
+        {
             Instantiate(scanner, transform.position, Quaternion.identity);
+            scanTimer = 0.0f;
+        }
     }
 
     void FixedUpdate()
@@ -64,11 +77,16 @@ public class RoverController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(landSpeed > 4f)
-        {
-            impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
-            impulse.GenerateImpulse();
-            impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
-        }
+        if(landSpeed > 4f || prevSpeed > 10f)
+            Shake();
+
+        AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform);
+    }
+
+    void Shake()
+    {
+        impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
+        impulse.GenerateImpulse();
+        impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
     }
 }

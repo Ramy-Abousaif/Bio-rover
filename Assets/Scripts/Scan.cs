@@ -32,6 +32,9 @@ public class Scan : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //Highlight 
+        if(other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
+        {
+            other.GetComponent<Renderer>().material.SetInt("_isHighlighted", 1);
+        }
     }
 }
