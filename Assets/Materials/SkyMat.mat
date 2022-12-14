@@ -134,7 +134,7 @@ Material:
     - _SkyColor2: {r: 0.75, g: 0.3, b: 0.17, a: 1}
     - _SkyColor3: {r: 0.090909004, g: 0, b: 1, a: 0}
     - _SkyColorNight1: {r: 0, g: 0, b: 0.039215688, a: 0}
-    - _SkyColorNight2: {r: 0.42837796, g: 0.34480244, b: 0.7851371, a: 1}
+    - _SkyColorNight2: {r: 0.45000762, g: 0.3417894, b: 0.74376804, a: 1}
     - _SkyColorNight3: {r: 0, g: 0, b: 0.039215688, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

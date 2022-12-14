@@ -72,6 +72,7 @@ public class RoverController : MonoBehaviour
         if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
         {
             Instantiate(scanner, transform.position, Quaternion.identity);
+            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform);
             scanTimer = 0.0f;
         }
 
