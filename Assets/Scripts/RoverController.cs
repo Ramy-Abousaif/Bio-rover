@@ -8,7 +8,7 @@ public class RoverController : MonoBehaviour
     private CinemachineImpulseSource impulse;
     private Rigidbody rb;
     private SphereCollider sc;
-    public Transform folloCam;
+    public Transform followCam;
     public GameObject draw;
 
     public LayerMask ground;
@@ -45,6 +45,8 @@ public class RoverController : MonoBehaviour
         scanTimer = scanCooldown;
         sc.radius = initialRadius;
         draw.transform.localScale = initialSize;
+        if (followCam != null)
+            rb.AddTorque(followCam.transform.forward * 25.0f);
     }
 
     void Update()
@@ -55,8 +57,8 @@ public class RoverController : MonoBehaviour
 
         if (isGrounded)
         {
-            if (folloCam != null)
-                moveDir = folloCam.transform.forward * -PlayerInputManager.instance.inputX + folloCam.transform.right * PlayerInputManager.instance.inputY;
+            if (followCam != null)
+                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputX + followCam.transform.right * PlayerInputManager.instance.inputY;
 
             coyoteCounter = coyoteTime;
         }
@@ -89,8 +91,6 @@ public class RoverController : MonoBehaviour
             return;
 
         rb.AddTorque(moveDir.normalized * roverSpeed * speedMult);
-        if (isGrounded && PlayerInputManager.instance.jump)
-            rb.AddForce(Vector3.up * jumpForce);
     }
 
     private void OnCollisionEnter(Collision collision)
