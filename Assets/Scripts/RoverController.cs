@@ -72,7 +72,7 @@ public class RoverController : MonoBehaviour
         if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
         {
             Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform);
+            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             scanTimer = 0.0f;
         }
 
@@ -99,7 +99,7 @@ public class RoverController : MonoBehaviour
             Shake();
 
         if(!isChangingSize)
-            AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform);
+            AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
     }
 
     void Shake()
@@ -115,9 +115,9 @@ public class RoverController : MonoBehaviour
         float time = 0f;
 
         if (initialRadius > targetRadius)
-            AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform);
+            AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
         else
-            AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform);
+            AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
 
         while (time < sizeShiftTime)
         {
