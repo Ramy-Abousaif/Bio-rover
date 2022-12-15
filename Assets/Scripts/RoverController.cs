@@ -31,6 +31,7 @@ public class RoverController : MonoBehaviour
     private float sizeShiftTime = 1.5f;
     private bool isChangingSize = false;
 
+    public GameObject smokeRing;
     public GameObject scanner;
     private float landSpeed;
     private float currentSpeed;
@@ -75,7 +76,7 @@ public class RoverController : MonoBehaviour
         if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
         {
             Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             scanTimer = 0.0f;
         }
 
@@ -106,15 +107,6 @@ public class RoverController : MonoBehaviour
         rb.AddTorque(moveDir.normalized * roverSpeed * speedMult * rb.mass);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(landSpeed > 4f || prevSpeed > 10f)
-            Shake();
-
-        if(!isChangingSize)
-            AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-    }
-
     void Shake()
     {
         impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
@@ -129,13 +121,13 @@ public class RoverController : MonoBehaviour
 
         if (initialRadius > targetRadius)
         {
-            AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            maxSlopLimit = 12.5f;
+            AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            maxSlopLimit = 25f;
         }
         else
         {
-            AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            maxSlopLimit = 25f;
+            AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            maxSlopLimit = 45f;
         }
 
         while (time < sizeShiftTime)
@@ -157,5 +149,17 @@ public class RoverController : MonoBehaviour
         targetRadius = tempRadius;
 
         isChangingSize = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (landSpeed > 9f || prevSpeed > 10f)
+        {
+            Shake();
+            Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up ,collision.contacts[0].normal));
+        }
+
+        if (!isChangingSize)
+            AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
     }
 }

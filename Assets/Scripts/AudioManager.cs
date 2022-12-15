@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     public float masterVolume = 0.5f;
     public float bgVolume = 0.5f;
     public float sfxVolume = 0.5f;
-    public int testIndex = 2;
+    //public int testIndex = 2;
 
     //FMOD Variables
     Bus masterBus;
@@ -28,7 +28,6 @@ public class AudioManager : MonoBehaviour
     //Bus sfxBus;
     EventInstance ambienceInstance;
     EventInstance musicInstance;
-    EventInstance chargeInstance;
     [Header("Events Selector")]
     [Space(20)]
     public EventReference ambienceEvent;
@@ -55,16 +54,17 @@ public class AudioManager : MonoBehaviour
         masterBus = RuntimeManager.GetBus("Bus:/");
         //backgroundBus = RuntimeManager.GetBus("Bus:/Master/Background");
         //sfxBus = RuntimeManager.GetBus("Bus:/Master/SFX");
-        //StartAmbience();
+        StartAmbience();
         //StartMusic();
     }
 
     private void Update()
     {
-        masterBus.setVolume(this.masterVolume);
+        //masterBus.setVolume(this.masterVolume);
         //backgroundBus.setVolume(this.bgVolume);
         //sfxBus.setVolume(this.sfxVolume);
-        musicInstance.setParameterByName("Scene", SceneManager.GetActiveScene().buildIndex);
+        ambienceInstance.setParameterByName("Underwater", (Camera.main.transform.position.y > WaveManager.instance.getHeight(Camera.main.transform.position.x, Camera.main.transform.position.z)) ? 0f : 1f);
+        //musicInstance.setParameterByName("Scene", SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ChangeSFXVolume(float newSFXVolume)
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
     {
         ambienceInstance = RuntimeManager.CreateInstance(ambienceEvent);
         ambienceInstance.start();
-        ambienceInstance.release();
+        //ambienceInstance.release();
     }
 
     public void StartMusic()
