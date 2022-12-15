@@ -22,6 +22,7 @@ public class RoverController : MonoBehaviour
     private float speedMult = 4.0f;
     private float jumpForce = 500f;
     private Vector3 moveDir;
+    private float maxSlopLimit = 12.5f;
 
     private float initialRadius = 1.5f;
     private float targetRadius = 3f;
@@ -53,7 +54,7 @@ public class RoverController : MonoBehaviour
     {
         scanTimer += Time.deltaTime;
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
-        isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.1f, ground);
+        isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (isGrounded)
         {
@@ -80,6 +81,18 @@ public class RoverController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
             StartCoroutine(ChangeSize());
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
+        {
+            Debug.Log((Vector3.Angle(Vector3.up, hit.normal)));
+            if ((Vector3.Angle(Vector3.up, hit.normal)) > maxSlopLimit + 0.1f)
+            {
+                var left = Vector3.Cross(hit.normal, Vector3.up);
+                var slope = Vector3.Cross(hit.normal, left);
+                rb.AddForce(slope * 50f * rb.mass);
+            }
+        }
     }
 
     void FixedUpdate()
@@ -90,7 +103,7 @@ public class RoverController : MonoBehaviour
         if (isChangingSize)
             return;
 
-        rb.AddTorque(moveDir.normalized * roverSpeed * speedMult);
+        rb.AddTorque(moveDir.normalized * roverSpeed * speedMult * rb.mass);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -115,9 +128,15 @@ public class RoverController : MonoBehaviour
         float time = 0f;
 
         if (initialRadius > targetRadius)
+        {
             AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            maxSlopLimit = 12.5f;
+        }
         else
+        {
             AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Occluded", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            maxSlopLimit = 25f;
+        }
 
         while (time < sizeShiftTime)
         {
