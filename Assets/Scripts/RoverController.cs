@@ -22,7 +22,9 @@ public class RoverController : MonoBehaviour
     private float speedMult = 4.0f;
     private float jumpForce = 500f;
     private Vector3 moveDir;
-    private float maxSlopLimit = 12.5f;
+    private float maxSlope = 45f;
+    private float minSlope = 12.5f;
+    private float slopeLimit = 12.5f;
 
     private float initialRadius = 1.5f;
     private float targetRadius = 3f;
@@ -86,7 +88,7 @@ public class RoverController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
         {
-            if ((Vector3.Angle(Vector3.up, hit.normal)) > maxSlopLimit + 0.1f)
+            if ((Vector3.Angle(Vector3.up, hit.normal)) > slopeLimit + 0.1f)
             {
                 var left = Vector3.Cross(hit.normal, Vector3.up);
                 var slope = Vector3.Cross(hit.normal, left);
@@ -121,12 +123,12 @@ public class RoverController : MonoBehaviour
         if (initialRadius > targetRadius)
         {
             AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            maxSlopLimit = 25f;
+            slopeLimit = minSlope;
         }
         else
         {
             AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            maxSlopLimit = 45f;
+            slopeLimit = maxSlope;
         }
 
         while (time < sizeShiftTime)
