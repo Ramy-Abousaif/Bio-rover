@@ -32,30 +32,23 @@ public class Buoyancy : MonoBehaviour
 
         float wH = WaveManager.instance.getHeight(transform.position.x, transform.position.z);
 
+        // Manual gravity subdivided based on the amount of floaters.
+        rb.AddForceAtPosition((Physics.gravity * rb.mass) / floaters, transform.position, ForceMode.Acceleration);
+
         // If the floater is below water
-        if (transform.position.y < wH)
+        if (transform.position.y < wH && PlayerInputManager.instance.jump)
         {
-            rb.AddForceAtPosition(((Physics.gravity * rb.mass) / floaters) / 2, transform.position, ForceMode.Acceleration);
+            float submersion = Mathf.Clamp01(wH - transform.position.y) / objectDepth;
+            float buoyancy = Mathf.Abs(Physics.gravity.y) * submersion * strength * rb.mass;
 
-            if (PlayerInputManager.instance.jump)
-            {
-                float submersion = Mathf.Clamp01(wH - transform.position.y) / objectDepth;
-                float buoyancy = Mathf.Abs(Physics.gravity.y) * submersion * strength * rb.mass;
+            // Buoyant Force
+            rb.AddForceAtPosition(Vector3.up * buoyancy, transform.position, ForceMode.Acceleration);
 
-                // Buoyant Force
-                rb.AddForceAtPosition(Vector3.up * buoyancy, transform.position, ForceMode.Acceleration);
+            // Drag Force
+            rb.AddForce(-rb.velocity * waterVelocityDrag * Time.fixedDeltaTime * strength, ForceMode.VelocityChange);
 
-                // Drag Force
-                rb.AddForce(-rb.velocity * waterVelocityDrag * Time.fixedDeltaTime * strength, ForceMode.VelocityChange);
-
-                // Torque Force
-                rb.AddTorque(-rb.angularVelocity * waterAngularDrag * Time.fixedDeltaTime * strength, ForceMode.VelocityChange);
-            }
-        }
-        else
-        {
-            // Manual gravity subdivided based on the amount of floaters.
-            rb.AddForceAtPosition((Physics.gravity * rb.mass) / floaters, transform.position, ForceMode.Acceleration);
+            // Torque Force
+            rb.AddTorque(-rb.angularVelocity * waterAngularDrag * Time.fixedDeltaTime * strength, ForceMode.VelocityChange);
         }
     }
 

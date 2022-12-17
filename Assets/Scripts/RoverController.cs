@@ -86,7 +86,6 @@ public class RoverController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
         {
-            Debug.Log((Vector3.Angle(Vector3.up, hit.normal)));
             if ((Vector3.Angle(Vector3.up, hit.normal)) > maxSlopLimit + 0.1f)
             {
                 var left = Vector3.Cross(hit.normal, Vector3.up);
