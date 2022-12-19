@@ -10,6 +10,8 @@ public class RoverController : MonoBehaviour
     private SphereCollider sc;
     public Transform followCam;
     public GameObject draw;
+    [SerializeField]
+    private Marimo[] marimos;
 
     public LayerMask ground;
     private bool isGrounded = false;
@@ -49,6 +51,7 @@ public class RoverController : MonoBehaviour
         scanTimer = scanCooldown;
         sc.radius = initialRadius;
         draw.transform.localScale = initialSize;
+        // Fixes weird glitch that makes it so that ball's collider goes through floor if inflated without moving at the start of the game
         if (followCam != null)
             rb.AddTorque(followCam.transform.forward * 25.0f);
     }
@@ -62,7 +65,7 @@ public class RoverController : MonoBehaviour
         if (isGrounded)
         {
             if (followCam != null)
-                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputX + followCam.transform.right * PlayerInputManager.instance.inputY;
+                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputY + followCam.transform.right * -PlayerInputManager.instance.inputX;
 
             coyoteCounter = coyoteTime;
         }
@@ -102,10 +105,38 @@ public class RoverController : MonoBehaviour
         if (rb == null)
             return;
 
+        float fuelToUse = 0.5f * Time.fixedDeltaTime;
+
         if (isChangingSize)
             return;
 
-        rb.AddTorque(moveDir.normalized * roverSpeed * speedMult * rb.mass);
+        Vector3 totalForce = Vector3.zero;
+
+        foreach (Marimo marimo in marimos)
+        {
+            // Only apply force from the compartment if the direction is in the same direction as the movement direction
+            if (Vector3.Angle(-marimo.transform.forward, Camera.main.transform.forward) < 45)
+            {
+                // Use up the fuel if there's enough, otherwise use up all remaining fuel
+                if (marimo.energy >= fuelToUse)
+                {
+                    marimo.energy -= fuelToUse;
+                }
+                else
+                {
+                    fuelToUse = marimo.energy;
+                    marimo.energy = 0;
+                }
+
+                // Add the force based on the fuel used
+                totalForce += fuelToUse * Vector3.Scale(marimo.transform.forward, moveDir.normalized) * 10f;
+            }
+        }
+
+        Debug.Log(totalForce);
+
+        if(moveDir.normalized != Vector3.zero)
+            rb.AddForce(totalForce * roverSpeed * speedMult * rb.mass);
     }
 
     void Shake()

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateEnergy : MonoBehaviour
+public class Marimo : MonoBehaviour
 {
     public LayerMask lm;
     private bool blocked = false;
     private float photosynthesis;
     private float rate = 2.0f;
-    private float energy = 0;
+    public float energy = 0;
     private Transform sunlight;
 
     // Start is called before the first frame update
