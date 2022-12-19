@@ -105,38 +105,13 @@ public class RoverController : MonoBehaviour
         if (rb == null)
             return;
 
-        float fuelToUse = 0.5f * Time.fixedDeltaTime;
-
         if (isChangingSize)
             return;
 
-        Vector3 totalForce = Vector3.zero;
+        float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
-        foreach (Marimo marimo in marimos)
-        {
-            // Only apply force from the compartment if the direction is in the same direction as the movement direction
-            if (Vector3.Angle(-marimo.transform.forward, Camera.main.transform.forward) < 45)
-            {
-                // Use up the fuel if there's enough, otherwise use up all remaining fuel
-                if (marimo.energy >= fuelToUse)
-                {
-                    marimo.energy -= fuelToUse;
-                }
-                else
-                {
-                    fuelToUse = marimo.energy;
-                    marimo.energy = 0;
-                }
-
-                // Add the force based on the fuel used
-                totalForce += fuelToUse * Vector3.Scale(marimo.transform.forward, moveDir.normalized) * 10f;
-            }
-        }
-
-        Debug.Log(totalForce);
-
-        if(moveDir.normalized != Vector3.zero)
-            rb.AddForce(totalForce * roverSpeed * speedMult * rb.mass);
+        // Apply thrust to the ball based on the fuel usage of each fuel compartment
+        ApplyThrust(energyUsage);
     }
 
     void Shake()
@@ -181,6 +156,43 @@ public class RoverController : MonoBehaviour
         targetRadius = tempRadius;
 
         isChangingSize = false;
+    }
+
+    // Calculates the fuel usage for each fuel compartment based on the direction in which the ball should move
+    float[] CalculateEnergyUsage(Vector3 moveDirection)
+    {
+        float[] energyUsage = new float[marimos.Length];
+
+        for (int i = 0; i < marimos.Length; i++)
+        {
+            // Calculate the angle between the direction in which the ball should move and the direction of the fuel compartment
+            float angle = Vector3.Angle(moveDirection, marimos[i].transform.forward);
+
+            // Calculate the fuel usage based on the angle between the direction in which the ball should move and the direction of the fuel compartment
+            energyUsage[i] = Mathf.Lerp(0f, 1f, angle / 180f);
+        }
+
+        return energyUsage;
+    }
+
+    // Applies thrust to the ball based on the fuel usage of each fuel compartment
+    void ApplyThrust(float[] energyUsage)
+    {
+        for (int i = 0; i < marimos.Length; i++)
+        {
+            // Check if there is enough fuel in the fuel compartment
+            if (marimos[i].energy > 0f)
+            {
+                // Calculate the thrust force based on the fuel usage of the fuel compartment and the speed at which the ball should move
+                Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 20f;
+
+                // Apply the thrust force to the ball
+                rb.AddForce(thrustForce);
+
+                // Reduce the fuel in the fuel compartment by the fuel usage
+                marimos[i].energy -= energyUsage[i];
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

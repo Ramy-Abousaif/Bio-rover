@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Marimo : MonoBehaviour
 {
+    public Gradient debugColor;
     public LayerMask lm;
     private bool blocked = false;
     private float photosynthesis;
     private float rate = 2.0f;
     public float energy = 0;
+    private float maxEnergy = 10.0f;
     private Transform sunlight;
 
     // Start is called before the first frame update
@@ -48,6 +50,12 @@ public class Marimo : MonoBehaviour
         if (photosynthesis > 0 && !blocked)
             energy += photosynthesis * (rate * Time.deltaTime);
 
-        energy = Mathf.Clamp(energy, 0, 10);
+        energy = Mathf.Clamp(energy, 0, maxEnergy);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = debugColor.Evaluate(energy / maxEnergy);
+        Gizmos.DrawSphere(transform.position, 0.3f);
     }
 }
