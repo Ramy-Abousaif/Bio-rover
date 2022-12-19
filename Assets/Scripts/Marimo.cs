@@ -8,9 +8,9 @@ public class Marimo : MonoBehaviour
     public LayerMask lm;
     private bool blocked = false;
     private float photosynthesis;
-    private float rate = 2.0f;
+    private float rate = 20.0f;
     public float energy = 0;
-    private float maxEnergy = 10.0f;
+    private float maxEnergy = 100.0f;
     private Transform sunlight;
 
     // Start is called before the first frame update

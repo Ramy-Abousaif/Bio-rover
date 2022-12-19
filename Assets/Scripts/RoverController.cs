@@ -110,7 +110,7 @@ public class RoverController : MonoBehaviour
 
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
-        // Apply thrust to the ball based on the fuel usage of each fuel compartment
+        // Apply thrust to the ball based on the energy usage of each marimo
         ApplyThrust(energyUsage);
     }
 
@@ -158,38 +158,38 @@ public class RoverController : MonoBehaviour
         isChangingSize = false;
     }
 
-    // Calculates the fuel usage for each fuel compartment based on the direction in which the ball should move
+    // Calculates the energy usage for each marimo based on the direction in which the ball should move
     float[] CalculateEnergyUsage(Vector3 moveDirection)
     {
         float[] energyUsage = new float[marimos.Length];
 
         for (int i = 0; i < marimos.Length; i++)
         {
-            // Calculate the angle between the direction in which the ball should move and the direction of the fuel compartment
+            // Calculate the angle between the direction in which the ball should move and the direction of the marimo
             float angle = Vector3.Angle(moveDirection, marimos[i].transform.forward);
 
-            // Calculate the fuel usage based on the angle between the direction in which the ball should move and the direction of the fuel compartment
-            energyUsage[i] = Mathf.Lerp(0f, 1f, angle / 180f);
+            // Calculate the energy usage based on the angle between the direction in which the ball should move and the direction of the marimo
+            energyUsage[i] = Mathf.Lerp(0f, 0.1f, angle / 180f);
         }
 
         return energyUsage;
     }
 
-    // Applies thrust to the ball based on the fuel usage of each fuel compartment
+    // Applies thrust to the ball based on the energy usage of each marimo
     void ApplyThrust(float[] energyUsage)
     {
         for (int i = 0; i < marimos.Length; i++)
         {
-            // Check if there is enough fuel in the fuel compartment
+            // Check if there is enough energy in the marimo
             if (marimos[i].energy > 0f)
             {
-                // Calculate the thrust force based on the fuel usage of the fuel compartment and the speed at which the ball should move
+                // Calculate the thrust force based on the energy usage of the marimo and the speed at which the ball should move
                 Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 20f;
 
                 // Apply the thrust force to the ball
                 rb.AddForce(thrustForce);
 
-                // Reduce the fuel in the fuel compartment by the fuel usage
+                // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];
             }
         }
