@@ -184,7 +184,7 @@ public class RoverController : MonoBehaviour
             if (marimos[i].energy > 0f)
             {
                 // Calculate the thrust force based on the energy usage of the marimo and the speed at which the ball should move
-                Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 20f;
+                Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 100f;
 
                 // Apply the thrust force to the ball
                 rb.AddForce(thrustForce);
