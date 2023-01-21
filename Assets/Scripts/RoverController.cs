@@ -12,14 +12,14 @@ public class RoverController : MonoBehaviour
     public GameObject draw;
     [SerializeField]
     private Marimo[] marimos;
+    [SerializeField]
+    private Buoyancy floater;
 
     public LayerMask ground;
     private bool isGrounded = false;
     private bool landed = true;
-    private float coyoteTime = 0.2f;
     private float scanCooldown = 2.0f;
     private float scanTimer = 0.0f;
-    private float coyoteCounter;
     private float roverSpeed = 10.0f;
     private float speedMult = 4.0f;
     private float jumpForce = 500f;
@@ -58,19 +58,15 @@ public class RoverController : MonoBehaviour
 
     void Update()
     {
-        scanTimer += Time.deltaTime;
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
+
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (isGrounded)
         {
             if (followCam != null)
                 moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputY + followCam.transform.right * -PlayerInputManager.instance.inputX;
-
-            coyoteCounter = coyoteTime;
         }
-        else
-            coyoteCounter -= Time.deltaTime;
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -78,26 +74,13 @@ public class RoverController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
-        {
-            Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            scanTimer = 0.0f;
-        }
-
         if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
             StartCoroutine(ChangeSize());
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
-        {
-            if ((Vector3.Angle(Vector3.up, hit.normal)) > slopeLimit + 0.1f)
-            {
-                var left = Vector3.Cross(hit.normal, Vector3.up);
-                var slope = Vector3.Cross(hit.normal, left);
-                rb.AddForce(slope * 50f * rb.mass);
-            }
-        }
+        floater.active = PlayerInputManager.instance.jump;
+
+        Slope();
+        Scan();
     }
 
     void FixedUpdate()
@@ -119,6 +102,31 @@ public class RoverController : MonoBehaviour
         impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
         impulse.GenerateImpulse();
         impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
+    }
+
+    void Slope()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
+        {
+            if ((Vector3.Angle(Vector3.up, hit.normal)) > slopeLimit + 0.1f)
+            {
+                var left = Vector3.Cross(hit.normal, Vector3.up);
+                var slope = Vector3.Cross(hit.normal, left);
+                rb.AddForce(slope * 50f * rb.mass);
+            }
+        }
+    }
+
+    void Scan()
+    {
+        scanTimer += Time.deltaTime;
+        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
+        {
+            Instantiate(scanner, transform.position, Quaternion.identity);
+            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            scanTimer = 0.0f;
+        }
     }
 
     IEnumerator ChangeSize()

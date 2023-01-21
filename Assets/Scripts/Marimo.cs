@@ -5,6 +5,8 @@ using UnityEngine;
 public class Marimo : MonoBehaviour
 {
     public Gradient debugColor;
+    public GameObject relFace;
+    private Material relMat;
     public LayerMask lm;
     private bool blocked = false;
     private float photosynthesis;
@@ -18,6 +20,7 @@ public class Marimo : MonoBehaviour
     void Start()
     {
         sunlight = RenderSettings.sun.transform;
+        relMat = relFace.GetComponent<Renderer>().material;
     }
 
     void Update()
@@ -47,6 +50,7 @@ public class Marimo : MonoBehaviour
         }
 
         Debug.DrawRay(transform.position, -sunlight.forward * 1000000000f, Color.yellow);
+        relMat.SetVector("_Color", debugColor.Evaluate(energy / maxEnergy) * 3);
 
         if (photosynthesis > 0 && !blocked)
             energy += photosynthesis * (rateGain * Time.deltaTime);
@@ -56,9 +60,11 @@ public class Marimo : MonoBehaviour
         energy = Mathf.Clamp(energy, 0, maxEnergy);
     }
 
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = debugColor.Evaluate(energy / maxEnergy);
         Gizmos.DrawSphere(transform.position, 0.3f);
     }
+    */
 }
