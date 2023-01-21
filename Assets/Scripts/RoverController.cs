@@ -15,6 +15,7 @@ public class RoverController : MonoBehaviour
     private Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
+    public bool ableToFloat;
 
     public LayerMask ground;
     private bool isGrounded = false;
@@ -38,7 +39,7 @@ public class RoverController : MonoBehaviour
     private float currentSpeed;
     private float prevSpeed;
 
-    private float debugEnergy = 0;
+    private float sumEnergy = 0;
     public TMP_Text energyLevels;
 
     private void Start()
@@ -65,10 +66,7 @@ public class RoverController : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
-        if (isGrounded)
-            moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
-        else
-            moveDir = Vector3.zero;
+        moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -79,7 +77,7 @@ public class RoverController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
             StartCoroutine(ChangeSize());
 
-        floater.active = PlayerInputManager.instance.jump;
+        floater.active = PlayerInputManager.instance.jump && ableToFloat;
 
         Slope();
         Scan();
@@ -96,9 +94,10 @@ public class RoverController : MonoBehaviour
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
         // Apply thrust to the ball based on the energy usage of each marimo
-        ApplyThrust(energyUsage);
+        ApplyRotation(energyUsage);
+        ApplyFloat(energyUsage);
 
-        energyLevels.text = "Energy Levels: " + ((debugEnergy / 1200f) * 100).ToString("0") + "%";
+        energyLevels.text = "Energy Levels: " + ((sumEnergy / 1200f) * 100).ToString("0") + "%";
     }
 
     void Shake()
@@ -188,23 +187,49 @@ public class RoverController : MonoBehaviour
     }
 
     // Applies thrust to the ball based on the energy usage of each marimo
-    void ApplyThrust(float[] energyUsage)
+    void ApplyRotation(float[] energyUsage)
     {
-        debugEnergy = 0;
+        sumEnergy = 0;
         for (int i = 0; i < marimos.Length; i++)
         {
-            debugEnergy += marimos[i].energy;
+            sumEnergy += marimos[i].energy;
             // Check if there is enough energy in the marimo
             if (marimos[i].energy > 0f)
             {
                 // Calculate the thrust force based on the energy usage of the marimo and the speed at which the ball should move
-                Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 100f;
+                Vector3 torque = marimos[i].transform.forward * energyUsage[i] * 100f;
 
                 // Apply the thrust force to the ball
-                rb.AddTorque(thrustForce);
+                rb.AddTorque(torque);
 
                 // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];
+            }
+        }
+    }
+
+    // Applies thrust to the ball based on the energy usage of each marimo
+    void ApplyFloat(float[] energyUsage)
+    {
+        ableToFloat = false;
+        if (transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z))
+        {
+            for (int i = 0; i < marimos.Length; i++)
+            {
+                // Check if there is enough energy in the marimo
+                if (marimos[i].energy > 0f)
+                {
+                    if (Vector3.Angle(Vector3.down, marimos[i].transform.forward) < 50)
+                    {
+                        ableToFloat = true;
+
+                        energyUsage[i] = Mathf.Lerp(0f, 1f, Vector3.Angle(Vector3.down, marimos[i].transform.forward) / 180f);
+
+                        // Reduce the energy in the marimo by the energy usage
+                        if (floater.active)
+                            marimos[i].energy -= energyUsage[i];
+                    }
+                }
             }
         }
     }
