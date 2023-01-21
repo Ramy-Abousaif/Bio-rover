@@ -10,14 +10,16 @@ public class RoverController : MonoBehaviour
     private SphereCollider sc;
     public Transform followCam;
     public GameObject draw;
+    [SerializeField]
+    private Marimo[] marimos;
+    [SerializeField]
+    private Buoyancy floater;
 
     public LayerMask ground;
     private bool isGrounded = false;
     private bool landed = true;
-    private float coyoteTime = 0.2f;
     private float scanCooldown = 2.0f;
     private float scanTimer = 0.0f;
-    private float coyoteCounter;
     private float roverSpeed = 10.0f;
     private float speedMult = 4.0f;
     private float jumpForce = 500f;
@@ -49,25 +51,22 @@ public class RoverController : MonoBehaviour
         scanTimer = scanCooldown;
         sc.radius = initialRadius;
         draw.transform.localScale = initialSize;
+        // Fixes weird glitch that makes it so that ball's collider goes through floor if inflated without moving at the start of the game
         if (followCam != null)
             rb.AddTorque(followCam.transform.forward * 25.0f);
     }
 
     void Update()
     {
-        scanTimer += Time.deltaTime;
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
+
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (isGrounded)
         {
             if (followCam != null)
-                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputX + followCam.transform.right * PlayerInputManager.instance.inputY;
-
-            coyoteCounter = coyoteTime;
+                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputY + followCam.transform.right * -PlayerInputManager.instance.inputX;
         }
-        else
-            coyoteCounter -= Time.deltaTime;
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -75,16 +74,38 @@ public class RoverController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
-        {
-            Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            scanTimer = 0.0f;
-        }
-
         if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
             StartCoroutine(ChangeSize());
 
+        floater.active = PlayerInputManager.instance.jump;
+
+        Slope();
+        Scan();
+    }
+
+    void FixedUpdate()
+    {
+        if (rb == null)
+            return;
+
+        if (isChangingSize)
+            return;
+
+        float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
+
+        // Apply thrust to the ball based on the energy usage of each marimo
+        ApplyThrust(energyUsage);
+    }
+
+    void Shake()
+    {
+        impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
+        impulse.GenerateImpulse();
+        impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
+    }
+
+    void Slope()
+    {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
         {
@@ -97,22 +118,15 @@ public class RoverController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Scan()
     {
-        if (rb == null)
-            return;
-
-        if (isChangingSize)
-            return;
-
-        rb.AddTorque(moveDir.normalized * roverSpeed * speedMult * rb.mass);
-    }
-
-    void Shake()
-    {
-        impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
-        impulse.GenerateImpulse();
-        impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
+        scanTimer += Time.deltaTime;
+        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
+        {
+            Instantiate(scanner, transform.position, Quaternion.identity);
+            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            scanTimer = 0.0f;
+        }
     }
 
     IEnumerator ChangeSize()
@@ -150,6 +164,43 @@ public class RoverController : MonoBehaviour
         targetRadius = tempRadius;
 
         isChangingSize = false;
+    }
+
+    // Calculates the energy usage for each marimo based on the direction in which the ball should move
+    float[] CalculateEnergyUsage(Vector3 moveDirection)
+    {
+        float[] energyUsage = new float[marimos.Length];
+
+        for (int i = 0; i < marimos.Length; i++)
+        {
+            // Calculate the angle between the direction in which the ball should move and the direction of the marimo
+            float angle = Vector3.Angle(moveDirection, marimos[i].transform.forward);
+
+            // Calculate the energy usage based on the angle between the direction in which the ball should move and the direction of the marimo
+            energyUsage[i] = Mathf.Lerp(0f, 0.1f, angle / 180f);
+        }
+
+        return energyUsage;
+    }
+
+    // Applies thrust to the ball based on the energy usage of each marimo
+    void ApplyThrust(float[] energyUsage)
+    {
+        for (int i = 0; i < marimos.Length; i++)
+        {
+            // Check if there is enough energy in the marimo
+            if (marimos[i].energy > 0f)
+            {
+                // Calculate the thrust force based on the energy usage of the marimo and the speed at which the ball should move
+                Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 100f;
+
+                // Apply the thrust force to the ball
+                rb.AddForce(thrustForce);
+
+                // Reduce the energy in the marimo by the energy usage
+                marimos[i].energy -= energyUsage[i];
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

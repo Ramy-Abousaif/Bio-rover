@@ -10,6 +10,8 @@ public class Buoyancy : MonoBehaviour
     [Range(1, 5)] public float strength;
     [Range(1, 5)] public float objectDepth;
 
+    public bool active = true;
+
     #region Private Fields
     int floaters;
     [HideInInspector]
@@ -30,13 +32,16 @@ public class Buoyancy : MonoBehaviour
         if (rb == null)
             return;
 
-        float wH = WaveManager.instance.getHeight(transform.position.x, transform.position.z);
-
         // Manual gravity subdivided based on the amount of floaters.
         rb.AddForceAtPosition((Physics.gravity * rb.mass) / floaters, transform.position, ForceMode.Acceleration);
 
+        if (!active)
+            return;
+
+        float wH = WaveManager.instance.getHeight(transform.position.x, transform.position.z);
+
         // If the floater is below water
-        if (transform.position.y < wH && PlayerInputManager.instance.jump)
+        if (transform.position.y < wH)
         {
             float submersion = Mathf.Clamp01(wH - transform.position.y) / objectDepth;
             float buoyancy = Mathf.Abs(Physics.gravity.y) * submersion * strength * rb.mass;
