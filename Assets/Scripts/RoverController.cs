@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
 
 public class RoverController : MonoBehaviour
 {
@@ -17,12 +18,8 @@ public class RoverController : MonoBehaviour
 
     public LayerMask ground;
     private bool isGrounded = false;
-    private bool landed = true;
     private float scanCooldown = 2.0f;
     private float scanTimer = 0.0f;
-    private float roverSpeed = 10.0f;
-    private float speedMult = 4.0f;
-    private float jumpForce = 500f;
     private Vector3 moveDir;
     private float maxSlope = 45f;
     private float minSlope = 12.5f;
@@ -40,6 +37,9 @@ public class RoverController : MonoBehaviour
     private float landSpeed;
     private float currentSpeed;
     private float prevSpeed;
+
+    private float debugEnergy = 0;
+    public TMP_Text energyLevels;
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class RoverController : MonoBehaviour
         if (isGrounded)
         {
             if (followCam != null)
-                moveDir = followCam.transform.forward * -PlayerInputManager.instance.inputY + followCam.transform.right * -PlayerInputManager.instance.inputX;
+                moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
         }
 
         if (currentSpeed > 8f)
@@ -95,6 +95,8 @@ public class RoverController : MonoBehaviour
 
         // Apply thrust to the ball based on the energy usage of each marimo
         ApplyThrust(energyUsage);
+
+        energyLevels.text = "Energy Levels: " + ((debugEnergy / 1200f) * 100).ToString("0") + "%";
     }
 
     void Shake()
@@ -186,8 +188,10 @@ public class RoverController : MonoBehaviour
     // Applies thrust to the ball based on the energy usage of each marimo
     void ApplyThrust(float[] energyUsage)
     {
+        debugEnergy = 0;
         for (int i = 0; i < marimos.Length; i++)
         {
+            debugEnergy += marimos[i].energy;
             // Check if there is enough energy in the marimo
             if (marimos[i].energy > 0f)
             {
@@ -195,7 +199,7 @@ public class RoverController : MonoBehaviour
                 Vector3 thrustForce = marimos[i].transform.forward * energyUsage[i] * 100f;
 
                 // Apply the thrust force to the ball
-                rb.AddForce(thrustForce);
+                rb.AddTorque(thrustForce);
 
                 // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];

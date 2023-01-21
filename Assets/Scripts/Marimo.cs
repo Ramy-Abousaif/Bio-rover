@@ -11,7 +11,7 @@ public class Marimo : MonoBehaviour
     private bool blocked = false;
     private float photosynthesis;
     private float rateGain = 20.0f;
-    private float rateLoss = 5.0f;
+    //private float rateLoss = 5.0f;
     public float energy = 0;
     private float maxEnergy = 100.0f;
     private Transform sunlight;
@@ -49,7 +49,7 @@ public class Marimo : MonoBehaviour
             */
         }
 
-        Debug.DrawRay(transform.position, -sunlight.forward * 1000000000f, Color.yellow);
+        //Debug.DrawRay(transform.position, -sunlight.forward * 1000000000f, Color.yellow);
         relMat.SetVector("_Color", debugColor.Evaluate(energy / maxEnergy) * 3);
 
         if (photosynthesis > 0 && !blocked)
