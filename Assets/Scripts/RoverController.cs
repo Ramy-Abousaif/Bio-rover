@@ -58,15 +58,17 @@ public class RoverController : MonoBehaviour
 
     void Update()
     {
+        if (followCam == null)
+            return;
+
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
 
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (isGrounded)
-        {
-            if (followCam != null)
-                moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
-        }
+            moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
+        else
+            moveDir = Vector3.zero;
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
