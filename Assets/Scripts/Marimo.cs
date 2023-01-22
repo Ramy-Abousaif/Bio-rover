@@ -15,12 +15,14 @@ public class Marimo : MonoBehaviour
     public float energy = 0;
     private float maxEnergy = 100.0f;
     private Transform sunlight;
+    public bool showUI = true;
 
     // Start is called before the first frame update
     void Start()
     {
         sunlight = RenderSettings.sun.transform;
-        relMat = relFace.GetComponent<Renderer>().material;
+        if (showUI)
+            relMat = relFace.GetComponent<Renderer>().material;
     }
 
     void Update()
@@ -50,7 +52,8 @@ public class Marimo : MonoBehaviour
         }
 
         //Debug.DrawRay(transform.position, -sunlight.forward * 1000000000f, Color.yellow);
-        relMat.SetVector("_Color", debugColor.Evaluate(energy / maxEnergy) * 3);
+        if (showUI)
+            relMat.SetVector("_Color", debugColor.Evaluate(energy / maxEnergy) * 3);
 
         if (photosynthesis > 0 && !blocked)
             energy += photosynthesis * (rateGain * Time.deltaTime);
