@@ -7,12 +7,13 @@ public class OceanGeometry : MonoBehaviour
     private Transform viewer;
     [SerializeField]
     private GameObject water;
+    private int count = 3;
 
     private void Start()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < count; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < count; j++)
             {
                 Instantiate(water, new Vector3(transform.position.x + (i * 512) - 512, transform.position.y, transform.position.z + (j * 512) - 512), Quaternion.identity, transform);
             }
