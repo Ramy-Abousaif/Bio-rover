@@ -15,12 +15,13 @@ public class RoverController : MonoBehaviour
     private Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
-    public bool ableToFloat;
+    private bool ableToFloat;
 
     public LayerMask ground;
     private bool isGrounded = false;
     private float scanCooldown = 2.0f;
     private float scanTimer = 0.0f;
+    private Vector3 torqueDir;
     private Vector3 moveDir;
     private float maxSlope = 45f;
     private float minSlope = 12.5f;
@@ -66,7 +67,8 @@ public class RoverController : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
-        moveDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
+        torqueDir = followCam.transform.forward * PlayerInputManager.instance.inputX + followCam.transform.right * -PlayerInputManager.instance.inputY;
+        moveDir = followCam.transform.forward * PlayerInputManager.instance.inputY + followCam.transform.right * PlayerInputManager.instance.inputX;
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -91,7 +93,7 @@ public class RoverController : MonoBehaviour
         if (isChangingSize)
             return;
 
-        float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
+        float[] energyUsage = CalculateEnergyUsage(torqueDir.normalized);
 
         // Apply thrust to the ball based on the energy usage of each marimo
         ApplyRotation(energyUsage);
@@ -201,6 +203,9 @@ public class RoverController : MonoBehaviour
 
                 // Apply the thrust force to the ball
                 rb.AddTorque(torque);
+
+                if (!isGrounded && transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z))
+                    rb.AddForce(moveDir.normalized * 0.3f);
 
                 // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];
