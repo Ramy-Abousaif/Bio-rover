@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManager instance { get; private set; }
 
     [Serializable]
     public class sfxLib
@@ -37,9 +37,9 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
         }
         else
         {

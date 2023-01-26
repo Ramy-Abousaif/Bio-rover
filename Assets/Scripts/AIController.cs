@@ -120,7 +120,7 @@ public class AIController : MonoBehaviour
         if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
         {
             Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            AudioManager.instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             scanTimer = 0.0f;
         }
     }
@@ -132,12 +132,12 @@ public class AIController : MonoBehaviour
 
         if (initialRadius > targetRadius)
         {
-            AudioManager.Instance.PlayOneShotWithParameters("Deflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            AudioManager.instance.PlayOneShotWithParameters("Deflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             slopeLimit = minSlope;
         }
         else
         {
-            AudioManager.Instance.PlayOneShotWithParameters("Inflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            AudioManager.instance.PlayOneShotWithParameters("Inflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             slopeLimit = maxSlope;
         }
 
@@ -302,7 +302,7 @@ public class AIController : MonoBehaviour
         }
 
         if (!isChangingSize)
-            AudioManager.Instance.PlayOneShotWithParameters("BallLand", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            AudioManager.instance.PlayOneShotWithParameters("BallLand", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
     }
 
     private void FindNewTarget()

@@ -34,6 +34,13 @@ public class Scan : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
         {
+            if(other.GetComponent<Renderer>().material.GetInt("_isHighlighted") == 0)
+            {
+                GameManager.instance.scanned_objs++;
+                GameManager.instance.money += 10;
+                UIManager.instance.moneyText.text = "$" + GameManager.instance.money.ToString();
+            }
+
             other.GetComponent<Renderer>().material.SetInt("_isHighlighted", 1);
         }
     }

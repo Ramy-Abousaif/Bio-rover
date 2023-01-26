@@ -14,10 +14,16 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-            Destroy(this);
-        else
+        if (instance == null)
+        {
             instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

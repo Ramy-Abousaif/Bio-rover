@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    public static WaveManager instance;
+    public static WaveManager instance { get; private set; }
 
     public Material water;
 
