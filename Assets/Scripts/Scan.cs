@@ -38,7 +38,7 @@ public class Scan : MonoBehaviour
             {
                 GameManager.instance.scanned_objs++;
                 GameManager.instance.money += 10;
-                UIManager.instance.moneyText.text = "$" + GameManager.instance.money.ToString();
+                UIManager.instance.moneyText.text = GameManager.instance.money.ToString() + " Credits";
             }
 
             other.GetComponent<Renderer>().material.SetInt("_isHighlighted", 1);
