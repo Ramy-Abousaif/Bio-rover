@@ -20,7 +20,6 @@ public class PlayerManager : MonoBehaviour
     public CinemachineFreeLook roverVCam;
     public GameObject rover;
     public GameObject boat;
-    public GameObject waterLens;
 
     void Awake()
     {
@@ -70,7 +69,6 @@ public class PlayerManager : MonoBehaviour
             rover.SetActive(false);
             boatVCam.gameObject.SetActive(true);
             roverVCam.gameObject.SetActive(false);
-            waterLens.SetActive(false);
         }
 
         if (state == PlayerState.ROVER)
