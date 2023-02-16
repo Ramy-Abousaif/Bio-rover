@@ -20,7 +20,10 @@ public class BoatController : MonoBehaviour
     private Transform mesh;
     [SerializeField]
     private Transform boatCamFollow;
+    [SerializeField]
+    private GameObject botRover;
     [Header("Other")]
+    public int botCount = 0;
     private float minDrag = 2f;
     [SerializeField]
     private float maxDrag = 6f;
@@ -60,6 +63,12 @@ public class BoatController : MonoBehaviour
 
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
         boatCamFollow.position = transform.position;
+
+        if (botCount > 0 && PlayerInputManager.instance.spawnBot)
+        {
+            Instantiate(botRover, PlayerManager.instance.dropPoint.position, Quaternion.identity);
+            botCount--;
+        }
     }
 
     private void RotateAnim()
@@ -92,5 +101,26 @@ public class BoatController : MonoBehaviour
     {
         if (Mathf.Sqrt((this.rb.velocity.x * this.rb.velocity.x) + (this.rb.velocity.z * this.rb.velocity.z)) > 20.0f)
             this.rb.AddTorque(base.transform.up * this.angularSpeed * this.xInput);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!PlayerInputManager.instance.pickUp)
+            return;
+
+        if (other.CompareTag("Rover") && PlayerManager.instance.playerState == PlayerState.BOAT)
+        {
+            GameObject rover = other.transform.gameObject;
+            PlayerManager.instance.currentRover = rover;
+            PlayerManager.instance.currentRover.transform.position = PlayerManager.instance.dropPoint.position;
+            rover.transform.SetParent(PlayerManager.instance.dropPoint);
+            rover.SetActive(false);
+        }
+
+        if (other.CompareTag("Bot") && PlayerManager.instance.playerState == PlayerState.BOAT)
+        {
+            Destroy(other.gameObject);
+            botCount++;
+        }
     }
 }

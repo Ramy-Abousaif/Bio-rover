@@ -18,8 +18,11 @@ public class PlayerManager : MonoBehaviour
     public Camera playerCam;
     public CinemachineVirtualCamera boatVCam;
     public CinemachineFreeLook roverVCam;
-    public GameObject rover;
+    public GameObject currentRover;
     public GameObject boat;
+    public RoverController rc;
+    public BoatController bc;
+    public Transform dropPoint;
 
     void Awake()
     {
@@ -43,9 +46,9 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
+        if(PlayerInputManager.instance.switchMode)
         {
-            if (playerState == PlayerState.BOAT)
+            if (playerState == PlayerState.BOAT && currentRover != null)
                 ChangePlayerState(PlayerState.ROVER);
             else
                 ChangePlayerState(PlayerState.BOAT);
@@ -65,18 +68,19 @@ public class PlayerManager : MonoBehaviour
         if (state == PlayerState.BOAT)
         {
             UIManager.instance.energyUsage.SetActive(false);
-            boat.SetActive(true);
-            rover.SetActive(false);
+            bc.enabled = true;
+            rc.enabled = false;
             boatVCam.gameObject.SetActive(true);
             roverVCam.gameObject.SetActive(false);
         }
 
-        if (state == PlayerState.ROVER)
+        if (state == PlayerState.ROVER && currentRover != null)
         {
             UIManager.instance.energyUsage.SetActive(true);
-            rover.transform.position = boat.transform.position;
-            boat.SetActive(false);
-            rover.SetActive(true);
+            bc.enabled = false;
+            currentRover.transform.SetParent(transform);
+            currentRover.SetActive(true);
+            rc.enabled = true;
             boatVCam.gameObject.SetActive(false);
             roverVCam.gameObject.SetActive(true);
         }
