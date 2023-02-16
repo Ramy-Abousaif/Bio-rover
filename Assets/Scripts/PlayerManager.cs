@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public enum PlayerState
 {
@@ -14,8 +15,12 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector]
     public PlayerState playerState;
+    public Camera playerCam;
+    public CinemachineVirtualCamera boatVCam;
+    public CinemachineFreeLook roverVCam;
     public GameObject rover;
     public GameObject boat;
+    public GameObject waterLens;
 
     void Awake()
     {
@@ -50,6 +55,7 @@ public class PlayerManager : MonoBehaviour
 
     void SetUp()
     {
+        playerCam = Camera.main;
         ChangePlayerState(PlayerState.BOAT);
     }
 
@@ -62,13 +68,19 @@ public class PlayerManager : MonoBehaviour
             UIManager.instance.energyUsage.SetActive(false);
             boat.SetActive(true);
             rover.SetActive(false);
+            boatVCam.gameObject.SetActive(true);
+            roverVCam.gameObject.SetActive(false);
+            waterLens.SetActive(false);
         }
 
         if (state == PlayerState.ROVER)
         {
             UIManager.instance.energyUsage.SetActive(true);
+            rover.transform.position = boat.transform.position;
             boat.SetActive(false);
             rover.SetActive(true);
+            boatVCam.gameObject.SetActive(false);
+            roverVCam.gameObject.SetActive(true);
         }
     }
 }

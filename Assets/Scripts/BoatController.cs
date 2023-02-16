@@ -18,6 +18,8 @@ public class BoatController : MonoBehaviour
     private Transform rotation;
     [SerializeField]
     private Transform mesh;
+    [SerializeField]
+    private Transform boatCamFollow;
     [Header("Other")]
     private float minDrag = 2f;
     [SerializeField]
@@ -57,6 +59,7 @@ public class BoatController : MonoBehaviour
         this.motor.speed = Mathf.Lerp(this.motor.startSpeed / 2f, this.motor.startSpeed * 1.5f, this.dragT);
 
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
+        boatCamFollow.position = transform.position;
     }
 
     private void RotateAnim()
