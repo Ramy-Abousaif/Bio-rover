@@ -123,4 +123,18 @@ public class BoatController : MonoBehaviour
             botCount++;
         }
     }
+
+    private void OnEnable()
+    {
+        motor.isSpinning = true;
+        motor.splash.Play();
+        motor.foam.Play();
+    }
+
+    private void OnDisable()
+    {
+        motor.isSpinning = false;
+        motor.splash.Stop();
+        motor.foam.Stop();
+    }
 }
