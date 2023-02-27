@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -242,8 +242,8 @@ MonoBehaviour:
     y: 0
     width: 880
     height: 763
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -297,8 +297,8 @@ MonoBehaviour:
     y: 0
     width: 256
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -364,9 +364,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a6a70000
-      m_LastClickedID: 42918
-      m_ExpandedIDs: 0efbffff3688000054a70000
+      m_SelectedIDs: b8a90000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 0efbffff16710000c288000040910000809a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -670,9 +670,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 139.17178, y: 2.023922, z: 28.828308}
+    m_Target: {x: 134.8983, y: 34.20115, z: 47.82017}
     speed: 2
-    m_Value: {x: 139.17178, y: 2.023922, z: 28.828308}
+    m_Value: {x: 134.9371, y: 34.21612, z: 47.816353}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -718,13 +718,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.06465724, y: -0.93586606, z: 0.24265762, w: 0.24766856}
+    m_Target: {x: 0.13630772, y: -0.6600597, z: 0.12110512, w: 0.72909784}
     speed: 2
-    m_Value: {x: 0.06464922, y: -0.93574995, z: 0.2426275, w: 0.24763784}
+    m_Value: {x: 0.13499975, y: -0.6611657, z: 0.12028643, w: 0.728125}
   m_Size:
-    m_Target: 10
+    m_Target: 34.64101
     speed: 2
-    m_Value: 10
+    m_Value: 10.221595
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1696,22 +1696,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scripts/Missions
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scripts/Missions
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\ramy_\OneDrive\Documents\Unity Projects\Bio-rover
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 81}
-    m_SelectedIDs: b8ab0000
-    m_LastClickedID: 43960
-    m_ExpandedIDs: 0000000090ab000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 129}
+    m_SelectedIDs: 32ad0000
+    m_LastClickedID: 44338
+    m_ExpandedIDs: 0000000018ab00001aab000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1739,7 +1739,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000090ab0000
+    m_ExpandedIDs: 0000000018ab00001aab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1766,7 +1766,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000fa750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

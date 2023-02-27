@@ -15,6 +15,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool spawnBot;
     public bool pickUp;
     public bool goToStore;
+    public bool changeSize;
 
     private void Awake()
     {
@@ -46,5 +47,6 @@ public class PlayerInputManager : MonoBehaviour
         spawnBot = Input.GetKeyDown(KeyCode.Alpha1);
         pickUp = Input.GetKeyDown(KeyCode.R);
         goToStore = Input.GetKey(KeyCode.F);
+        changeSize = Input.GetKeyDown(KeyCode.E);
     }
 }

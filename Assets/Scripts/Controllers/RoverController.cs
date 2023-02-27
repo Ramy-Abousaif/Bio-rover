@@ -15,6 +15,7 @@ public class RoverController : MonoBehaviour
     private Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
+    [SerializeField]
     private bool ableToFloat;
 
     public LayerMask ground;
@@ -76,7 +77,7 @@ public class RoverController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
+        if (PlayerInputManager.instance.changeSize && !isChangingSize)
             StartCoroutine(ChangeSize());
 
         floater.active = PlayerInputManager.instance.jump && ableToFloat;
