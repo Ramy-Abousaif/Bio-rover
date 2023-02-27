@@ -6,6 +6,8 @@ public class StoreManager : MonoBehaviour
 {
     public static StoreManager instance { get; private set; }
 
+    public bool inStore = false;
+
     void Awake()
     {
         if (instance == null)
@@ -22,5 +24,6 @@ public class StoreManager : MonoBehaviour
     public void CheckStore()
     {
         Debug.Log("Checking store");
+        inStore = true;
     }
 }

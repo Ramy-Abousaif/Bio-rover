@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
-    public Transform return_point;
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!PlayerInputManager.instance.goToStore)
+            return;
+
+        if (PlayerManager.instance.playerState == PlayerState.BOAT && other.CompareTag("Player") && !StoreManager.instance.inStore)
             StoreManager.instance.CheckStore();
     }
 }

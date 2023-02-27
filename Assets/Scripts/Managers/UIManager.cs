@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance { get; private set; }
 
+    public GameObject inGame;
+    public GameObject energyUsage;
+    public GameObject money;
     public TMP_Text moneyText;
 
     void Awake()
@@ -30,6 +33,6 @@ public class UIManager : MonoBehaviour
 
     void Setup()
     {
-        moneyText.text = "$" + GameManager.instance.money.ToString();
+        moneyText.text = GameManager.instance.money.ToString() + " Credits";
     }
 }

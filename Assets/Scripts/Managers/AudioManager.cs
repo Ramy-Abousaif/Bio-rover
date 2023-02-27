@@ -63,7 +63,8 @@ public class AudioManager : MonoBehaviour
         //masterBus.setVolume(this.masterVolume);
         //backgroundBus.setVolume(this.bgVolume);
         //sfxBus.setVolume(this.sfxVolume);
-        ambienceInstance.setParameterByName("Underwater", (Camera.main.transform.position.y > WaveManager.instance.getHeight(Camera.main.transform.position.x, Camera.main.transform.position.z)) ? 0f : 1f);
+        ambienceInstance.setParameterByName("Underwater", (Camera.main.transform.position.y >
+            WaveManager.instance.getHeight(Camera.main.transform.position.x, Camera.main.transform.position.z)) ? 0f : 1f);
         //musicInstance.setParameterByName("Scene", SceneManager.GetActiveScene().buildIndex);
     }
 

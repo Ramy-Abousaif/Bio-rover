@@ -11,6 +11,10 @@ public class PlayerInputManager : MonoBehaviour
     public float inputY;
     public bool jump;
     public bool scan;
+    public bool switchMode;
+    public bool spawnBot;
+    public bool pickUp;
+    public bool goToStore;
 
     private void Awake()
     {
@@ -38,5 +42,9 @@ public class PlayerInputManager : MonoBehaviour
         inputY = Input.GetAxis("Vertical");
         jump = Input.GetKey(KeyCode.Space);
         scan = Input.GetKeyDown(KeyCode.Q);
+        switchMode = Input.GetKeyDown(KeyCode.T);
+        spawnBot = Input.GetKeyDown(KeyCode.Alpha1);
+        pickUp = Input.GetKeyDown(KeyCode.R);
+        goToStore = Input.GetKey(KeyCode.F);
     }
 }
