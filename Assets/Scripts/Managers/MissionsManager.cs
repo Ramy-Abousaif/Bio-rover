@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MissionsManager : MonoBehaviour
 {
     public static MissionsManager instance { get; private set; }
 
+    public int selection = 0;
     public List<Mission> availableMissions;
     public List<Mission> completedMissions;
+    private TMP_Text missionText;
 
     void Awake()
     {
@@ -24,7 +27,27 @@ public class MissionsManager : MonoBehaviour
 
     private void Start()
     {
+        missionText = GameObject.Find("MissionDetails").GetComponent<TMP_Text>();
+        UpdateMissionText();
         ResetMissions();
+    }
+
+    private void Update()
+    {
+        if (availableMissions.Count > 0)
+        {
+            if (PlayerInputManager.instance.downArrow)
+            {
+                selection = (selection - 1 + availableMissions.Count) % availableMissions.Count;
+                UpdateMissionText();
+            }
+
+            if (PlayerInputManager.instance.upArrow)
+            {
+                selection = (selection + 1) % availableMissions.Count;
+                UpdateMissionText();
+            }
+        }
     }
 
     private void OnApplicationQuit()
@@ -35,6 +58,15 @@ public class MissionsManager : MonoBehaviour
     private void OnDestroy()
     {
         ResetMissions();
+    }
+
+    public void UpdateMissionText()
+    {
+        missionText.text = "";
+        foreach (var objective in availableMissions[selection].objectives)
+        {
+            missionText.text += objective.title + ": " + objective.currentProgress + "/" + objective.targetProgress + "\n";
+        }
     }
 
     public Mission GetMissionByName(string _missionName)

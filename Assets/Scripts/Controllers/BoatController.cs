@@ -21,16 +21,16 @@ public class BoatController : MonoBehaviour
     [SerializeField]
     private Transform boatCamFollow;
     [SerializeField]
-    private GameObject botRover;
+    private Transform dropPoint;
     [Header("Other")]
-    public int botCount = 0;
+    public int selection = 0;
+    public List<GameObject> storedRovers = new List<GameObject>();
+    public List<GameObject> activeRovers = new List<GameObject>();
     private float minDrag = 2f;
     [SerializeField]
     private float maxDrag = 6f;
     private float currentDrag = 6f;
     private float dragT = 0.5f;
-    private float xInput;
-    private float yInput;
     private float zRot;
     [SerializeField]
     private Motor motor;
@@ -46,13 +46,11 @@ public class BoatController : MonoBehaviour
 
     private void Update()
     {
-        this.xInput = Input.GetAxisRaw("Horizontal");
-        this.yInput = Input.GetAxisRaw("Vertical");
         this.RotateAnim();
 
         rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, transform.eulerAngles.y, rotation.eulerAngles.z);
-        if (this.yInput != 0f)
-            this.dragT += this.yInput * this.acceleration;
+        if (PlayerInputManager.instance.inputY != 0f)
+            this.dragT += PlayerInputManager.instance.inputY * this.acceleration;
         else if (this.dragT > 0.5f)
             this.dragT -= this.acceleration;
         else if (this.dragT < 0.5f)
@@ -64,17 +62,42 @@ public class BoatController : MonoBehaviour
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
         boatCamFollow.position = transform.position;
 
-        if (botCount > 0 && PlayerInputManager.instance.spawnBot)
+        ChangeSelection();
+
+        // Spawn rover
+        if (storedRovers.Count > 0 && PlayerInputManager.instance.releaseRover)
         {
-            Instantiate(botRover, PlayerManager.instance.dropPoint.position, Quaternion.identity);
-            botCount--;
+            storedRovers[selection].transform.GetChild(0).position = dropPoint.position;
+            storedRovers[selection].SetActive(true);
+            storedRovers[selection].transform.GetChild(0).GetComponent<AIController>().enabled = true;
+            activeRovers.Add(storedRovers[selection]);
+            storedRovers.Remove(storedRovers[selection]);
+
+            if(selection > 0)
+                selection--;
+        }
+    }
+
+    void ChangeSelection()
+    {
+        if (PlayerInputManager.instance.scroll > 0f)
+        {
+            selection--;
+            if (selection < 0)
+                selection = storedRovers.Count - 1;
+        }
+        else if (PlayerInputManager.instance.scroll < 0f)
+        {
+            selection++;
+            if (selection >= storedRovers.Count)
+                selection = 0;
         }
     }
 
     private void RotateAnim()
     {
         float interpolationRatio = ((float)elapsedFrames / interpolationFramesCount) * 0.025f;
-        this.zRot = Mathf.Clamp(this.xInput * this.angularSpeed * Time.deltaTime, -25f, 25f);
+        this.zRot = Mathf.Clamp(PlayerInputManager.instance.inputX * this.angularSpeed * Time.deltaTime, -25f, 25f);
         this.mesh.transform.localRotation = Quaternion.Slerp(this.mesh.transform.localRotation,
             Quaternion.Euler(this.mesh.transform.localRotation.x, this.mesh.transform.localRotation.y, this.zRot), interpolationRatio);
     }
@@ -93,14 +116,14 @@ public class BoatController : MonoBehaviour
     private void Movement()
     {
         this.rb.velocity = Vector3.zero;
-        float d = (Mathf.Abs(this.xInput) > 0f) ? (this.speed * this.turningResponsiveness) : this.speed;
+        float d = (Mathf.Abs(PlayerInputManager.instance.inputX) > 0f) ? (this.speed * this.turningResponsiveness) : this.speed;
         this.rb.AddForce(this.rotation.forward * d * this.currentDrag, ForceMode.VelocityChange);
     }
 
     private void Rotation()
     {
         if (Mathf.Sqrt((this.rb.velocity.x * this.rb.velocity.x) + (this.rb.velocity.z * this.rb.velocity.z)) > 20.0f)
-            this.rb.AddTorque(base.transform.up * this.angularSpeed * this.xInput);
+            this.rb.AddTorque(base.transform.up * this.angularSpeed * PlayerInputManager.instance.inputX);
     }
 
     private void OnTriggerStay(Collider other)
@@ -110,17 +133,9 @@ public class BoatController : MonoBehaviour
 
         if (other.CompareTag("Rover") && PlayerManager.instance.playerState == PlayerState.BOAT)
         {
-            GameObject rover = other.transform.gameObject;
-            PlayerManager.instance.currentRover = rover;
-            PlayerManager.instance.currentRover.transform.position = PlayerManager.instance.dropPoint.position;
-            rover.transform.SetParent(PlayerManager.instance.dropPoint);
-            rover.SetActive(false);
-        }
-
-        if (other.CompareTag("Bot") && PlayerManager.instance.playerState == PlayerState.BOAT)
-        {
-            Destroy(other.gameObject);
-            botCount++;
+            storedRovers.Add(other.transform.parent.gameObject);
+            activeRovers.Remove(other.transform.gameObject);
+            other.transform.parent.gameObject.SetActive(false);
         }
     }
 

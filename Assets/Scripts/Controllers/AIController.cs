@@ -55,8 +55,6 @@ public class AIController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         sc = GetComponent<SphereCollider>();
         scanTimer = scanCooldown;
@@ -331,6 +329,15 @@ public class AIController : MonoBehaviour
         else
         {
             p.Release(this);
+        }
+    }
+
+    private void OnEnable()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(PlayerManager.instance.boat.transform.position, Vector3.down, out hit, Mathf.Infinity, ground))
+        {
+            targetPos.position = hit.point;
         }
     }
 }

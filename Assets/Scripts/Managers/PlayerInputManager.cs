@@ -9,10 +9,15 @@ public class PlayerInputManager : MonoBehaviour
     // Inputs
     public float inputX;
     public float inputY;
+    public float scroll;
+    public bool leftArrow;
+    public bool rightArrow;
+    public bool upArrow;
+    public bool downArrow;
     public bool jump;
     public bool scan;
     public bool switchMode;
-    public bool spawnBot;
+    public bool releaseRover;
     public bool pickUp;
     public bool goToStore;
     public bool changeSize;
@@ -39,12 +44,17 @@ public class PlayerInputManager : MonoBehaviour
 
     void UpdateInput()
     {
-        inputX = Input.GetAxis("Horizontal");
-        inputY = Input.GetAxis("Vertical");
+        inputX = Input.GetAxisRaw("Horizontal");
+        inputY = Input.GetAxisRaw("Vertical");
+        scroll = Input.GetAxis("Mouse ScrollWheel");
+        leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
+        rightArrow = Input.GetKeyDown(KeyCode.RightArrow);
+        upArrow = Input.GetKeyDown(KeyCode.UpArrow);
+        downArrow = Input.GetKeyDown(KeyCode.DownArrow);
         jump = Input.GetKey(KeyCode.Space);
         scan = Input.GetKeyDown(KeyCode.Q);
         switchMode = Input.GetKeyDown(KeyCode.T);
-        spawnBot = Input.GetKeyDown(KeyCode.Alpha1);
+        releaseRover = Input.GetKeyDown(KeyCode.Z);
         pickUp = Input.GetKeyDown(KeyCode.R);
         goToStore = Input.GetKey(KeyCode.F);
         changeSize = Input.GetKeyDown(KeyCode.E);

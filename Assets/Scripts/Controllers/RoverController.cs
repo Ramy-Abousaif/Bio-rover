@@ -9,6 +9,7 @@ public class RoverController : MonoBehaviour
     private CinemachineImpulseSource impulse;
     private Rigidbody rb;
     private SphereCollider sc;
+    public GameObject UIBall;
     public Transform followCam;
     public GameObject draw;
     [SerializeField]
@@ -46,8 +47,7 @@ public class RoverController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        energyLevels = GameObject.Find("EnergyText").GetComponent<TMP_Text>();
         impulse = GetComponent<CinemachineImpulseSource>();
         rb = GetComponent<Rigidbody>();
         sc = GetComponent<SphereCollider>();

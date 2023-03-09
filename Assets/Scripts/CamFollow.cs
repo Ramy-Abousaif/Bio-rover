@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
-    public GameObject boat;
-    public GameObject rover;
+    private GameObject boat;
     public GameObject waterLens;
+
+    private void Start()
+    {
+        boat = PlayerManager.instance.boat;
+    }
 
     void Update()
     {
@@ -21,7 +25,8 @@ public class CamFollow : MonoBehaviour
                 transform.position = boat.transform.position;
                 break;
             case PlayerState.ROVER:
-                transform.position = rover.transform.position;
+                transform.position = PlayerManager.instance.currentRover.transform.position;
+                PlayerManager.instance.rc.followCam = transform;
                 transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y, 0);
                 break;
             default:

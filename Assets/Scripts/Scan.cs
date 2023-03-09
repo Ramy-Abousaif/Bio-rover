@@ -34,7 +34,7 @@ public class Scan : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
         {
-            if(other.GetComponent<Renderer>().material.GetInt("_isHighlighted") == 0)
+            if(other.GetComponent<Renderer>().materials[1].GetInt("_isHighlighted") == 0)
             {
                 if (MissionsManager.instance.GetMissionByName("Scan All Plants").GetObjectiveByTitle("Scan All Plants").currentProgress <
                         MissionsManager.instance.GetMissionByName("Scan All Plants").GetObjectiveByTitle("Scan All Plants").targetProgress)
@@ -49,7 +49,7 @@ public class Scan : MonoBehaviour
                 UIManager.instance.moneyText.text = GameManager.instance.money.ToString() + " Credits";
             }
 
-            other.GetComponent<Renderer>().material.SetInt("_isHighlighted", 1);
+            other.GetComponent<Renderer>().materials[1].SetInt("_isHighlighted", 1);
         }
     }
 }

@@ -18,11 +18,11 @@ public class PlayerManager : MonoBehaviour
     public Camera playerCam;
     public CinemachineVirtualCamera boatVCam;
     public CinemachineFreeLook roverVCam;
+    public int roverIndex = 0;
     public GameObject currentRover;
     public GameObject boat;
     public RoverController rc;
     public BoatController bc;
-    public Transform dropPoint;
 
     void Awake()
     {
@@ -46,12 +46,34 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerInputManager.instance.switchMode)
+        switch(playerState)
         {
-            if (playerState == PlayerState.BOAT && currentRover != null)
-                ChangePlayerState(PlayerState.ROVER);
-            else
-                ChangePlayerState(PlayerState.BOAT);
+            case PlayerState.BOAT:
+
+                ChangeRover();
+
+                if (PlayerInputManager.instance.switchMode && bc.activeRovers.Count > 0)
+                    ChangePlayerState(PlayerState.ROVER);
+
+                break;
+            case PlayerState.ROVER:
+
+                if(PlayerInputManager.instance.switchMode)
+                    ChangePlayerState(PlayerState.BOAT);
+
+                break;
+        }
+    }
+
+    void ChangeRover()
+    {
+        if(bc.activeRovers.Count > 0)
+        {
+            if (PlayerInputManager.instance.leftArrow)
+                roverIndex = (roverIndex - 1 + bc.activeRovers.Count) % bc.activeRovers.Count;
+
+            if (PlayerInputManager.instance.rightArrow)
+                roverIndex = (roverIndex + 1) % bc.activeRovers.Count;
         }
     }
 
@@ -65,22 +87,35 @@ public class PlayerManager : MonoBehaviour
     {
         playerState = state;
 
+        // Change to boat
         if (state == PlayerState.BOAT)
         {
             UIManager.instance.energyUsage.SetActive(false);
             bc.enabled = true;
-            rc.enabled = false;
+
+            if(currentRover != null)
+                currentRover.GetComponent<AIController>().enabled = true;
+
+            if (rc != null)
+            {
+                rc.UIBall.SetActive(false);
+                rc.enabled = false;
+            }
+
             boatVCam.gameObject.SetActive(true);
             roverVCam.gameObject.SetActive(false);
         }
 
-        if (state == PlayerState.ROVER && currentRover != null)
+        // Change to rover
+        if (state == PlayerState.ROVER && bc.activeRovers.Count > 0)
         {
             UIManager.instance.energyUsage.SetActive(true);
+            currentRover = bc.activeRovers[roverIndex].transform.GetChild(0).gameObject;
+            rc = currentRover.GetComponent<RoverController>();
+            currentRover.GetComponent<AIController>().enabled = false;
             bc.enabled = false;
-            currentRover.transform.SetParent(transform);
-            currentRover.SetActive(true);
             rc.enabled = true;
+            rc.UIBall.SetActive(true);
             boatVCam.gameObject.SetActive(false);
             roverVCam.gameObject.SetActive(true);
         }

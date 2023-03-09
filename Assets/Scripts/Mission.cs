@@ -40,6 +40,8 @@ public class Mission : ScriptableObject
 
     public bool CheckCompletion()
     {
+        MissionsManager.instance.UpdateMissionText();
+
         foreach (Objective objective in objectives)
         {
             if (objective.currentProgress >= objective.targetProgress)
