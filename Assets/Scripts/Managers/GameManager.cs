@@ -15,9 +15,7 @@ public class GameManager : MonoBehaviour
 
     public Gamestate gameState = Gamestate.IN_GAME;
 
-    public int money = 0;
-    public int scanned_objs = 0;
-    public int bot_count = 0;
+    public int credits = 0;
 
     void Awake()
     {
@@ -43,7 +41,6 @@ public class GameManager : MonoBehaviour
 
     void Setup()
     {
-        money = 0;
-        bot_count = 0;
+        StoreManager.instance.AddCredit(50);
     }
 }

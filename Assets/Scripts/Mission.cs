@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Mission", menuName = "Mission")]
+[CreateAssetMenu(fileName = "New Mission", menuName = "Scriptable Objects/Mission")]
 public class Mission : ScriptableObject
 {
     public enum MissionType
@@ -24,7 +24,7 @@ public class Mission : ScriptableObject
     public string title;
     public MissionType type;
     [TextArea] public string description;
-    public int moneyReward;
+    public int creditsReward;
     public List<Objective> objectives;
     public bool completed = false;
 
@@ -54,7 +54,7 @@ public class Mission : ScriptableObject
         if(!completed)
         {
             MissionsManager.instance.completedMissions.Add(this);
-            GameManager.instance.money += moneyReward;
+            StoreManager.instance.AddCredit(creditsReward);
             completed = true;
         }
 

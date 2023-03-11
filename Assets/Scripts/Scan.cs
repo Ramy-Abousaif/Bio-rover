@@ -44,9 +44,7 @@ public class Scan : MonoBehaviour
 
                 MissionsManager.instance.GetMissionByName("Scan All Plants").CheckCompletion();
 
-                GameManager.instance.scanned_objs++;
-                GameManager.instance.money += 10;
-                UIManager.instance.moneyText.text = GameManager.instance.money.ToString() + " Credits";
+                StoreManager.instance.AddCredit(10);
             }
 
             other.GetComponent<Renderer>().materials[1].SetInt("_isHighlighted", 1);

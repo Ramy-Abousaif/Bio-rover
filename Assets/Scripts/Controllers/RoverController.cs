@@ -47,7 +47,7 @@ public class RoverController : MonoBehaviour
 
     private void Start()
     {
-        energyLevels = GameObject.Find("EnergyText").GetComponent<TMP_Text>();
+        energyLevels = GameObject.Find("EnergyTxt").GetComponent<TMP_Text>();
         impulse = GetComponent<CinemachineImpulseSource>();
         rb = GetComponent<Rigidbody>();
         sc = GetComponent<SphereCollider>();

@@ -9,8 +9,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject inGame;
     public GameObject energyUsage;
-    public GameObject money;
-    public TMP_Text moneyText;
+    public TMP_Text creditsText;
 
     void Awake()
     {
@@ -33,6 +32,6 @@ public class UIManager : MonoBehaviour
 
     void Setup()
     {
-        moneyText.text = GameManager.instance.money.ToString() + " Credits";
+        creditsText.text = GameManager.instance.credits.ToString() + " Credits";
     }
 }
