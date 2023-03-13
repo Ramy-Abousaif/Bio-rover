@@ -131,7 +131,7 @@ public class BoatController : MonoBehaviour
         if (!PlayerInputManager.instance.pickUp)
             return;
 
-        if (other.CompareTag("Rover") && PlayerManager.instance.playerState == PlayerState.BOAT)
+        if (other.CompareTag("Rover"))
             TakeRover(other.gameObject);
     }
 

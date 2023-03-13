@@ -21,6 +21,19 @@ public class StoreTemplate : MonoBehaviour
                 break;
             case 1:
                 GameManager.instance.sonarUpgrade++;
+
+                if(PlayerManager.instance.bc.activeRovers != null || PlayerManager.instance.bc.activeRovers.Count != 0)
+                {
+                    foreach (var rover in PlayerManager.instance.bc.activeRovers)
+                        rover.transform.GetChild(0).GetComponent<AIController>().aiScan.transform.GetComponent<SphereCollider>().radius = 20 + (20 * GameManager.instance.sonarUpgrade);
+                }
+
+                if (PlayerManager.instance.bc.storedRovers != null || PlayerManager.instance.bc.storedRovers.Count != 0)
+                {
+                    foreach (var rover in PlayerManager.instance.bc.storedRovers)
+                        rover.transform.GetChild(0).GetComponent<AIController>().aiScan.transform.GetComponent<SphereCollider>().radius = 20 + (20 * GameManager.instance.sonarUpgrade);
+                }
+
                 StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.sonarUpgrade;
                 break;
             case 2:

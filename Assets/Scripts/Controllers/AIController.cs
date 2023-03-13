@@ -16,22 +16,9 @@ public class AIController : MonoBehaviour
 
     public LayerMask ground;
     private bool isGrounded = false;
-    private float scanCooldown = 2.0f;
-    private float scanTimer = 0.0f;
     private Vector3 moveDir;
-    private float maxSlope = 45f;
-    private float minSlope = 12.5f;
-    private float slopeLimit = 12.5f;
-
-    private float initialRadius = 1.5f;
-    private float targetRadius = 3f;
-    private Vector3 initialSize = new Vector3(3, 3, 3);
-    private Vector3 targetSize = new Vector3(6, 6, 6);
-    private float sizeShiftTime = 1.5f;
-    private bool isChangingSize = false;
 
     public GameObject smokeRing;
-    public GameObject scanner;
     private float landSpeed;
     private float currentSpeed;
     private float prevSpeed;
@@ -41,6 +28,7 @@ public class AIController : MonoBehaviour
     // AI STUFF
     private Seeker seeker;
     public Transform targetPos;
+    public AIScan aiScan;
     public Path path;
     public float speed = 2;
     public float nextWaypointDistance = 3;
@@ -57,9 +45,6 @@ public class AIController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         sc = GetComponent<SphereCollider>();
-        scanTimer = scanCooldown;
-        sc.radius = initialRadius;
-        draw.transform.localScale = initialSize;
         seeker = GetComponent<Seeker>();
         grid = AstarPath.active.data.gridGraph;
     }
@@ -78,13 +63,7 @@ public class AIController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.E) && !isChangingSize && GameManager.instance.expandUpgrade >= 1)
-            StartCoroutine(ChangeSize());
-
         floater.active = PlayerInputManager.instance.jump && ableToFloat;
-
-        //Slope();
-        Scan();
     }
 
     void FixedUpdate()
@@ -92,72 +71,7 @@ public class AIController : MonoBehaviour
         if (rb == null)
             return;
 
-        if (isChangingSize)
-            return;
-
         AIMovement();
-    }
-
-    void Slope()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, sc.radius + 1f, ground))
-        {
-            if ((Vector3.Angle(Vector3.up, hit.normal)) > slopeLimit + 0.1f)
-            {
-                var left = Vector3.Cross(hit.normal, Vector3.up);
-                var slope = Vector3.Cross(hit.normal, left);
-                rb.AddForce(slope * 50f * rb.mass);
-            }
-        }
-    }
-
-    void Scan()
-    {
-        scanTimer += Time.deltaTime;
-        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
-        {
-            Instantiate(scanner, transform.position, Quaternion.identity);
-            AudioManager.instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            scanTimer = 0.0f;
-        }
-    }
-
-    IEnumerator ChangeSize()
-    {
-        isChangingSize = true;
-        float time = 0f;
-
-        if (initialRadius > targetRadius)
-        {
-            AudioManager.instance.PlayOneShotWithParameters("Deflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            slopeLimit = minSlope;
-        }
-        else
-        {
-            AudioManager.instance.PlayOneShotWithParameters("Inflate", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
-            slopeLimit = maxSlope;
-        }
-
-        while (time < sizeShiftTime)
-        {
-            float newRadius = Mathf.Lerp(initialRadius, targetRadius, time / sizeShiftTime);
-            Vector3 newSize = Vector3.Lerp(initialSize, targetSize, time / sizeShiftTime);
-            sc.radius = newRadius;
-            draw.transform.localScale = newSize;
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        Vector3 tempSize = initialSize;
-        initialSize = targetSize;
-        targetSize = tempSize;
-
-        float tempRadius = initialRadius;
-        initialRadius = targetRadius;
-        targetRadius = tempRadius;
-
-        isChangingSize = false;
     }
 
     // Calculates the energy usage for each marimo based on the direction in which the ball should move
@@ -295,12 +209,7 @@ public class AIController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (landSpeed > 9f || prevSpeed > 10f)
-        {
-            Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up ,collision.contacts[0].normal));
-        }
-
-        if (!isChangingSize)
-            AudioManager.instance.PlayOneShotWithParameters("BallLand", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+            Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up, collision.contacts[0].normal));
     }
 
     private void FindNewTarget()
@@ -334,10 +243,16 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
+        aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;
         if (Physics.Raycast(PlayerManager.instance.boat.transform.position, Vector3.down, out hit, Mathf.Infinity, ground))
         {
             targetPos.position = hit.point;
         }
+    }
+
+    private void OnDisable()
+    {
+        aiScan.transform.gameObject.SetActive(false);
     }
 }

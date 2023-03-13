@@ -160,6 +160,65 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1123234891619114081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8320681808939255438}
+  - component: {fileID: 8685325363894576059}
+  - component: {fileID: 6878646380389287012}
+  m_Layer: 3
+  m_Name: ScanArea
+  m_TagString: ScanArea
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8320681808939255438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123234891619114081}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2673469575641101216}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8685325363894576059
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123234891619114081}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 20
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6878646380389287012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123234891619114081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8c74e11325d164fbcecc77d0fecab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanner: {fileID: 3691125880041633730, guid: 534b822f778ebb14ab3075a2870b6ffe, type: 3}
 --- !u!1 &1977118106550971429
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +667,7 @@ Transform:
   - {fileID: 2673469575351778890}
   - {fileID: 1040304749289534181}
   - {fileID: 3539410159032985462}
+  - {fileID: 8320681808939255438}
   m_Father: {fileID: 1946583155376998654}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -773,9 +833,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3
   smokeRing: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
-  scanner: {fileID: 3691125880041633730, guid: 534b822f778ebb14ab3075a2870b6ffe, type: 3}
   targetPos: {fileID: 4378583711251243889}
-  speed: 5
+  aiScan: {fileID: 6878646380389287012}
+  speed: 20
   nextWaypointDistance: 3
   reachedEndOfPath: 0
   repathRate: 0.5
