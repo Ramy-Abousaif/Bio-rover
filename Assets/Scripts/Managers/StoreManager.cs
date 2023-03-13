@@ -67,11 +67,15 @@ public class StoreManager : MonoBehaviour
 
         for (int i = 0; i < storeItems.Length; i++)
         {
+            storePanels[i].UpdateProgress(i);
+
             if (GameManager.instance.credits >= storeItems[i].baseCost && storeItems[i].currentProgress < storeItems[i].capacity)
                 purchaseBtns[i].interactable = true;
             else
                 purchaseBtns[i].interactable = false;
         }
+
+        LoadPanels();
     }
 
     public void PurchaseItem(int btnNo)

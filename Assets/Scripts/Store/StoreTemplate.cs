@@ -10,6 +10,25 @@ public class StoreTemplate : MonoBehaviour
     public TMP_Text costTxt;
     public TMP_Text capacityTxt;
 
+    public void UpdateProgress(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                StoreManager.instance.storeItems[id].currentProgress = PlayerManager.instance.bc.storedRovers.Count + PlayerManager.instance.bc.activeRovers.Count;
+                break;
+            case 1:
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.sonarUpgrade;
+                break;
+            case 2:
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.expandUpgrade;
+                break;
+            case 3:
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.explosionUpgrade;
+                break;
+        }
+    }
+
     public void Effect(int id)
     {
         switch(id)

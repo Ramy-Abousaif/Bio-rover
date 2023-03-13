@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SonarUpgrade
   m_EditorClassIdentifier: 
   title: Sonar Upgrade
-  description: Upgrade your sonar to increase the are of which you can scan objects
+  description: Upgrade your sonar to increase the area of which you can scan objects
+    and increase the AI bots' area of detection
   baseCost: 100
+  currentProgress: 0
   capacity: 5
