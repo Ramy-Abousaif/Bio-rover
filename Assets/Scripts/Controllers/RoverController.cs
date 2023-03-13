@@ -77,7 +77,7 @@ public class RoverController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (PlayerInputManager.instance.changeSize && !isChangingSize)
+        if (PlayerInputManager.instance.changeSize && !isChangingSize && GameManager.instance.expandUpgrade >= 1)
             StartCoroutine(ChangeSize());
 
         floater.active = PlayerInputManager.instance.jump && ableToFloat;

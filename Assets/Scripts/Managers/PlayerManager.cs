@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector]
     public PlayerState playerState;
+    public GameObject roverPrefab;
     public Camera playerCam;
     public CinemachineVirtualCamera boatVCam;
     public CinemachineFreeLook roverVCam;

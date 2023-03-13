@@ -5,7 +5,7 @@ using UnityEngine;
 public class Scan : MonoBehaviour
 {
     public float speed = 5.0f;
-    public float duration = 5.0f;
+    private float duration = 1.0f;
     private float fadeDuration = 1.0f;
     private float timeElapsed = 0.0f;
     private Material mat;
@@ -13,7 +13,7 @@ public class Scan : MonoBehaviour
     void Start()
     {
         mat = this.gameObject.GetComponent<Renderer>().material;
-        Destroy(gameObject, duration);
+        Destroy(gameObject, (duration + GameManager.instance.sonarUpgrade));
     }
 
     void Update()
@@ -21,7 +21,7 @@ public class Scan : MonoBehaviour
         float expand = speed * Time.deltaTime;
         transform.localScale = new Vector3(transform.localScale.x + expand, transform.localScale.y + expand, transform.localScale.z + expand);
 
-        if(timeElapsed > duration - fadeDuration)
+        if(timeElapsed > (duration + GameManager.instance.sonarUpgrade) - fadeDuration)
         {
             mat.SetFloat("_Alpha", fadeDuration);
             fadeDuration -= Time.deltaTime;

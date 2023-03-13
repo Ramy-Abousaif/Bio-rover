@@ -9,4 +9,28 @@ public class StoreTemplate : MonoBehaviour
     public TMP_Text descriptionTxt;
     public TMP_Text costTxt;
     public TMP_Text capacityTxt;
+
+    public void Effect(int id)
+    {
+        switch(id)
+        {
+            case 0:
+                GameObject roverInstance = Instantiate(PlayerManager.instance.roverPrefab, transform.position, Quaternion.identity);
+                PlayerManager.instance.bc.TakeRover(roverInstance.transform.GetChild(0).gameObject);
+                StoreManager.instance.storeItems[id].currentProgress = PlayerManager.instance.bc.storedRovers.Count + PlayerManager.instance.bc.activeRovers.Count;
+                break;
+            case 1:
+                GameManager.instance.sonarUpgrade++;
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.sonarUpgrade;
+                break;
+            case 2:
+                GameManager.instance.expandUpgrade++;
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.expandUpgrade;
+                break;
+            case 3:
+                GameManager.instance.explosionUpgrade++;
+                StoreManager.instance.storeItems[id].currentProgress = GameManager.instance.explosionUpgrade;
+                break;
+        }
+    }
 }

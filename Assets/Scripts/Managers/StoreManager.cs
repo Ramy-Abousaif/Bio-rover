@@ -32,6 +32,8 @@ public class StoreManager : MonoBehaviour
 
     private void Start()
     {
+        StoreReset();
+
         for (int i = 0; i < storePanels.Length; i++)
             storePanelsGO[i].SetActive(true);
 
@@ -47,7 +49,7 @@ public class StoreManager : MonoBehaviour
             storePanels[i].titleTxt.text = storeItems[i].title;
             storePanels[i].descriptionTxt.text = storeItems[i].description;
             storePanels[i].costTxt.text = storeItems[i].baseCost.ToString() + " Credits";
-            storePanels[i].capacityTxt.text = storeItems[i].capacity.ToString();
+            storePanels[i].capacityTxt.text = storeItems[i].currentProgress + "/" + storeItems[i].capacity.ToString();
         }
     }
 
@@ -61,9 +63,11 @@ public class StoreManager : MonoBehaviour
 
     public void CheckPurchasable()
     {
+        creditsUI.text = "Credits: " + GameManager.instance.credits.ToString();
+
         for (int i = 0; i < storeItems.Length; i++)
         {
-            if (GameManager.instance.credits >= storeItems[i].baseCost)
+            if (GameManager.instance.credits >= storeItems[i].baseCost && storeItems[i].currentProgress < storeItems[i].capacity)
                 purchaseBtns[i].interactable = true;
             else
                 purchaseBtns[i].interactable = false;
@@ -77,14 +81,16 @@ public class StoreManager : MonoBehaviour
             GameManager.instance.credits -= storeItems[btnNo].baseCost;
             creditsUI.text = "Credits: " + GameManager.instance.credits.ToString();
             UIManager.instance.creditsText.text = GameManager.instance.credits.ToString() + " Credits";
+            storePanels[btnNo].Effect(btnNo);
             CheckPurchasable();
-            // Trigger unique function here
+            storePanels[btnNo].capacityTxt.text = storeItems[btnNo].currentProgress + "/" + storeItems[btnNo].capacity.ToString();
         }
     }
 
     public void CheckStore()
     {
         inStore = true;
+        PlayerManager.instance.bc.enabled = false;
         store.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -94,8 +100,22 @@ public class StoreManager : MonoBehaviour
     public void ExitStore()
     {
         inStore = false;
+        PlayerManager.instance.bc.enabled = true;
         store.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnApplicationQuit()
+    {
+        StoreReset();
+    }
+
+    public void StoreReset()
+    {
+        foreach (var item in storeItems)
+        {
+            item.currentProgress = 0;
+        }
     }
 }

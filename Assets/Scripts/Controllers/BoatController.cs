@@ -132,11 +132,14 @@ public class BoatController : MonoBehaviour
             return;
 
         if (other.CompareTag("Rover") && PlayerManager.instance.playerState == PlayerState.BOAT)
-        {
-            storedRovers.Add(other.transform.parent.gameObject);
-            activeRovers.Remove(other.transform.gameObject);
-            other.transform.parent.gameObject.SetActive(false);
-        }
+            TakeRover(other.gameObject);
+    }
+
+    public void TakeRover(GameObject rover)
+    {
+        storedRovers.Add(rover.transform.parent.gameObject);
+        activeRovers.Remove(rover.transform.gameObject);
+        rover.transform.parent.gameObject.SetActive(false);
     }
 
     private void OnEnable()

@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public Gamestate gameState = Gamestate.IN_GAME;
 
     public int credits = 0;
+    public int sonarUpgrade = 0;
+    public int explosionUpgrade = 0;
+    public int expandUpgrade = 0;
 
     void Awake()
     {
@@ -41,6 +44,10 @@ public class GameManager : MonoBehaviour
 
     void Setup()
     {
+        credits = 0;
+        sonarUpgrade = 0;
+        explosionUpgrade = 0;
+        expandUpgrade = 0;
         StoreManager.instance.AddCredit(50);
     }
 }

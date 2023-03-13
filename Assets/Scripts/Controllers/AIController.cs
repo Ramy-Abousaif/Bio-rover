@@ -78,7 +78,7 @@ public class AIController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.E) && !isChangingSize)
+        if (Input.GetKeyDown(KeyCode.E) && !isChangingSize && GameManager.instance.expandUpgrade >= 1)
             StartCoroutine(ChangeSize());
 
         floater.active = PlayerInputManager.instance.jump && ableToFloat;

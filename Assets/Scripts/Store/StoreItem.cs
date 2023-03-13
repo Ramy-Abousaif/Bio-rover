@@ -8,5 +8,6 @@ public class StoreItem : ScriptableObject
     public string title;
     public string description;
     public int baseCost;
+    public int currentProgress;
     public int capacity;
 }
