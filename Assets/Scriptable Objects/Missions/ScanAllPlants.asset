@@ -15,10 +15,10 @@ MonoBehaviour:
   title: Scan All Plants
   type: 2
   description: Scan nearby plants to see if they have any traces of chemicals
-  moneyReward: 100
+  creditsReward: 1000
   objectives:
   - title: Scan All Plants
-    completed: 1
-    currentProgress: 15
+    completed: 0
+    currentProgress: 0
     targetProgress: 15
-  completed: 1
+  completed: 0
