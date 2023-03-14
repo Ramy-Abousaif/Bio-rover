@@ -25,7 +25,7 @@ public class MissionsManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Setup()
     {
         missionText = GameObject.Find("MissionDetails").GetComponent<TMP_Text>();
         UpdateMissionText();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Gamestate
 {
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
-    public Gamestate gameState = Gamestate.IN_GAME;
+    public Gamestate gameState = Gamestate.MENU;
 
     public int credits = 0;
     public int sonarUpgrade = 0;
@@ -22,9 +23,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         if (instance == null)
         {
             instance = this;
@@ -37,17 +35,80 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        Setup();
-    }
 
     void Setup()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         credits = 0;
         sonarUpgrade = 0;
         explosionUpgrade = 0;
         expandUpgrade = 0;
         StoreManager.instance.AddCredit(50);
+    }
+
+    float currentProgress = 0;
+    IEnumerator LoadSceneAsync(string sceneIndex, Gamestate _gameState)
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        UIManager.instance.progressBar.fillAmount = 0;
+        gameState = Gamestate.LOADING;
+
+        UIManager.instance.loadingScreen.SetActive(true);
+        var scene = SceneManager.LoadSceneAsync(sceneIndex);
+
+        while (!scene.isDone)
+        {
+            float progress = Mathf.Clamp01(scene.progress / 0.9f);
+            currentProgress = progress;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.4f);
+        UIManager.instance.loadingScreen.SetActive(false);
+        gameState = _gameState;
+
+        switch (gameState)
+        {
+            case Gamestate.MENU:
+                UIManager.instance.mainMenu.SetActive(true);
+                UIManager.instance.inGame.SetActive(false);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case Gamestate.LOADING:
+                break;
+            case Gamestate.IN_GAME:
+                UIManager.instance.mainMenu.SetActive(false);
+                UIManager.instance.inGame.SetActive(true);
+                Setup();
+                MissionsManager.instance.Setup();
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        switch (gameState)
+        {
+            case Gamestate.MENU:
+                break;
+            case Gamestate.LOADING:
+                UIManager.instance.progressBar.fillAmount = currentProgress;
+                break;
+            case Gamestate.IN_GAME:
+                break;
+        }
+    }
+
+    public void PlayGame()
+    {
+        StartCoroutine(LoadSceneAsync("GameScene", Gamestate.IN_GAME));
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
