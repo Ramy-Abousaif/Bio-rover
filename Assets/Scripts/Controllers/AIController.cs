@@ -49,11 +49,12 @@ public class AIController : MonoBehaviour
         grid = AstarPath.active.data.gridGraph;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
+        if (rb == null)
+            return;
 
-        repathTimer += Time.deltaTime;
+        float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
 
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
@@ -64,12 +65,6 @@ public class AIController : MonoBehaviour
             landSpeed = Mathf.Abs(rb.velocity.y);
 
         floater.active = PlayerInputManager.instance.jump && ableToFloat;
-    }
-
-    void FixedUpdate()
-    {
-        if (rb == null)
-            return;
 
         AIMovement();
     }
@@ -159,9 +154,9 @@ public class AIController : MonoBehaviour
             return;
         }
 
-        if (repathTimer >= forceRepath)
+        if (Time.time > repathTimer + forceRepath)
         {
-            repathTimer = 0.0f;
+            repathTimer = Time.time;
             FindNewTarget();
         }
 

@@ -92,6 +92,7 @@ public class PlayerManager : MonoBehaviour
         if (state == PlayerState.BOAT)
         {
             UIManager.instance.energyUsage.SetActive(false);
+            UIManager.instance.miniMap.SetActive(true);
             bc.enabled = true;
 
             if(currentRover != null)
@@ -111,6 +112,7 @@ public class PlayerManager : MonoBehaviour
         if (state == PlayerState.ROVER && bc.activeRovers.Count > 0)
         {
             UIManager.instance.energyUsage.SetActive(true);
+            UIManager.instance.miniMap.SetActive(false);
             currentRover = bc.activeRovers[roverIndex].transform.GetChild(0).gameObject;
             rc = currentRover.GetComponent<RoverController>();
             currentRover.GetComponent<AIController>().enabled = false;
