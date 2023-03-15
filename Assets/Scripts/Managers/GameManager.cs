@@ -35,17 +35,36 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        Setup();
+    }
 
     void Setup()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        credits = 0;
-        sonarUpgrade = 0;
-        explosionUpgrade = 0;
-        expandUpgrade = 0;
-        StoreManager.instance.AddCredit(50);
+        switch (gameState)
+        {
+            case Gamestate.MENU:
+                UIManager.instance.mainMenu.SetActive(true);
+                UIManager.instance.inGame.SetActive(false);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+            case Gamestate.LOADING:
+                break;
+            case Gamestate.IN_GAME:
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                UIManager.instance.mainMenu.SetActive(false);
+                UIManager.instance.inGame.SetActive(true);
+                credits = 0;
+                sonarUpgrade = 0;
+                explosionUpgrade = 0;
+                expandUpgrade = 0;
+                StoreManager.instance.AddCredit(50);
+                MissionsManager.instance.Setup();
+                break;
+        }
     }
 
     float currentProgress = 0;
@@ -68,24 +87,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         UIManager.instance.loadingScreen.SetActive(false);
         gameState = _gameState;
-
-        switch (gameState)
-        {
-            case Gamestate.MENU:
-                UIManager.instance.mainMenu.SetActive(true);
-                UIManager.instance.inGame.SetActive(false);
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                break;
-            case Gamestate.LOADING:
-                break;
-            case Gamestate.IN_GAME:
-                UIManager.instance.mainMenu.SetActive(false);
-                UIManager.instance.inGame.SetActive(true);
-                Setup();
-                MissionsManager.instance.Setup();
-                break;
-        }
+        Setup();
     }
 
     private void Update()
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
                 UIManager.instance.progressBar.fillAmount = currentProgress;
                 break;
             case Gamestate.IN_GAME:
+                if (PlayerInputManager.instance.pause)
+                    UIManager.instance.Pause();
                 break;
         }
     }
@@ -110,5 +114,11 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ReturnToMenu()
+    {
+        StartCoroutine(LoadSceneAsync("MainMenu", Gamestate.MENU));
+        UIManager.instance.Resume();
     }
 }

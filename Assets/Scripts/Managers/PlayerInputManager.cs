@@ -21,6 +21,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool pickUp;
     public bool goToStore;
     public bool changeSize;
+    public bool pause;
 
     private void Awake()
     {
@@ -58,5 +59,6 @@ public class PlayerInputManager : MonoBehaviour
         pickUp = Input.GetKeyDown(KeyCode.R);
         goToStore = Input.GetKey(KeyCode.F);
         changeSize = Input.GetKeyDown(KeyCode.E);
+        pause = Input.GetKeyDown(KeyCode.Escape);
     }
 }
