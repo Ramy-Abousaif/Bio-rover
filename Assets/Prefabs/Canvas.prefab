@@ -140,6 +140,42 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 217}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1636556419369174447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4413599554269911197}
+  m_Layer: 5
+  m_Name: CreditAddTextPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4413599554269911197
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636556419369174447}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4229415266258943930}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -824, y: 277}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2148279491211167454
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: -60}
+  m_AnchoredPosition: {x: 600, y: -40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3869585297871434515
@@ -1042,6 +1078,7 @@ RectTransform:
   - {fileID: 4229415266886546121}
   - {fileID: 4229415265932716754}
   - {fileID: 4229415265430884559}
+  - {fileID: 4413599554269911197}
   - {fileID: 2279419727650734941}
   - {fileID: 2318767588260913856}
   - {fileID: 3957145519679447956}
@@ -1708,8 +1745,10 @@ MonoBehaviour:
   miniMap: {fileID: 6162814338782277569}
   energyUsage: {fileID: 4229415266886546120}
   creditsText: {fileID: 4229415265932716755}
-  floatingTextPrefab: {fileID: 8149874630822725422, guid: f08f59bfab7d1424aa5ee9e65d517802, type: 3}
-  floatTextPos: {fileID: 2279419727650734941}
+  scanTextPrefab: {fileID: 2867761392654621849, guid: 50ae3599d36c2f546b7b794840c11f10, type: 3}
+  scanTextPos: {fileID: 2279419727650734941}
+  creditAddTextPrefab: {fileID: 4409457018217883455, guid: 78b39245a850179469268816b82e2417, type: 3}
+  creditAddTextPos: {fileID: 4413599554269911197}
 --- !u!1 &4229415266886546120
 GameObject:
   m_ObjectHideFlags: 0

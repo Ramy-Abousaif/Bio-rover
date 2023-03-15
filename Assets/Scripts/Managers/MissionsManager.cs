@@ -63,9 +63,16 @@ public class MissionsManager : MonoBehaviour
     public void UpdateMissionText()
     {
         missionText.text = "";
-        foreach (var objective in availableMissions[selection].objectives)
+        for (int i = 0; i < availableMissions[selection].objectives.Count; i++)
         {
-            missionText.text += objective.title + ": " + objective.currentProgress + "/" + objective.targetProgress + "\n";
+            string _color = "<color=white>";
+            if (availableMissions[selection].objectives[i].completed)
+                _color = "<color=green>";
+            else
+                _color = "<color=white>";
+
+            missionText.text += _color + availableMissions[selection].objectives[i].title + ": " +
+                availableMissions[selection].objectives[i].currentProgress + "/" + availableMissions[selection].objectives[i].targetProgress + "\n";
         }
     }
 

@@ -17,8 +17,10 @@ public class UIManager : MonoBehaviour
     public GameObject energyUsage;
     public TMP_Text creditsText;
 
-    public GameObject floatingTextPrefab;
-    public Transform floatTextPos;
+    public GameObject scanTextPrefab;
+    public Transform scanTextPos;
+    public GameObject creditAddTextPrefab;
+    public Transform creditAddTextPos;
 
     void Awake()
     {

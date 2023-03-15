@@ -55,10 +55,19 @@ public class StoreManager : MonoBehaviour
 
     public void AddCredit(int _credits)
     {
+        ShowAddedCreditsText(_credits);
         GameManager.instance.credits += _credits;
         creditsUI.text = "Credits: " + GameManager.instance.credits.ToString();
         UIManager.instance.creditsText.text = GameManager.instance.credits.ToString() + " Credits";
         CheckPurchasable();
+    }
+
+    public void ShowAddedCreditsText(int _credits)
+    {
+        GameObject text = Instantiate(UIManager.instance.creditAddTextPrefab, UIManager.instance.creditAddTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform);
+        text.layer = LayerMask.NameToLayer("UI");
+        text.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("UI");
+        text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+" + _credits;
     }
 
     public void CheckPurchasable()
