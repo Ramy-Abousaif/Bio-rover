@@ -13,8 +13,14 @@ public class UIManager : MonoBehaviour
     public Image progressBar;
     public GameObject pauseMenu;
     public GameObject inGame;
+    public GameObject miniMap;
     public GameObject energyUsage;
     public TMP_Text creditsText;
+
+    public GameObject scanTextPrefab;
+    public Transform scanTextPos;
+    public GameObject creditAddTextPrefab;
+    public Transform creditAddTextPos;
 
     void Awake()
     {

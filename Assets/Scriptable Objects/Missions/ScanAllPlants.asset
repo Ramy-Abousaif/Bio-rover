@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93df0801e9cc514a8e36eb2c781277f, type: 3}
   m_Name: ScanAllPlants
   m_EditorClassIdentifier: 
-  title: Scan All Plants
+  title: Scan objects
   type: 2
-  description: Scan nearby plants to see if they have any traces of chemicals
-  creditsReward: 1000
+  description: Scan nearby objects  to see if they have any traces of chemicals
+  creditsReward: 5000
   objectives:
-  - title: Scan All Plants
+  - title: Scan common objects
     completed: 0
     currentProgress: 0
     targetProgress: 15
+  - title: Scan rare objects
+    completed: 0
+    currentProgress: 0
+    targetProgress: 5
   completed: 0

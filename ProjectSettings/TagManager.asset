@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boat
+  - Rover
+  - ScanArea
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - BlockCamera
   - Homebase
   - Boat
-  - 
-  - 
+  - Minimap
+  - MainCamera
   - 
   - 
   - 

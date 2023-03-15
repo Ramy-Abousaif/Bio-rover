@@ -30,6 +30,7 @@ public class GenerateScannables : MonoBehaviour
                 GameObject seaweedGO = Instantiate(seaweed, hit.point, Quaternion.LookRotation(hit.normal));
                 seaweedGO.transform.localEulerAngles = new Vector3(seaweedGO.transform.localEulerAngles.x, seaweedGO.transform.localEulerAngles.y, seaweedGO.transform.localEulerAngles.z + randomRot);
                 seaweedGO.transform.SetParent(transform);
+                seaweedGO.name = "Seaweed";
             }
         }
     }
