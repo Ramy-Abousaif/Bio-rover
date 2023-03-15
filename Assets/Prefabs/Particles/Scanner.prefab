@@ -97,8 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b83b37220fae7d34f9715d6305d7b125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rarityColors:
+  - {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  - {r: 0.031916976, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.97150254, a: 1}
+  - {r: 1, g: 0.63872534, b: 0, a: 1}
   speed: 40
-  duration: 4
 --- !u!135 &3691125880041633742
 SphereCollider:
   m_ObjectHideFlags: 0

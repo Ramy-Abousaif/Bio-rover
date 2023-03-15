@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2291378, g: 0.2077418, b: 0.4675173, a: 1}
+  m_IndirectSpecularColor: {r: 0.25106063, g: 0.20468618, b: 0.4255918, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3731,15 +3731,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 4229415266886546120, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6109853506690855998, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6162814338782277569, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -3750,10 +3742,6 @@ PrefabInstance:
     - target: {fileID: 6713269958435657641, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9081508604216667454, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

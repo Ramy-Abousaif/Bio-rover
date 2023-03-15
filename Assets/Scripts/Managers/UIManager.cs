@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     public GameObject energyUsage;
     public TMP_Text creditsText;
 
+    public GameObject floatingTextPrefab;
+    public Transform floatTextPos;
+
     void Awake()
     {
         if (instance == null)

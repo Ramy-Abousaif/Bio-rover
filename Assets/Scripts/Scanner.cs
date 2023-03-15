@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Scanner : MonoBehaviour
 {
+    public Color[] rarityColors;
     public float speed = 5.0f;
     private float duration = 1.0f;
     private float fadeDuration = 1.0f;
@@ -34,7 +36,7 @@ public class Scanner : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
         {
-            if(other.GetComponent<Renderer>().materials[1].GetInt("_isHighlighted") == 0)
+            if(!other.GetComponent<Scannable>().scanned)
             {
                 if (MissionsManager.instance.GetMissionByName("Scan All Plants").GetObjectiveByTitle("Scan All Plants").currentProgress <
                         MissionsManager.instance.GetMissionByName("Scan All Plants").GetObjectiveByTitle("Scan All Plants").targetProgress)
@@ -44,10 +46,21 @@ public class Scanner : MonoBehaviour
 
                 MissionsManager.instance.GetMissionByName("Scan All Plants").CheckCompletion();
 
+                ShowFloatingText(other.gameObject);
                 StoreManager.instance.AddCredit(10);
             }
 
             other.GetComponent<Renderer>().materials[1].SetInt("_isHighlighted", 1);
         }
+    }
+
+    void ShowFloatingText(GameObject other)
+    {
+        //Play Audio
+
+        GameObject text = Instantiate(UIManager.instance.floatingTextPrefab, UIManager.instance.floatTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform);
+        text.layer = LayerMask.NameToLayer("UI");
+        text.GetComponent<TMP_Text>().text = "+ " + other.transform.name + "scanned";
+        text.GetComponent<TMP_Text>().color = rarityColors[(((int)other.GetComponent<Scannable>().rarity))];
     }
 }
