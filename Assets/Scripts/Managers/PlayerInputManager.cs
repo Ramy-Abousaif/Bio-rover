@@ -10,6 +10,8 @@ public class PlayerInputManager : MonoBehaviour
     public float inputX;
     public float inputY;
     public float scroll;
+    public bool leftMouse;
+    public bool rightMouse;
     public bool leftArrow;
     public bool rightArrow;
     public bool upArrow;
@@ -48,6 +50,8 @@ public class PlayerInputManager : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
         scroll = Input.GetAxis("Mouse ScrollWheel");
+        leftMouse = Input.GetButtonDown("Fire1");
+        rightMouse = Input.GetButtonDown("Fire2");
         leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         rightArrow = Input.GetKeyDown(KeyCode.RightArrow);
         upArrow = Input.GetKeyDown(KeyCode.UpArrow);

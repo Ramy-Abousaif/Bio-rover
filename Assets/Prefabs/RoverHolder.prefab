@@ -842,6 +842,7 @@ MonoBehaviour:
   reachedEndOfPath: 0
   repathRate: 0.5
   forceRepath: 100
+  overrideTarget: 0
 --- !u!114 &2957282166611655078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,7 +976,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469575727044638
 GameObject:
@@ -1054,7 +1055,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469575750913029
 GameObject:
@@ -1133,7 +1134,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469575870532584
 GameObject:
@@ -1212,7 +1213,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469575889095411
 GameObject:
@@ -1291,7 +1292,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469576057680630
 GameObject:
@@ -1370,7 +1371,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469576183225210
 GameObject:
@@ -1449,7 +1450,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469576452390813
 GameObject:
@@ -1528,7 +1529,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469576530786100
 GameObject:
@@ -1607,7 +1608,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469576648710153
 GameObject:
@@ -1736,7 +1737,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469577235304066
 GameObject:
@@ -1815,7 +1816,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2673469577387296797
 GameObject:
@@ -1894,7 +1895,7 @@ MonoBehaviour:
   lm:
     serializedVersion: 2
     m_Bits: 713
-  energy: 0
+  energy: 100
   showUI: 1
 --- !u!1 &2899029622306422774
 GameObject:

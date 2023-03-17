@@ -40,6 +40,7 @@ public class AIController : MonoBehaviour
     GridGraph grid;
     private float repathTimer = 0.0f;
     public float forceRepath = 10f;
+    public bool overrideTarget = false;
 
     private void Start()
     {
@@ -209,8 +210,21 @@ public class AIController : MonoBehaviour
 
     private void FindNewTarget()
     {
-        randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-        targetPos.position = randomNode.RandomPointOnSurface();
+        if(!overrideTarget)
+        {
+            PlayerManager.instance.arrow.SetActive(false);
+            randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
+            targetPos.position = randomNode.RandomPointOnSurface();
+        }
+    }
+
+    public void OverrideTarget(Vector3 newPos, Vector3 hitNormal)
+    {
+        PlayerManager.instance.arrow.SetActive(true);
+        PlayerManager.instance.arrow.transform.position = newPos;
+        PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hitNormal);
+        overrideTarget = true;
+        targetPos.position = newPos;
     }
 
     public void OnPathComplete(Path p)
@@ -238,6 +252,7 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
+        transform.gameObject.layer = LayerMask.NameToLayer("Bot");
         aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;
         if (Physics.Raycast(PlayerManager.instance.boat.transform.position, Vector3.down, out hit, Mathf.Infinity, ground))
