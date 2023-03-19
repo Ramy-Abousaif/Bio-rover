@@ -8,6 +8,7 @@ public class AIController : MonoBehaviour
     private Rigidbody rb;
     private SphereCollider sc;
     public GameObject draw;
+    public GameObject outline;
     [SerializeField]
     private Marimo[] marimos;
     [SerializeField]
@@ -212,7 +213,6 @@ public class AIController : MonoBehaviour
     {
         if(!overrideTarget)
         {
-            PlayerManager.instance.arrow.SetActive(false);
             randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
             targetPos.position = randomNode.RandomPointOnSurface();
         }
@@ -229,7 +229,7 @@ public class AIController : MonoBehaviour
 
     public void OnPathComplete(Path p)
     {
-        Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
+        //Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
 
         // Path pooling. To avoid unnecessary allocations paths are reference counted.
         // Calling Claim will increase the reference count by 1 and Release will reduce
@@ -263,6 +263,7 @@ public class AIController : MonoBehaviour
 
     private void OnDisable()
     {
+        outline.SetActive(false);
         aiScan.transform.gameObject.SetActive(false);
     }
 }

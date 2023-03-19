@@ -13,7 +13,7 @@ public class RoverController : MonoBehaviour
     public GameObject UIBall;
     public Transform followCam;
     public GameObject draw;
-    private AIController aiRover;
+    private List<AIController> aiRovers = new List<AIController>();
     [SerializeField]
     private Marimo[] marimos;
     [SerializeField]
@@ -22,6 +22,7 @@ public class RoverController : MonoBehaviour
     private bool ableToFloat;
     private bool roverSelectMode = false;
 
+    public LayerMask bot;
     public LayerMask ground;
     private bool isGrounded = false;
     private float scanCooldown = 2.0f;
@@ -274,19 +275,42 @@ public class RoverController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 10000, ~(1 << LayerMask.NameToLayer("Bot") | 1 << LayerMask.NameToLayer("Player"))))
+            bool executeDefaultRaycast = true;
+
+            if (Physics.Raycast(ray, out hit, 10000, bot, QueryTriggerInteraction.Ignore))
             {
-                if (aiRover != null)
-                    aiRover.OverrideTarget(hit.point, hit.normal);
+                Debug.Log("First raycast: " + hit.collider.gameObject.name + " in layer " + hit.collider.gameObject.layer);
+                if (hit.transform.GetComponent<AIController>() != null)
+                {
+                    if (!aiRovers.Contains(hit.transform.GetComponent<AIController>()))
+                    {
+                        hit.transform.GetComponent<AIController>().outline.SetActive(true);
+                        aiRovers.Add(hit.transform.GetComponent<AIController>());
+                    }
+
+                    if (hit.transform.GetComponent<AIController>().overrideTarget)
+                    {
+                        hit.transform.GetComponent<AIController>().overrideTarget = false;
+                        hit.transform.GetComponent<AIController>().outline.SetActive(false);
+                        aiRovers.Remove(hit.transform.GetComponent<AIController>());
+                    }
+                }
+
+                executeDefaultRaycast = false;
             }
 
-            if (Physics.Raycast(ray, out hit, 10000, 1 << LayerMask.NameToLayer("Bot")))
+            if (executeDefaultRaycast && Physics.Raycast(ray, out hit, 10000, ground, QueryTriggerInteraction.Ignore))
             {
-                if (aiRover != null && aiRover != hit.transform.GetComponent<AIController>())
-                    aiRover.overrideTarget = false;
-
-                aiRover = hit.transform.GetComponent<AIController>();
+                Debug.Log("Second raycast: " + hit.collider.gameObject.name + " in layer " + hit.collider.gameObject.layer);
+                if (aiRovers != null && aiRovers.Count != 0)
+                {
+                    for (int i = 0; i < aiRovers.Count; i++)
+                    {
+                        aiRovers[i].OverrideTarget(hit.point, hit.normal);
+                    }
+                }
             }
+            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.red);
         }
     }
 
@@ -299,10 +323,16 @@ public class RoverController : MonoBehaviour
     {
         roverSelectMode = false;
 
-        if (aiRover != null)
-            aiRover.overrideTarget = false;
+        if (aiRovers != null && aiRovers.Count != 0)
+        {
+            for (int i = 0; i < aiRovers.Count; i++)
+            {
+                aiRovers[i].overrideTarget = false;
+                aiRovers[i].outline.SetActive(false);
+            }
+        }
 
-        aiRover = null;
+        aiRovers.Clear();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         PlayerManager.instance.roverVCam.m_XAxis.m_InputAxisName = "Mouse X";
