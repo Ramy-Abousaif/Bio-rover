@@ -24,8 +24,8 @@ public class AudioManager : MonoBehaviour
 
     //FMOD Variables
     Bus masterBus;
-    //Bus backgroundBus;
-    //Bus sfxBus;
+    Bus backgroundBus;
+    Bus sfxBus;
     EventInstance ambienceInstance;
     EventInstance musicInstance;
     [Header("Events Selector")]
@@ -51,18 +51,18 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        masterBus = RuntimeManager.GetBus("Bus:/");
-        //backgroundBus = RuntimeManager.GetBus("Bus:/Master/Background");
-        //sfxBus = RuntimeManager.GetBus("Bus:/Master/SFX");
+        masterBus = RuntimeManager.GetBus("bus:/Master");
+        backgroundBus = RuntimeManager.GetBus("bus:/Master/Background");
+        sfxBus = RuntimeManager.GetBus("bus:/Master/SFX");
+        masterBus.setVolume(this.masterVolume);
+        backgroundBus.setVolume(this.bgVolume);
+        sfxBus.setVolume(this.sfxVolume);
         StartAmbience();
         //StartMusic();
     }
 
     private void Update()
     {
-        //masterBus.setVolume(this.masterVolume);
-        //backgroundBus.setVolume(this.bgVolume);
-        //sfxBus.setVolume(this.sfxVolume);
         ambienceInstance.setParameterByName("Underwater", (Camera.main.transform.position.y >
             WaveManager.instance.getHeight(Camera.main.transform.position.x, Camera.main.transform.position.z)) ? 0f : 1f);
         //musicInstance.setParameterByName("Scene", SceneManager.GetActiveScene().buildIndex);
@@ -71,16 +71,19 @@ public class AudioManager : MonoBehaviour
     public void ChangeSFXVolume(float newSFXVolume)
     {
         this.sfxVolume = newSFXVolume;
+        sfxBus.setVolume(this.sfxVolume);
     }
 
     public void ChangeBGVolume(float newBGVolume)
     {
         this.bgVolume = newBGVolume;
+        backgroundBus.setVolume(this.bgVolume);
     }
 
     public void ChangeMasterVolume(float newMasterVolume)
     {
         this.masterVolume = newMasterVolume;
+        masterBus.setVolume(this.masterVolume);
     }
 
     public void PlayOneShotWithParameters(string fmodEvent, Transform t, params (string name, float value)[] parameters)

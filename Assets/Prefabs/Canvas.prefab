@@ -6136,6 +6136,9 @@ MonoBehaviour:
   mainButtons: {fileID: 6109853506365472545}
   settingsTitle: {fileID: 6109853506562450348}
   settingsButtons: {fileID: 6109853506950026425}
+  masterSlider: {fileID: 6109853506419027155}
+  bgSlider: {fileID: 6109853508369818648}
+  sfxSlider: {fileID: 6109853506332628574}
 --- !u!1 &6109853506751845733
 GameObject:
   m_ObjectHideFlags: 0
@@ -10438,6 +10441,9 @@ MonoBehaviour:
   pauseButtons: {fileID: 7848252515779603069}
   settingsTitle: {fileID: 5616346672130971293}
   settingsButtons: {fileID: 8347267068219952298}
+  masterSlider: {fileID: 6940833644299096912}
+  bgSlider: {fileID: 95447040621652889}
+  sfxSlider: {fileID: 9010484279311333}
 --- !u!1001 &4229415266163744854
 PrefabInstance:
   m_ObjectHideFlags: 0

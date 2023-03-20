@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
+    public Slider masterSlider;
+    public Slider bgSlider;
+    public Slider sfxSlider;
 
     private void Start()
     {
@@ -43,7 +47,15 @@ public class PauseMenu : MonoBehaviour
 
     public void Settings()
     {
+        UpdateSliders();
         UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
+    }
+
+    private void UpdateSliders()
+    {
+        masterSlider.value = AudioManager.instance.masterVolume;
+        bgSlider.value = AudioManager.instance.bgVolume;
+        sfxSlider.value = AudioManager.instance.sfxVolume;
     }
 
     public void Back()
