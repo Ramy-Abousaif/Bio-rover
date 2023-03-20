@@ -53,6 +53,7 @@ public class Mission : ScriptableObject
 
         if(!completed)
         {
+            AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
             MissionsManager.instance.completedMissions.Add(this);
             StoreManager.instance.AddCredit(creditsReward);
             completed = true;

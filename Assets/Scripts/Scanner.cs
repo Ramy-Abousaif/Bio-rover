@@ -67,26 +67,22 @@ public class Scanner : MonoBehaviour
         switch (other.GetComponent<Scannable>().rarity)
         {
             case ScanRarity.COMMON:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardCommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[0];
                 StoreManager.instance.AddCredit(100);
                 break;
             case ScanRarity.UNCOMMON:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardUncommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[1];
                 StoreManager.instance.AddCredit(200);
                 break;
             case ScanRarity.RARE:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardRare", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[2];
                 StoreManager.instance.AddCredit(500);
                 break;
             case ScanRarity.EXOTIC:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardExotic", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[3];
                 StoreManager.instance.AddCredit(1000);
                 break;
