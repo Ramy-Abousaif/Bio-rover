@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public Transform scanTextPos;
     public GameObject creditAddTextPrefab;
     public Transform creditAddTextPos;
+    private int screenWidth = 1920;
+    private int screenHeight = 1080;
 
     void Awake()
     {
@@ -41,36 +43,39 @@ public class UIManager : MonoBehaviour
         Setup();
     }
 
-    public void Resume()
-    {
-        if (StoreManager.instance != null)
-        {
-            if (StoreManager.instance.inStore)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1;
-    }
-
     public void Pause()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void ChangeMenu(GameObject _newTitle, GameObject _newButtons, ref GameObject _activeTitle, ref GameObject _activeButtons)
+    {
+        GameObject prevTitle = _activeTitle;
+        GameObject prevButtons = _activeButtons;
+        prevTitle.SetActive(false);
+        prevButtons.SetActive(false);
+        _activeTitle = _newTitle;
+        _activeButtons = _newButtons;
+        _activeTitle.SetActive(true);
+        _activeButtons.SetActive(true);
+    }
+
+    public void SetWidth(int newWidth)
+    {
+        screenWidth = newWidth;
+    }
+
+    public void SetHeight(int newHeight)
+    {
+        screenHeight = newHeight;
+    }
+
+    public void SetResolution()
+    {
+        Screen.SetResolution(screenWidth, screenHeight, false);
     }
 
     void Setup()

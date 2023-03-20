@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
-    private int screenWidth = 1920;
-    private int screenHeight = 1080;
+    public Slider masterSlider;
+    public Slider bgSlider;
+    public Slider sfxSlider;
 
     void Start()
     {
@@ -24,43 +26,26 @@ public class MainMenu : MonoBehaviour
         activeButtons = mainButtons;
     }
 
-    public void SetWidth(int newWidth)
-    {
-        screenWidth = newWidth;
-    }
-
-    public void SetHeight(int newHeight)
-    {
-        screenHeight = newHeight;
-    }
-
-    public void SetResolution()
-    {
-        Screen.SetResolution(screenWidth, screenHeight, false);
-    }
-
     public void Settings()
     {
-        StartCoroutine(ChangeMenu(settingsTitle, settingsButtons));
+        UpdateSliders();
+        UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void About()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
+    }
+
+    private void UpdateSliders()
+    {
+        masterSlider.value = AudioManager.instance.masterVolume;
+        bgSlider.value = AudioManager.instance.bgVolume;
+        sfxSlider.value = AudioManager.instance.sfxVolume;
     }
 
     public void Back()
     {
-        StartCoroutine(ChangeMenu(mainTitle, mainButtons));
-    }
-
-    IEnumerator ChangeMenu(GameObject newTitle, GameObject newButtons)
-    {
-        GameObject prevTitle = activeTitle;
-        GameObject prevButtons = activeButtons;
-        yield return new WaitForSeconds(0.8f);
-        prevTitle.SetActive(false);
-        prevButtons.SetActive(false);
-        yield return new WaitForSeconds(0.02f);
-        activeTitle = newTitle;
-        activeButtons = newButtons;
-        activeTitle.SetActive(true);
-        activeButtons.SetActive(true);
-        yield return null;
+        UIManager.instance.ChangeMenu(mainTitle, mainButtons, ref activeTitle, ref activeButtons);
     }
 }

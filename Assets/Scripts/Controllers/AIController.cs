@@ -8,6 +8,7 @@ public class AIController : MonoBehaviour
     private Rigidbody rb;
     private SphereCollider sc;
     public GameObject draw;
+    public GameObject outline;
     [SerializeField]
     private Marimo[] marimos;
     [SerializeField]
@@ -40,6 +41,7 @@ public class AIController : MonoBehaviour
     GridGraph grid;
     private float repathTimer = 0.0f;
     public float forceRepath = 10f;
+    public bool overrideTarget = false;
 
     private void Start()
     {
@@ -209,13 +211,25 @@ public class AIController : MonoBehaviour
 
     private void FindNewTarget()
     {
-        randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-        targetPos.position = randomNode.RandomPointOnSurface();
+        if(!overrideTarget)
+        {
+            randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
+            targetPos.position = randomNode.RandomPointOnSurface();
+        }
+    }
+
+    public void OverrideTarget(Vector3 newPos, Vector3 hitNormal)
+    {
+        PlayerManager.instance.arrow.SetActive(true);
+        PlayerManager.instance.arrow.transform.position = newPos;
+        PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hitNormal);
+        overrideTarget = true;
+        targetPos.position = newPos;
     }
 
     public void OnPathComplete(Path p)
     {
-        Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
+        //Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
 
         // Path pooling. To avoid unnecessary allocations paths are reference counted.
         // Calling Claim will increase the reference count by 1 and Release will reduce
@@ -238,6 +252,7 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
+        transform.gameObject.layer = LayerMask.NameToLayer("Bot");
         aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;
         if (Physics.Raycast(PlayerManager.instance.boat.transform.position, Vector3.down, out hit, Mathf.Infinity, ground))
@@ -248,6 +263,7 @@ public class AIController : MonoBehaviour
 
     private void OnDisable()
     {
+        outline.SetActive(false);
         aiScan.transform.gameObject.SetActive(false);
     }
 }

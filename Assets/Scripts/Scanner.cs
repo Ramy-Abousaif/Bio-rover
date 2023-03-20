@@ -50,7 +50,11 @@ public class Scanner : MonoBehaviour
                 Reward(other.gameObject);
             }
 
-            other.GetComponent<Renderer>().materials[1].SetInt("_isHighlighted", 1);
+            foreach(Material mat in other.GetComponent<Renderer>().materials)
+            {
+                if(mat.GetInt("_isScannable") == 1)
+                    mat.SetInt("_isHighlighted", 1);
+            }
         }
     }
 
@@ -59,30 +63,26 @@ public class Scanner : MonoBehaviour
         GameObject text = Instantiate(UIManager.instance.scanTextPrefab, UIManager.instance.scanTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform);
         text.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("UI");
-        text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+ " + other.transform.name + "scanned";
+        text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+ " + other.transform.name + " scanned";
         switch (other.GetComponent<Scannable>().rarity)
         {
             case ScanRarity.COMMON:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardCommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[0];
                 StoreManager.instance.AddCredit(100);
                 break;
             case ScanRarity.UNCOMMON:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardUncommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[1];
                 StoreManager.instance.AddCredit(200);
                 break;
             case ScanRarity.RARE:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardRare", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[2];
                 StoreManager.instance.AddCredit(500);
                 break;
             case ScanRarity.EXOTIC:
-                //Play Audio
-
+                AudioManager.instance.PlayOneShotWithParameters("RewardExotic", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[3];
                 StoreManager.instance.AddCredit(1000);
                 break;
