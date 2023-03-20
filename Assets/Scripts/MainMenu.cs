@@ -10,8 +10,6 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
-    private int screenWidth = 1920;
-    private int screenHeight = 1080;
 
     void Start()
     {
@@ -24,43 +22,18 @@ public class MainMenu : MonoBehaviour
         activeButtons = mainButtons;
     }
 
-    public void SetWidth(int newWidth)
-    {
-        screenWidth = newWidth;
-    }
-
-    public void SetHeight(int newHeight)
-    {
-        screenHeight = newHeight;
-    }
-
-    public void SetResolution()
-    {
-        Screen.SetResolution(screenWidth, screenHeight, false);
-    }
-
     public void Settings()
     {
-        StartCoroutine(ChangeMenu(settingsTitle, settingsButtons));
+        UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void About()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
     }
 
     public void Back()
     {
-        StartCoroutine(ChangeMenu(mainTitle, mainButtons));
-    }
-
-    IEnumerator ChangeMenu(GameObject newTitle, GameObject newButtons)
-    {
-        GameObject prevTitle = activeTitle;
-        GameObject prevButtons = activeButtons;
-        yield return new WaitForSeconds(0.8f);
-        prevTitle.SetActive(false);
-        prevButtons.SetActive(false);
-        yield return new WaitForSeconds(0.02f);
-        activeTitle = newTitle;
-        activeButtons = newButtons;
-        activeTitle.SetActive(true);
-        activeButtons.SetActive(true);
-        yield return null;
+        UIManager.instance.ChangeMenu(mainTitle, mainButtons, ref activeTitle, ref activeButtons);
     }
 }

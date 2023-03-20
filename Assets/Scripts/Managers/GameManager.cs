@@ -119,6 +119,9 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         StartCoroutine(LoadSceneAsync("MainMenu", Gamestate.MENU));
-        UIManager.instance.Resume();
+        UIManager.instance.pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1;
     }
 }
