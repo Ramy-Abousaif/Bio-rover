@@ -801,6 +801,7 @@ MonoBehaviour:
   UIBall: {fileID: 370481562979772511}
   followCam: {fileID: 0}
   draw: {fileID: 3521490357930426531}
+  aiRovers: []
   marimos:
   - {fileID: 2673469575727044636}
   - {fileID: 2673469576530786098}
@@ -822,6 +823,9 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 3
+  breakable:
+    serializedVersion: 2
+    m_Bits: 16384
   smokeRing: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
   scanner: {fileID: 3691125880041633730, guid: 534b822f778ebb14ab3075a2870b6ffe, type: 3}
   energyLevels: {fileID: 0}
@@ -923,6 +927,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3
   smokeRing: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
+  explosion: {fileID: 9669109299659850, guid: 2670fe4e401b8b34d8c3bc81ab681dfc, type: 3}
   targetPos: {fileID: 4378583711251243889}
   aiScan: {fileID: 6878646380389287012}
   speed: 20
@@ -931,6 +936,7 @@ MonoBehaviour:
   repathRate: 0.5
   forceRepath: 100
   overrideTarget: 0
+  breakableTarget: {fileID: 0}
 --- !u!114 &2957282166611655078
 MonoBehaviour:
   m_ObjectHideFlags: 0

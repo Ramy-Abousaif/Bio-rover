@@ -20,6 +20,9 @@ public class AIController : MonoBehaviour
     private Vector3 moveDir;
 
     public GameObject smokeRing;
+    public GameObject explosion;
+    private float explosionForce = 100f;
+    private float explosionRadius = 30f;
     private float landSpeed;
     private float currentSpeed;
     private float prevSpeed;
@@ -41,7 +44,9 @@ public class AIController : MonoBehaviour
     GridGraph grid;
     private float repathTimer = 0.0f;
     public float forceRepath = 10f;
+    [HideInInspector]
     public bool overrideTarget = false;
+    public GameObject breakableTarget;
 
     private void Start()
     {
@@ -49,6 +54,24 @@ public class AIController : MonoBehaviour
         sc = GetComponent<SphereCollider>();
         seeker = GetComponent<Seeker>();
         grid = AstarPath.active.data.gridGraph;
+        floater.active = false;
+    }
+
+    private void Update()
+    {
+        if (PlayerInputManager.instance.upArrow)
+            floater.active = true;
+
+        if (PlayerInputManager.instance.downArrow)
+            floater.active = false;
+
+        if (breakableTarget == null)
+            return;
+
+        float squaredDistance = (breakableTarget.transform.position - transform.position).sqrMagnitude;
+
+        if (squaredDistance <= explosionRadius)
+            Explode();
     }
 
     void FixedUpdate()
@@ -65,8 +88,6 @@ public class AIController : MonoBehaviour
 
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
-
-        floater.active = PlayerInputManager.instance.jump && ableToFloat;
 
         AIMovement();
     }
@@ -110,32 +131,6 @@ public class AIController : MonoBehaviour
 
                 // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];
-            }
-        }
-    }
-
-    // Applies thrust to the ball based on the energy usage of each marimo
-    void ApplyFloat(float[] energyUsage)
-    {
-        ableToFloat = false;
-        if (transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z))
-        {
-            for (int i = 0; i < marimos.Length; i++)
-            {
-                // Check if there is enough energy in the marimo
-                if (marimos[i].energy > 0f)
-                {
-                    if (Vector3.Angle(Vector3.down, marimos[i].transform.forward) < 50)
-                    {
-                        ableToFloat = true;
-
-                        energyUsage[i] = Mathf.Lerp(0f, 1f, Vector3.Angle(Vector3.down, marimos[i].transform.forward) / 180f);
-
-                        // Reduce the energy in the marimo by the energy usage
-                        if (floater.active)
-                            marimos[i].energy -= energyUsage[i];
-                    }
-                }
             }
         }
     }
@@ -200,7 +195,6 @@ public class AIController : MonoBehaviour
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
         ApplyForce(energyUsage, distanceToWaypoint);
-        ApplyFloat(energyUsage);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -250,8 +244,47 @@ public class AIController : MonoBehaviour
         }
     }
 
+    private void Explode()
+    {
+        if (!(GameManager.instance.explosionUpgrade >= 1))
+            return;
+
+        if(explosion != null)
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (var col in colliders)
+        {
+            Rigidbody rigidBody = col.GetComponent<Rigidbody>();
+
+            if(rigidBody != null)
+                rigidBody.AddExplosionForce(explosionForce, transform.position, explosionRadius / 2);
+        }
+
+        if (PlayerManager.instance.bc.activeRovers.Contains(transform.parent.gameObject))
+            PlayerManager.instance.bc.activeRovers.Remove(transform.parent.gameObject);
+
+        if (PlayerManager.instance.rc != null)
+        {
+            if (PlayerManager.instance.rc.aiRovers.Contains(this))
+                PlayerManager.instance.rc.aiRovers.Remove(this);
+
+            float squaredDistance = (PlayerManager.instance.rc.transform.position - transform.position).sqrMagnitude;
+
+            Debug.Log(squaredDistance);
+            if (squaredDistance <= explosionRadius * 20f)
+                PlayerManager.instance.rc.Shake(20f);
+        }
+
+        AudioManager.instance.PlayOneShotWithParameters("Explosion", transform);
+
+        Destroy(transform.parent.gameObject);
+    }
+
     private void OnEnable()
     {
+        floater.active = false;
         transform.gameObject.layer = LayerMask.NameToLayer("Bot");
         aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;

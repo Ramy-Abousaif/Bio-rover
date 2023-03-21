@@ -15,9 +15,6 @@
 		<property name="initialValue">
 			<value>0</value>
 		</property>
-		<property name="seekSpeed">
-			<value>1</value>
-		</property>
 		<relationship name="modulators">
 			<destination>{d4276072-f1d2-4f8f-8f41-8ac46bae6bff}</destination>
 		</relationship>

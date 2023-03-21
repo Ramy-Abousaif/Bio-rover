@@ -23,7 +23,7 @@ public class BoatController : MonoBehaviour
     [SerializeField]
     private Transform dropPoint;
     [Header("Other")]
-    public int selection = 0;
+    private int selection = 0;
     public List<GameObject> storedRovers = new List<GameObject>();
     public List<GameObject> activeRovers = new List<GameObject>();
     private float minDrag = 2f;
@@ -34,6 +34,8 @@ public class BoatController : MonoBehaviour
     private float zRot;
     [SerializeField]
     private Motor motor;
+    private Vector3 lastSavedPos;
+    private Vector3 lastSavedRot;
 
     private int interpolationFramesCount = 45;
     int elapsedFrames = 0;
@@ -42,6 +44,7 @@ public class BoatController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        StartCoroutine(SavePosAndRot(10.0f));
     }
 
     private void Update()
@@ -62,8 +65,6 @@ public class BoatController : MonoBehaviour
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
         boatCamFollow.position = transform.position;
 
-        ChangeSelection();
-
         // Spawn rover
         if (storedRovers.Count > 0 && PlayerInputManager.instance.releaseRover)
         {
@@ -75,22 +76,6 @@ public class BoatController : MonoBehaviour
 
             if(selection > 0)
                 selection--;
-        }
-    }
-
-    void ChangeSelection()
-    {
-        if (PlayerInputManager.instance.scroll > 0f)
-        {
-            selection--;
-            if (selection < 0)
-                selection = storedRovers.Count - 1;
-        }
-        else if (PlayerInputManager.instance.scroll < 0f)
-        {
-            selection++;
-            if (selection >= storedRovers.Count)
-                selection = 0;
         }
     }
 
@@ -140,6 +125,26 @@ public class BoatController : MonoBehaviour
         storedRovers.Add(rover.transform.parent.gameObject);
         activeRovers.Remove(rover.transform.gameObject);
         rover.transform.parent.gameObject.SetActive(false);
+    }
+
+    private IEnumerator SavePosAndRot(float duration)
+    {
+        while(true)
+        {
+            lastSavedPos = transform.position;
+            lastSavedRot = transform.eulerAngles;
+            yield return new WaitForSeconds(duration);
+        }
+        yield return null;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Default") || collision.gameObject.layer == LayerMask.NameToLayer("Homebase"))
+        {
+            transform.position = lastSavedPos;
+            transform.eulerAngles = lastSavedRot;
+        }
     }
 
     private void OnEnable()

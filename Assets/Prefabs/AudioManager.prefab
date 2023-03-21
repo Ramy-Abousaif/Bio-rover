@@ -134,3 +134,11 @@ MonoBehaviour:
         Data3: 683070122
         Data4: 284733803
       Path: event:/SFX/MissionComplete
+  - Name: Explosion
+    sfxPath:
+      Guid:
+        Data1: 708094224
+        Data2: 1191109437
+        Data3: 667178407
+        Data4: 957045023
+      Path: event:/SFX/Explosion

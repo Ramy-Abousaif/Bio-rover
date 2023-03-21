@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     public Camera playerCam;
     public CinemachineVirtualCamera boatVCam;
     public CinemachineFreeLook roverVCam;
-    public int roverIndex = 0;
+    private int roverIndex = 0;
     public GameObject currentRover;
     public GameObject boat;
     public RoverController rc;
@@ -71,10 +71,9 @@ public class PlayerManager : MonoBehaviour
     {
         if(bc.activeRovers.Count > 0)
         {
-            if (PlayerInputManager.instance.leftArrow)
+            if (PlayerInputManager.instance.scroll > 0f)
                 roverIndex = (roverIndex - 1 + bc.activeRovers.Count) % bc.activeRovers.Count;
-
-            if (PlayerInputManager.instance.rightArrow)
+            else if (PlayerInputManager.instance.scroll < 0f)
                 roverIndex = (roverIndex + 1) % bc.activeRovers.Count;
         }
     }

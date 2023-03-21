@@ -12,11 +12,11 @@ public class PlayerInputManager : MonoBehaviour
     public float scroll;
     public bool leftMouse;
     public bool rightMouse;
-    public bool leftArrow;
     public bool rightArrow;
+    public bool leftArrow;
     public bool upArrow;
     public bool downArrow;
-    public bool jump;
+    public bool floating;
     public bool scan;
     public bool switchMode;
     public bool releaseRover;
@@ -52,11 +52,11 @@ public class PlayerInputManager : MonoBehaviour
         scroll = Input.GetAxis("Mouse ScrollWheel");
         leftMouse = Input.GetButtonDown("Fire1");
         rightMouse = Input.GetButtonDown("Fire2");
-        leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         rightArrow = Input.GetKeyDown(KeyCode.RightArrow);
+        leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         upArrow = Input.GetKeyDown(KeyCode.UpArrow);
         downArrow = Input.GetKeyDown(KeyCode.DownArrow);
-        jump = Input.GetKey(KeyCode.Space);
+        floating = Input.GetKey(KeyCode.Space);
         scan = Input.GetKeyDown(KeyCode.Q);
         switchMode = Input.GetKeyDown(KeyCode.T);
         releaseRover = Input.GetKeyDown(KeyCode.Z);

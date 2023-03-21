@@ -13,7 +13,7 @@ public class RoverController : MonoBehaviour
     public GameObject UIBall;
     public Transform followCam;
     public GameObject draw;
-    private List<AIController> aiRovers = new List<AIController>();
+    public List<AIController> aiRovers = new List<AIController>();
     [SerializeField]
     private Marimo[] marimos;
     [SerializeField]
@@ -24,6 +24,7 @@ public class RoverController : MonoBehaviour
 
     public LayerMask bot;
     public LayerMask ground;
+    public LayerMask breakable;
     private bool isGrounded = false;
     private float scanCooldown = 2.0f;
     private float scanTimer = 0.0f;
@@ -85,7 +86,7 @@ public class RoverController : MonoBehaviour
         if (PlayerInputManager.instance.changeSize && !isChangingSize && GameManager.instance.expandUpgrade >= 1)
             StartCoroutine(ChangeSize());
 
-        floater.active = PlayerInputManager.instance.jump && ableToFloat;
+        floater.active = PlayerInputManager.instance.floating && ableToFloat;
 
         Slope();
         Scan();
@@ -109,9 +110,9 @@ public class RoverController : MonoBehaviour
         energyLevels.text = "Energy Levels: " + ((sumEnergy / 1200f) * 100).ToString("0") + "%";
     }
 
-    void Shake()
+    public void Shake(float _value)
     {
-        impulse.m_DefaultVelocity *= Mathf.Clamp(landSpeed / 10f, 0f, 6f);
+        impulse.m_DefaultVelocity *= Mathf.Clamp(_value / 10f, 0f, 6f);
         impulse.GenerateImpulse();
         impulse.m_DefaultVelocity = new Vector3(-1f, -1f, -1f);
     }
@@ -279,7 +280,6 @@ public class RoverController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 10000, bot, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("First raycast: " + hit.collider.gameObject.name + " in layer " + hit.collider.gameObject.layer);
                 if (hit.transform.GetComponent<AIController>() != null)
                 {
                     if (!aiRovers.Contains(hit.transform.GetComponent<AIController>()))
@@ -299,14 +299,28 @@ public class RoverController : MonoBehaviour
                 executeDefaultRaycast = false;
             }
 
-            if (executeDefaultRaycast && Physics.Raycast(ray, out hit, 10000, ground, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out hit, 10000, breakable, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("Second raycast: " + hit.collider.gameObject.name + " in layer " + hit.collider.gameObject.layer);
                 if (aiRovers != null && aiRovers.Count != 0)
                 {
                     for (int i = 0; i < aiRovers.Count; i++)
                     {
                         aiRovers[i].OverrideTarget(hit.point, hit.normal);
+                        aiRovers[i].breakableTarget = hit.transform.gameObject;
+                    }
+                }
+
+                executeDefaultRaycast = false;
+            }
+
+            if (executeDefaultRaycast && Physics.Raycast(ray, out hit, 10000, ground, QueryTriggerInteraction.Ignore))
+            {
+                if (aiRovers != null && aiRovers.Count != 0)
+                {
+                    for (int i = 0; i < aiRovers.Count; i++)
+                    {
+                        aiRovers[i].OverrideTarget(hit.point, hit.normal);
+                        aiRovers[i].breakableTarget = null;
                     }
                 }
             }
@@ -328,6 +342,7 @@ public class RoverController : MonoBehaviour
             for (int i = 0; i < aiRovers.Count; i++)
             {
                 aiRovers[i].overrideTarget = false;
+                aiRovers[i].breakableTarget = null;
                 aiRovers[i].outline.SetActive(false);
             }
         }
@@ -343,7 +358,7 @@ public class RoverController : MonoBehaviour
     {
         if (landSpeed > 9f || prevSpeed > 10f)
         {
-            Shake();
+            Shake(landSpeed);
             Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up ,collision.contacts[0].normal));
         }
 
