@@ -12,8 +12,8 @@ public class PlayerInputManager : MonoBehaviour
     public float scroll;
     public bool leftMouse;
     public bool rightMouse;
-    public bool leftArrow;
     public bool rightArrow;
+    public bool leftArrow;
     public bool upArrow;
     public bool downArrow;
     public bool jump;
@@ -52,8 +52,8 @@ public class PlayerInputManager : MonoBehaviour
         scroll = Input.GetAxis("Mouse ScrollWheel");
         leftMouse = Input.GetButtonDown("Fire1");
         rightMouse = Input.GetButtonDown("Fire2");
-        leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         rightArrow = Input.GetKeyDown(KeyCode.RightArrow);
+        leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         upArrow = Input.GetKeyDown(KeyCode.UpArrow);
         downArrow = Input.GetKeyDown(KeyCode.DownArrow);
         jump = Input.GetKey(KeyCode.Space);

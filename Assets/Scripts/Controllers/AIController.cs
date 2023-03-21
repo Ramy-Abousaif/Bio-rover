@@ -49,6 +49,16 @@ public class AIController : MonoBehaviour
         sc = GetComponent<SphereCollider>();
         seeker = GetComponent<Seeker>();
         grid = AstarPath.active.data.gridGraph;
+        floater.active = false;
+    }
+
+    private void Update()
+    {
+        if (PlayerInputManager.instance.upArrow)
+            floater.active = true;
+
+        if (PlayerInputManager.instance.downArrow)
+            floater.active = false;
     }
 
     void FixedUpdate()
@@ -65,8 +75,6 @@ public class AIController : MonoBehaviour
 
         if (Mathf.Abs(rb.velocity.y) > 0.1f)
             landSpeed = Mathf.Abs(rb.velocity.y);
-
-        floater.active = PlayerInputManager.instance.jump && ableToFloat;
 
         AIMovement();
     }
@@ -110,32 +118,6 @@ public class AIController : MonoBehaviour
 
                 // Reduce the energy in the marimo by the energy usage
                 marimos[i].energy -= energyUsage[i];
-            }
-        }
-    }
-
-    // Applies thrust to the ball based on the energy usage of each marimo
-    void ApplyFloat(float[] energyUsage)
-    {
-        ableToFloat = false;
-        if (transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z))
-        {
-            for (int i = 0; i < marimos.Length; i++)
-            {
-                // Check if there is enough energy in the marimo
-                if (marimos[i].energy > 0f)
-                {
-                    if (Vector3.Angle(Vector3.down, marimos[i].transform.forward) < 50)
-                    {
-                        ableToFloat = true;
-
-                        energyUsage[i] = Mathf.Lerp(0f, 1f, Vector3.Angle(Vector3.down, marimos[i].transform.forward) / 180f);
-
-                        // Reduce the energy in the marimo by the energy usage
-                        if (floater.active)
-                            marimos[i].energy -= energyUsage[i];
-                    }
-                }
             }
         }
     }
@@ -200,7 +182,6 @@ public class AIController : MonoBehaviour
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
         ApplyForce(energyUsage, distanceToWaypoint);
-        ApplyFloat(energyUsage);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -252,6 +233,7 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
+        floater.active = false;
         transform.gameObject.layer = LayerMask.NameToLayer("Bot");
         aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;

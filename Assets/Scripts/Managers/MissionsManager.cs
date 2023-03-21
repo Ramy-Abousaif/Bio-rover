@@ -36,13 +36,13 @@ public class MissionsManager : MonoBehaviour
     {
         if (availableMissions.Count > 0)
         {
-            if (PlayerInputManager.instance.downArrow)
+            if (PlayerInputManager.instance.leftArrow)
             {
                 selection = (selection - 1 + availableMissions.Count) % availableMissions.Count;
                 UpdateMissionText();
             }
 
-            if (PlayerInputManager.instance.upArrow)
+            if (PlayerInputManager.instance.rightArrow)
             {
                 selection = (selection + 1) % availableMissions.Count;
                 UpdateMissionText();

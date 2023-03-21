@@ -23,7 +23,7 @@ public class BoatController : MonoBehaviour
     [SerializeField]
     private Transform dropPoint;
     [Header("Other")]
-    public int selection = 0;
+    private int selection = 0;
     public List<GameObject> storedRovers = new List<GameObject>();
     public List<GameObject> activeRovers = new List<GameObject>();
     private float minDrag = 2f;
@@ -62,8 +62,6 @@ public class BoatController : MonoBehaviour
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
         boatCamFollow.position = transform.position;
 
-        ChangeSelection();
-
         // Spawn rover
         if (storedRovers.Count > 0 && PlayerInputManager.instance.releaseRover)
         {
@@ -75,22 +73,6 @@ public class BoatController : MonoBehaviour
 
             if(selection > 0)
                 selection--;
-        }
-    }
-
-    void ChangeSelection()
-    {
-        if (PlayerInputManager.instance.scroll > 0f)
-        {
-            selection--;
-            if (selection < 0)
-                selection = storedRovers.Count - 1;
-        }
-        else if (PlayerInputManager.instance.scroll < 0f)
-        {
-            selection++;
-            if (selection >= storedRovers.Count)
-                selection = 0;
         }
     }
 
