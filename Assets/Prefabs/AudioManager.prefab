@@ -142,3 +142,11 @@ MonoBehaviour:
         Data3: 667178407
         Data4: 957045023
       Path: event:/SFX/Explosion
+  - Name: MouseClick
+    sfxPath:
+      Guid:
+        Data1: -1085927680
+        Data2: 1330365053
+        Data3: 1764133311
+        Data4: -858478693
+      Path: event:/SFX/MouseClick
