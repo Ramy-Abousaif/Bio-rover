@@ -20,6 +20,9 @@ public class AIController : MonoBehaviour
     private Vector3 moveDir;
 
     public GameObject smokeRing;
+    public GameObject explosion;
+    private float explosionForce = 100f;
+    private float explosionRadius = 30f;
     private float landSpeed;
     private float currentSpeed;
     private float prevSpeed;
@@ -41,7 +44,9 @@ public class AIController : MonoBehaviour
     GridGraph grid;
     private float repathTimer = 0.0f;
     public float forceRepath = 10f;
+    [HideInInspector]
     public bool overrideTarget = false;
+    public GameObject breakableTarget;
 
     private void Start()
     {
@@ -59,6 +64,14 @@ public class AIController : MonoBehaviour
 
         if (PlayerInputManager.instance.downArrow)
             floater.active = false;
+
+        if (breakableTarget == null)
+            return;
+
+        float squaredDistance = (breakableTarget.transform.position - transform.position).sqrMagnitude;
+
+        if (squaredDistance <= explosionRadius)
+            Explode();
     }
 
     void FixedUpdate()
@@ -229,6 +242,44 @@ public class AIController : MonoBehaviour
         {
             p.Release(this);
         }
+    }
+
+    private void Explode()
+    {
+        if (!(GameManager.instance.explosionUpgrade >= 1))
+            return;
+
+        if(explosion != null)
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (var col in colliders)
+        {
+            Rigidbody rigidBody = col.GetComponent<Rigidbody>();
+
+            if(rigidBody != null)
+                rigidBody.AddExplosionForce(explosionForce, transform.position, explosionRadius / 2);
+        }
+
+        if (PlayerManager.instance.bc.activeRovers.Contains(transform.parent.gameObject))
+            PlayerManager.instance.bc.activeRovers.Remove(transform.parent.gameObject);
+
+        if (PlayerManager.instance.rc != null)
+        {
+            if (PlayerManager.instance.rc.aiRovers.Contains(this))
+                PlayerManager.instance.rc.aiRovers.Remove(this);
+
+            float squaredDistance = (PlayerManager.instance.rc.transform.position - transform.position).sqrMagnitude;
+
+            Debug.Log(squaredDistance);
+            if (squaredDistance <= explosionRadius * 20f)
+                PlayerManager.instance.rc.Shake(20f);
+        }
+
+        AudioManager.instance.PlayOneShotWithParameters("Explosion", transform);
+
+        Destroy(transform.parent.gameObject);
     }
 
     private void OnEnable()

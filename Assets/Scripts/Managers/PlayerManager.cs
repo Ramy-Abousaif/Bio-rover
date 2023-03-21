@@ -69,10 +69,13 @@ public class PlayerManager : MonoBehaviour
 
     void ChangeRover()
     {
-        if (PlayerInputManager.instance.scroll > 0f)
-            roverIndex = (roverIndex - 1 + bc.activeRovers.Count) % bc.activeRovers.Count;
-        else if (PlayerInputManager.instance.scroll < 0f)
-            roverIndex = (roverIndex + 1) % bc.activeRovers.Count;
+        if(bc.activeRovers.Count > 0)
+        {
+            if (PlayerInputManager.instance.scroll > 0f)
+                roverIndex = (roverIndex - 1 + bc.activeRovers.Count) % bc.activeRovers.Count;
+            else if (PlayerInputManager.instance.scroll < 0f)
+                roverIndex = (roverIndex + 1) % bc.activeRovers.Count;
+        }
     }
 
     void SetUp()
