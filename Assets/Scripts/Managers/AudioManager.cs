@@ -103,11 +103,16 @@ public class AudioManager : MonoBehaviour
         instance.release();
     }
 
+    public void MenuClick()
+    {
+        PlayOneShotWithParameters("MouseClick", transform);
+    }
+
     public void StartAmbience()
     {
         ambienceInstance = RuntimeManager.CreateInstance(ambienceEvent);
         ambienceInstance.start();
-        //ambienceInstance.release();
+        ambienceInstance.release();
     }
 
     public void StartMusic()
