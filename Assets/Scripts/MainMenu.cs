@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     public GameObject mainButtons;
     public GameObject settingsTitle;
     public GameObject settingsButtons;
+    public GameObject howToPlayScreen;
+    public GameObject howToPlayButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
     public Slider masterSlider;
@@ -30,6 +32,11 @@ public class MainMenu : MonoBehaviour
     {
         UpdateSliders();
         UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay()
+    {
+        UIManager.instance.ChangeMenu(howToPlayScreen, howToPlayButtons, ref activeTitle, ref activeButtons);
     }
 
     public void About()
