@@ -9,6 +9,8 @@ public class AIController : MonoBehaviour
     private SphereCollider sc;
     public GameObject draw;
     public GameObject outline;
+    public GameObject minimap;
+    private Material minimapMat;
     [SerializeField]
     private Marimo[] marimos;
     [SerializeField]
@@ -55,15 +57,26 @@ public class AIController : MonoBehaviour
         seeker = GetComponent<Seeker>();
         grid = AstarPath.active.data.gridGraph;
         floater.active = false;
+        minimapMat = minimap.GetComponent<Renderer>().material;
     }
 
     private void Update()
     {
+        minimapMat.SetFloat("_RoverPos", transform.position.y);
+
         if (PlayerInputManager.instance.upArrow)
+        {
             floater.active = true;
+            minimapMat.SetInt("_isSinking", 0);
+            if (transform.position.y < 0f)
+                rb.AddForce(Vector3.up * 300f);
+        }
 
         if (PlayerInputManager.instance.downArrow)
+        {
             floater.active = false;
+            minimapMat.SetInt("_isSinking", 1);
+        }
 
         if (breakableTarget == null)
             return;
@@ -284,7 +297,9 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
+        minimapMat = minimap.GetComponent<Renderer>().material;
         floater.active = false;
+        minimapMat.SetInt("_isSinking", 1);
         transform.gameObject.layer = LayerMask.NameToLayer("Bot");
         aiScan.transform.gameObject.SetActive(true);
         RaycastHit hit;
