@@ -16,6 +16,9 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [HideInInspector] public ObjectPool<GameObject> explosionPool;
 
+    [SerializeField] private GameObject poofPrefab;
+    [HideInInspector] public ObjectPool<GameObject> poofPool;
+
     [SerializeField] private GameObject scanTextPrefab;
     [HideInInspector] public ObjectPool<GameObject> scanTextPool;
 
@@ -34,9 +37,10 @@ public class PoolManager : MonoBehaviour
             return;
         }
 
-        scannerPool = CreateObjectPool(scannerPrefab, 200, 500);
-        smokeRingPool = CreateObjectPool(smokeRingPrefab, 200, 500);
-        explosionPool = CreateObjectPool(explosionPrefab, 200, 500);
+        scannerPool = CreateObjectPool(scannerPrefab, 300, 500);
+        smokeRingPool = CreateObjectPool(smokeRingPrefab, 120, 250);
+        explosionPool = CreateObjectPool(explosionPrefab, 70, 100);
+        poofPool = CreateObjectPool(poofPrefab, 70, 100);
         scanTextPool = CreateObjectPool(scanTextPrefab, 200, 500);
         creditTextPool = CreateObjectPool(creditTextPrefab, 200, 500);
     }
@@ -99,6 +103,20 @@ public class PoolManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeLimit);
         explosionPool.Release(explosion);
+        yield return null;
+    }
+
+    public void SpawnPoof(Vector3 pos, Quaternion rot)
+    {
+        var poof = poofPool.Get();
+        poof.transform.position = pos;
+        StartCoroutine(DestroyPoof(poof, 2.0f));
+    }
+
+    IEnumerator DestroyPoof(GameObject poof, float timeLimit)
+    {
+        yield return new WaitForSeconds(timeLimit);
+        poofPool.Release(poof);
         yield return null;
     }
 

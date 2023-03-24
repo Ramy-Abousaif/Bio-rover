@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public GameObject miniMap;
     public GameObject energyUsage;
     public TMP_Text creditsText;
+    public TMP_Text storedRoversText;
+    public TMP_Text activeRoversText;
 
     public GameObject scanTextPrefab;
     public Transform scanTextPos;
@@ -45,6 +47,7 @@ public class UIManager : MonoBehaviour
 
     public void Pause()
     {
+        AudioManager.instance.Pause();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenu.SetActive(true);

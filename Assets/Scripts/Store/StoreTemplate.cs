@@ -37,6 +37,8 @@ public class StoreTemplate : MonoBehaviour
                 GameObject roverInstance = Instantiate(PlayerManager.instance.roverPrefab, transform.position, Quaternion.identity);
                 PlayerManager.instance.bc.TakeRover(roverInstance.transform.GetChild(0).gameObject);
                 StoreManager.instance.storeItems[id].currentProgress = PlayerManager.instance.bc.storedRovers.Count + PlayerManager.instance.bc.activeRovers.Count;
+                UIManager.instance.activeRoversText.text = PlayerManager.instance.bc.activeRovers.Count + " Active Rovers";
+                UIManager.instance.storedRoversText.text = PlayerManager.instance.bc.storedRovers.Count + " Stored Rovers";
                 break;
             case 1:
                 GameManager.instance.sonarUpgrade++;

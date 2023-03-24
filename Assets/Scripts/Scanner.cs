@@ -14,11 +14,10 @@ public class Scanner : MonoBehaviour
     private Material matLOD0;
     private Material matLOD1;
     private Material matLOD2;
-    private Vector3 localScale = Vector3.zero;
+    private Vector3 localScale;
 
-    void Start()
+    private void Awake()
     {
-        localScale = transform.localScale;
         matLOD0 = this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
         matLOD1 = this.gameObject.transform.GetChild(1).GetComponent<Renderer>().material;
         matLOD2 = this.gameObject.transform.GetChild(2).GetComponent<Renderer>().material;
@@ -109,15 +108,31 @@ public class Scanner : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.localScale = localScale;
+        transform.localScale = Vector3.zero;
         fadeDuration = 1.0f;
         timeElapsed = 0.0f;
+        matLOD0.SetFloat("_Alpha", fadeDuration);
+        matLOD1.SetFloat("_Alpha", fadeDuration);
+        matLOD2.SetFloat("_Alpha", fadeDuration);
     }
 
     private void OnDisable()
     {
-        transform.localScale = localScale;
+        transform.localScale = Vector3.zero;
         fadeDuration = 1.0f;
         timeElapsed = 0.0f;
+        matLOD0.SetFloat("_Alpha", fadeDuration);
+        matLOD1.SetFloat("_Alpha", fadeDuration);
+        matLOD2.SetFloat("_Alpha", fadeDuration);
+    }
+
+    private void OnDestroy()
+    {
+        transform.localScale = Vector3.zero;
+        fadeDuration = 1.0f;
+        timeElapsed = 0.0f;
+        matLOD0.SetFloat("_Alpha", fadeDuration);
+        matLOD1.SetFloat("_Alpha", fadeDuration);
+        matLOD2.SetFloat("_Alpha", fadeDuration);
     }
 }

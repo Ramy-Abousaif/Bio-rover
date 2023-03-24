@@ -22,6 +22,8 @@ public class BoatController : MonoBehaviour
     private Transform boatCamFollow;
     [SerializeField]
     private Transform dropPoint;
+    [SerializeField]
+    private ResetChecker resetChecker;
     [Header("Other")]
     private int selection = 0;
     public List<GameObject> storedRovers = new List<GameObject>();
@@ -45,6 +47,8 @@ public class BoatController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StartCoroutine(SavePosAndRot(10.0f));
+        UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";
+        UIManager.instance.storedRoversText.text = storedRovers.Count + " Stored Rovers";
     }
 
     private void Update()
@@ -73,8 +77,10 @@ public class BoatController : MonoBehaviour
             storedRovers[selection].transform.GetChild(0).GetComponent<AIController>().enabled = true;
             activeRovers.Add(storedRovers[selection]);
             storedRovers.Remove(storedRovers[selection]);
+            UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";
+            UIManager.instance.storedRoversText.text = storedRovers.Count + " Stored Rovers";
 
-            if(selection > 0)
+            if (selection > 0)
                 selection--;
         }
     }
@@ -125,14 +131,24 @@ public class BoatController : MonoBehaviour
         storedRovers.Add(rover.transform.parent.gameObject);
         activeRovers.Remove(rover.transform.parent.gameObject);
         rover.transform.parent.gameObject.SetActive(false);
+        UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";
+        UIManager.instance.storedRoversText.text = storedRovers.Count + " Stored Rovers";
     }
 
     private IEnumerator SavePosAndRot(float duration)
     {
         while(true)
         {
-            lastSavedPos = transform.position;
-            lastSavedRot = transform.eulerAngles;
+            resetChecker.transform.position = transform.position;
+            resetChecker.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            if (resetChecker.noBlocks)
+            {
+                lastSavedPos = transform.position;
+                lastSavedRot = transform.eulerAngles;
+            }
+            yield return new WaitForSeconds(0.5f);
+            resetChecker.gameObject.SetActive(false);
             yield return new WaitForSeconds(duration);
         }
         yield return null;
@@ -142,8 +158,10 @@ public class BoatController : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Default") || collision.gameObject.layer == LayerMask.NameToLayer("Homebase"))
         {
+            PoolManager.instance.SpawnPoof(transform.position, Quaternion.identity);
             transform.position = lastSavedPos;
             transform.eulerAngles = lastSavedRot;
+            PoolManager.instance.SpawnPoof(transform.position, Quaternion.identity);
         }
     }
 

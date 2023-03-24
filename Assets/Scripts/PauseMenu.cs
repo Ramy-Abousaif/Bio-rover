@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        AudioManager.instance.Resume();
         if (StoreManager.instance != null)
         {
             if (StoreManager.instance.inStore)

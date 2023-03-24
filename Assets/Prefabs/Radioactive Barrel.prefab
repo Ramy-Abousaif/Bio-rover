@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanned: 0
-  baseValue: 50
+  baseValue: 35
   rarity: 3
 --- !u!54 &3246641140894354071
 Rigidbody:
