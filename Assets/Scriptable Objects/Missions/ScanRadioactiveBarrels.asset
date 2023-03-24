@@ -15,7 +15,7 @@ MonoBehaviour:
   title: Scan for radioactive materials
   type: 2
   description: Scan nearby leaking radioactive barrels
-  creditsReward: 2500
+  creditsReward: 1500
   objectives:
   - title: Scan leaking radioactive barrels
     completed: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   title: Find The Missing Submarine
   type: 0
   description: Find The Missing Submarine
-  creditsReward: 5000
+  creditsReward: 3000
   objectives:
   - title: Find The Missing Submarine
     completed: 0

@@ -82,13 +82,9 @@ public class AIController : MonoBehaviour
             return;
 
         float squaredDistance = (breakableTarget.transform.position - transform.position).sqrMagnitude;
-        Debug.Log(squaredDistance);
-        if (squaredDistance <= explosionRadius * 4.5f)
-        {
+
+        if (squaredDistance <= explosionRadius * 5f)
             Explode();
-            if(breakableTarget != null)
-                Destroy(breakableTarget);
-        }
     }
 
     void FixedUpdate()
@@ -229,11 +225,8 @@ public class AIController : MonoBehaviour
         }
     }
 
-    public void OverrideTarget(Vector3 newPos, Vector3 hitNormal)
+    public void OverrideTarget(Vector3 newPos)
     {
-        PlayerManager.instance.arrow.SetActive(true);
-        PlayerManager.instance.arrow.transform.position = newPos;
-        PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hitNormal);
         overrideTarget = true;
         targetPos.position = newPos;
     }
@@ -290,9 +283,20 @@ public class AIController : MonoBehaviour
 
             if (squaredDistance <= explosionRadius * 20f)
                 PlayerManager.instance.rc.Shake(20f);
+
+            if(PlayerManager.instance.rc.aiRovers.Count <= 0)
+                PlayerManager.instance.arrow.SetActive(false);
         }
 
+        UIManager.instance.activeRoversText.text = PlayerManager.instance.bc.activeRovers.Count + " Active Rovers";
+        UIManager.instance.storedRoversText.text = PlayerManager.instance.bc.storedRovers.Count + " Stored Rovers";
         AudioManager.instance.PlayOneShotWithParameters("Explosion", transform);
+
+        if (breakableTarget != null)
+        {
+            PoolManager.instance.SpawnPoof(breakableTarget.transform.position, Quaternion.identity);
+            Destroy(breakableTarget);
+        }
 
         Destroy(transform.parent.gameObject);
     }

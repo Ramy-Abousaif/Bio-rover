@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.25099868, g: 0.20469353, b: 0.42570984, a: 1}
+  m_IndirectSpecularColor: {r: 0.1986165, g: 0.21199429, b: 0.52585, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -373,7 +373,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29880
+  m_Name: pb_Mesh32652
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -8274,7 +8274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfaba2f7799fe944b0761b3ee338585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cycleInMinutes: 0.25
+  cycleInMinutes: 5
   sun1: {fileID: 2138677393}
   sunBrightness:
     serializedVersion: 2
@@ -8484,7 +8484,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  starsSpeed: 8
   fogColor:
     serializedVersion: 2
     key0: {r: 0.66, g: 1, b: 1, a: 1}
@@ -8620,7 +8619,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30424
+  m_Name: pb_Mesh33200
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -9179,6 +9178,7 @@ MonoBehaviour:
   scannerPrefab: {fileID: 1349819124486141317, guid: 534b822f778ebb14ab3075a2870b6ffe, type: 3}
   smokeRingPrefab: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
   explosionPrefab: {fileID: 9669109299659850, guid: 2670fe4e401b8b34d8c3bc81ab681dfc, type: 3}
+  poofPrefab: {fileID: 6000195836722721760, guid: 921e3181a9c9bfe49bb5e49504088fc2, type: 3}
   scanTextPrefab: {fileID: 2867761392654621849, guid: 50ae3599d36c2f546b7b794840c11f10, type: 3}
   creditTextPrefab: {fileID: 4409457018217883455, guid: 78b39245a850179469268816b82e2417, type: 3}
 --- !u!4 &1302042733
@@ -10322,7 +10322,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371759, w: 0.6672781}
+  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371751, w: 0.6672782}
   m_LocalPosition: {x: -202.29999, y: 67.8, z: 31.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10797,7 +10797,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860238965}
-  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371759, w: 0.6672781}
+  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371751, w: 0.6672782}
   m_LocalPosition: {x: -202.29999, y: 67.8, z: 31.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18044,10 +18044,6 @@ PrefabInstance:
       propertyPath: boatCamFollow
       value: 
       objectReference: {fileID: 699267837}
-    - target: {fileID: 9078094989234794949, guid: b00b47233d0f108409bdbc0166b0302e, type: 3}
-      propertyPath: storedRovers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9078094989234794949, guid: b00b47233d0f108409bdbc0166b0302e, type: 3}
       propertyPath: storedRovers.Array.data[0]
       value: 

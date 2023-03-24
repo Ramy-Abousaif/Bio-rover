@@ -292,6 +292,8 @@ public class RoverController : MonoBehaviour
                         hit.transform.GetComponent<AIController>().overrideTarget = false;
                         hit.transform.GetComponent<AIController>().outline.SetActive(false);
                         aiRovers.Remove(hit.transform.GetComponent<AIController>());
+                        if(aiRovers.Count <= 0)
+                            PlayerManager.instance.arrow.SetActive(false);
                     }
                 }
 
@@ -304,9 +306,13 @@ public class RoverController : MonoBehaviour
                 {
                     for (int i = 0; i < aiRovers.Count; i++)
                     {
-                        aiRovers[i].OverrideTarget(hit.point, hit.normal);
+                        aiRovers[i].OverrideTarget(hit.point);
                         aiRovers[i].breakableTarget = hit.transform.gameObject;
                     }
+
+                    PlayerManager.instance.arrow.SetActive(true);
+                    PlayerManager.instance.arrow.transform.position = hit.point;
+                    PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hit.normal);
                 }
 
                 executeDefaultRaycast = false;
@@ -318,12 +324,15 @@ public class RoverController : MonoBehaviour
                 {
                     for (int i = 0; i < aiRovers.Count; i++)
                     {
-                        aiRovers[i].OverrideTarget(hit.point, hit.normal);
+                        aiRovers[i].OverrideTarget(hit.point);
                         aiRovers[i].breakableTarget = null;
                     }
+
+                    PlayerManager.instance.arrow.SetActive(true);
+                    PlayerManager.instance.arrow.transform.position = hit.point;
+                    PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hit.normal);
                 }
             }
-            Debug.DrawRay(ray.origin, ray.direction * 10000, Color.red);
         }
     }
 

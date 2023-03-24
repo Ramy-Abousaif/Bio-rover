@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f93df0801e9cc514a8e36eb2c781277f, type: 3}
-  m_Name: ScanAllPlants
+  m_Name: ScanAllObjects
   m_EditorClassIdentifier: 
   title: Scan objects
   type: 2
   description: Scan nearby objects  to see if they have any traces of chemicals
-  creditsReward: 1500
+  creditsReward: 1000
   objectives:
   - title: Scan common objects
     completed: 0

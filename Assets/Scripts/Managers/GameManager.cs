@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         StartCoroutine(LoadSceneAsync("MainMenu", Gamestate.MENU));
+        AudioManager.instance.Resume();
         UIManager.instance.pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

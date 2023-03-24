@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     Bus masterBus;
     Bus backgroundBus;
     Bus sfxBus;
+    Bus menuBus;
     EventInstance ambienceInstance;
     EventInstance musicInstance;
     [Header("Events Selector")]
@@ -54,9 +55,11 @@ public class AudioManager : MonoBehaviour
         masterBus = RuntimeManager.GetBus("bus:/Master");
         backgroundBus = RuntimeManager.GetBus("bus:/Master/Background");
         sfxBus = RuntimeManager.GetBus("bus:/Master/SFX");
+        menuBus = RuntimeManager.GetBus("bus:/Master/Menu");
         masterBus.setVolume(this.masterVolume);
         backgroundBus.setVolume(this.bgVolume);
         sfxBus.setVolume(this.sfxVolume);
+        menuBus.setVolume(this.sfxVolume);
         StartAmbience();
         //StartMusic();
     }
@@ -72,6 +75,7 @@ public class AudioManager : MonoBehaviour
     {
         this.sfxVolume = newSFXVolume;
         sfxBus.setVolume(this.sfxVolume);
+        menuBus.setVolume(this.sfxVolume);
     }
 
     public void ChangeBGVolume(float newBGVolume)
@@ -134,12 +138,14 @@ public class AudioManager : MonoBehaviour
 
     public void Resume()
     {
-        masterBus.setPaused(false);
+        backgroundBus.setPaused(false);
+        sfxBus.setPaused(false);
     }
 
     public void Pause()
     {
-        masterBus.setPaused(true);
+        backgroundBus.setPaused(true);
+        sfxBus.setPaused(true);
     }
 
     public void OnDestroy()
