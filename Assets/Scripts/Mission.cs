@@ -9,7 +9,8 @@ public class Mission : ScriptableObject
     {
         FIND,
         COLLECT,
-        SCAN
+        SCAN,
+        REMOVE
     }
 
     [System.Serializable]

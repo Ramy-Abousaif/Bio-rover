@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ScanRarity
+public enum Rarity
 {
-    COMMON,
-    UNCOMMON,
-    RARE,
-    EXOTIC
+    COMMON = 1,
+    UNCOMMON = 2,
+    RARE = 3,
+    EXOTIC = 5
 }
 
 public class Scannable : MonoBehaviour
 {
     public bool scanned = false;
-    public ScanRarity rarity = ScanRarity.COMMON;
+    public float baseValue = 10;
+    public Rarity rarity;
 }

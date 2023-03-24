@@ -64,7 +64,8 @@ public class StoreManager : MonoBehaviour
 
     public void ShowAddedCreditsText(int _credits)
     {
-        GameObject text = Instantiate(UIManager.instance.creditAddTextPrefab, UIManager.instance.creditAddTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform);
+        GameObject text;
+        PoolManager.instance.SpawnCreditText(UIManager.instance.creditAddTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform, out text);
         text.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+" + _credits;

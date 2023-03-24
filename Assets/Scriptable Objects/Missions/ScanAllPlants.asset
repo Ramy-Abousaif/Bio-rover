@@ -15,13 +15,21 @@ MonoBehaviour:
   title: Scan objects
   type: 2
   description: Scan nearby objects  to see if they have any traces of chemicals
-  creditsReward: 5000
+  creditsReward: 1500
   objectives:
   - title: Scan common objects
     completed: 0
     currentProgress: 0
+    targetProgress: 20
+  - title: Scan uncommon objects
+    completed: 0
+    currentProgress: 0
     targetProgress: 15
   - title: Scan rare objects
+    completed: 0
+    currentProgress: 0
+    targetProgress: 10
+  - title: Scan exotic objects
     completed: 0
     currentProgress: 0
     targetProgress: 5

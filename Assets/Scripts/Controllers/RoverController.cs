@@ -42,7 +42,6 @@ public class RoverController : MonoBehaviour
     private bool isChangingSize = false;
 
     public GameObject smokeRing;
-    public GameObject scanner;
     private float landSpeed;
     private float currentSpeed;
     private float prevSpeed;
@@ -134,9 +133,9 @@ public class RoverController : MonoBehaviour
     void Scan()
     {
         scanTimer += Time.deltaTime;
-        if (PlayerInputManager.instance.scan && scanner != null && scanTimer >= scanCooldown)
+        if (PlayerInputManager.instance.scan && scanTimer >= scanCooldown)
         {
-            Instantiate(scanner, transform.position, Quaternion.identity);
+            PoolManager.instance.SpawnScanner(transform.position, Quaternion.identity);
             AudioManager.instance.PlayOneShotWithParameters("Sonar", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
             scanTimer = 0.0f;
         }
@@ -359,7 +358,7 @@ public class RoverController : MonoBehaviour
         if (landSpeed > 9f || prevSpeed > 10f)
         {
             Shake(landSpeed);
-            Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up ,collision.contacts[0].normal));
+            PoolManager.instance.SpawnSmokeRing(collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up ,collision.contacts[0].normal));
         }
 
         if (!isChangingSize)

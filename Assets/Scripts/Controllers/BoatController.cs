@@ -123,7 +123,7 @@ public class BoatController : MonoBehaviour
     public void TakeRover(GameObject rover)
     {
         storedRovers.Add(rover.transform.parent.gameObject);
-        activeRovers.Remove(rover.transform.gameObject);
+        activeRovers.Remove(rover.transform.parent.gameObject);
         rover.transform.parent.gameObject.SetActive(false);
     }
 

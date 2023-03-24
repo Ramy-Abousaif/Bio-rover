@@ -909,6 +909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draw: {fileID: 3521490357930426531}
   outline: {fileID: 199431692850005090}
+  minimap: {fileID: 8768444916644576680}
   marimos:
   - {fileID: 2673469575727044636}
   - {fileID: 2673469576530786098}
@@ -1750,8 +1751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterVelocityDrag: 0.99
   waterAngularDrag: 0.5
-  strength: 3
-  objectDepth: 1
+  strength: 5
+  objectDepth: 1.2
   active: 1
   rb: {fileID: 0}
 --- !u!1 &2673469576739696410

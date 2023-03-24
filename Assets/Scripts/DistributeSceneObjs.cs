@@ -7,21 +7,34 @@ public class DistributeSceneObjs : MonoBehaviour
 {
     public LayerMask ground;
     public GameObject seaweed;
-    public GameObject rock1;
-    public GameObject rock2;
+    public GameObject rock;
+    public GameObject diamond;
+    public GameObject barrel;
+    public GameObject seaMine;
     private int seaweedCount = 70;
-    private int rock1Count = 70;
-    private int rock2Count = 70;
+    private int rockCount = 40;
+    private int diamondCount = 10;
+    private int barrelCount = 15;
+    private int seaMineCount = 30;
     private GridGraph grid;
 
     void Start()
     {
         grid = AstarPath.active.data.gridGraph;
 
-        if (seaweed == null)
+        DistributeObjs(seaweed, 0f, seaweedCount, "Seaweed", true, true);
+        DistributeObjs(rock, 0f, rockCount, "Rock", true, true);
+        DistributeObjs(diamond, 0f, diamondCount, "Diamond", true, true);
+        DistributeObjs(barrel, 1f, barrelCount, "Radioactive Barrel", true, true);
+        DistributeObjs(seaMine, 10f, barrelCount, "Sea Mine", false, false);
+    }
+
+    void DistributeObjs(GameObject prefab, float offset, int count, string name, bool useNormal, bool useRandomRot)
+    {
+        if (prefab == null)
             return;
 
-        for (int i = 0; i < seaweedCount; i++)
+        for (int i = 0; i < count; i++)
         {
             GridNode randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
             float x = randomNode.RandomPointOnSurface().x / 2;
@@ -29,52 +42,16 @@ public class DistributeSceneObjs : MonoBehaviour
             float randomRot = Random.Range(0, 360);
 
             RaycastHit hit;
-            if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground))
+            if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
             {
-                GameObject seaweedGO = Instantiate(seaweed, hit.point, Quaternion.LookRotation(hit.normal));
-                seaweedGO.transform.localEulerAngles = new Vector3(seaweedGO.transform.localEulerAngles.x, seaweedGO.transform.localEulerAngles.y, seaweedGO.transform.localEulerAngles.z + randomRot);
-                seaweedGO.transform.SetParent(transform);
-                seaweedGO.name = "Seaweed";
-            }
-        }
+                GameObject goInstance = Instantiate(prefab, new Vector3(hit.point.x, hit.point.y + offset, hit.point.z), useNormal ? Quaternion.LookRotation(hit.normal) : Quaternion.Euler(Vector3.zero));
 
-        if (rock1 == null)
-            return;
+                if(useRandomRot)
+                    goInstance.transform.localEulerAngles = new Vector3(goInstance.transform.localEulerAngles.x, goInstance.transform.localEulerAngles.y, goInstance.transform.localEulerAngles.z + randomRot);
 
-        for (int i = 0; i < rock1Count; i++)
-        {
-            GridNode randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-            float x = randomNode.RandomPointOnSurface().x / 2;
-            float z = randomNode.RandomPointOnSurface().z / 2;
-            float randomRot = Random.Range(0, 360);
-
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground))
-            {
-                GameObject rock1GO = Instantiate(rock1, hit.point, Quaternion.LookRotation(hit.normal));
-                rock1GO.transform.localEulerAngles = new Vector3(rock1GO.transform.localEulerAngles.x, rock1GO.transform.localEulerAngles.y, rock1GO.transform.localEulerAngles.z + randomRot);
-                rock1GO.transform.SetParent(transform);
-                rock1GO.name = "Rock";
-            }
-        }
-
-        if (rock2 == null)
-            return;
-
-        for (int i = 0; i < rock2Count; i++)
-        {
-            GridNode randomNode = grid.nodes[Random.Range(0, grid.nodes.Length)];
-            float x = randomNode.RandomPointOnSurface().x / 2;
-            float z = randomNode.RandomPointOnSurface().z / 2;
-            float randomRot = Random.Range(0, 360);
-
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground))
-            {
-                GameObject rock2GO = Instantiate(rock2, hit.point, Quaternion.LookRotation(hit.normal));
-                rock2GO.transform.localEulerAngles = new Vector3(rock2GO.transform.localEulerAngles.x, rock2GO.transform.localEulerAngles.y, rock2GO.transform.localEulerAngles.z + randomRot);
-                rock2GO.transform.SetParent(transform);
-                rock2GO.name = "Rock";
+                goInstance.transform.SetParent(transform);
+                goInstance.name = name;
+                goInstance.isStatic = true;
             }
         }
     }
