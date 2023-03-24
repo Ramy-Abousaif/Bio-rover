@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28935063, g: 0.30328086, b: 0.7067673, a: 1}
+  m_IndirectSpecularColor: {r: 0.25099868, g: 0.20469353, b: 0.42570984, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6534,8 +6534,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   seaweed: {fileID: 5525131197524251200, guid: 3903fb72967983345974aa8059eb7f24, type: 3}
-  rock1: {fileID: 194260872228636315, guid: afb93a99b51f5cc4887e47ffd3f5ec71, type: 3}
-  rock2: {fileID: 7307722998024300236, guid: 6517aabbc60447f4fa2bee54314cc52a, type: 3}
+  rock: {fileID: 7307722998024300236, guid: 6517aabbc60447f4fa2bee54314cc52a, type: 3}
+  diamond: {fileID: 194260872228636315, guid: afb93a99b51f5cc4887e47ffd3f5ec71, type: 3}
+  barrel: {fileID: 2819700747451330259, guid: 2d1d232949656384eba96deca44c43d0, type: 3}
+  seaMine: {fileID: 8132577642537867370, guid: fcd954bec6f9086428e70cad6871f3dc, type: 3}
 --- !u!1 &764358858
 GameObject:
   m_ObjectHideFlags: 0
@@ -8975,7 +8977,9 @@ MonoBehaviour:
   selection: 0
   availableMissions:
   - {fileID: 11400000, guid: a813ea52b3b74f7499bf59419bc67dde, type: 2}
+  - {fileID: 11400000, guid: d2b1d4a40d31d2444a029d6eebfff32a, type: 2}
   - {fileID: 11400000, guid: 25e3c8f8047e2da4990e30f19e1ce14d, type: 2}
+  - {fileID: 11400000, guid: 34ff076a20b9a6f49ba72389da9f1446, type: 2}
   completedMissions: []
 --- !u!4 &1228033440
 Transform:
@@ -9143,6 +9147,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276796926}
   m_Mesh: {fileID: -5886464371507507907, guid: b2a712ccb38eed142a9395e95c143052, type: 3}
+--- !u!1 &1302042731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302042733}
+  - component: {fileID: 1302042732}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1302042732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302042731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3822993b975054fac6ecddd68939f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scannerPrefab: {fileID: 1349819124486141317, guid: 534b822f778ebb14ab3075a2870b6ffe, type: 3}
+  smokeRingPrefab: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
+  explosionPrefab: {fileID: 9669109299659850, guid: 2670fe4e401b8b34d8c3bc81ab681dfc, type: 3}
+  scanTextPrefab: {fileID: 2867761392654621849, guid: 50ae3599d36c2f546b7b794840c11f10, type: 3}
+  creditTextPrefab: {fileID: 4409457018217883455, guid: 78b39245a850179469268816b82e2417, type: 3}
+--- !u!4 &1302042733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302042731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -509.31253, y: -92.943054, z: 144.26505}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317398081
 GameObject:
   m_ObjectHideFlags: 3

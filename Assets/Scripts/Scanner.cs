@@ -7,15 +7,21 @@ public class Scanner : MonoBehaviour
 {
     public Color[] rarityColors;
     public float speed = 5.0f;
-    private float duration = 1.0f;
+    [HideInInspector]
+    public float duration = 1.0f;
     private float fadeDuration = 1.0f;
     private float timeElapsed = 0.0f;
-    private Material mat;
+    private Material matLOD0;
+    private Material matLOD1;
+    private Material matLOD2;
+    private Vector3 localScale = Vector3.zero;
 
     void Start()
     {
-        mat = this.gameObject.GetComponent<Renderer>().material;
-        Destroy(gameObject, (duration + GameManager.instance.sonarUpgrade));
+        localScale = transform.localScale;
+        matLOD0 = this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+        matLOD1 = this.gameObject.transform.GetChild(1).GetComponent<Renderer>().material;
+        matLOD2 = this.gameObject.transform.GetChild(2).GetComponent<Renderer>().material;
     }
 
     void Update()
@@ -25,7 +31,9 @@ public class Scanner : MonoBehaviour
 
         if(timeElapsed > (duration + GameManager.instance.sonarUpgrade) - fadeDuration)
         {
-            mat.SetFloat("_Alpha", fadeDuration);
+            matLOD0.SetFloat("_Alpha", fadeDuration);
+            matLOD1.SetFloat("_Alpha", fadeDuration);
+            matLOD2.SetFloat("_Alpha", fadeDuration);
             fadeDuration -= Time.deltaTime;
         }
 
@@ -34,58 +42,82 @@ public class Scanner : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Scannable"))
         {
             Scannable scannedObj = other.gameObject.GetComponent<Scannable>();
             if(!scannedObj.scanned)
             {
-                other.GetComponent<Scannable>().scanned = true;
-                if (MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects") != null && 
+                scannedObj.scanned = true;
+                // Rarity scan mission
+                if (MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects") != null &&
                     !MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects").completed)
                 {
                     MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects").currentProgress++;
                 }
 
+                // Scan radioactive barrels mission
+                if (MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s") != null &&
+                    !MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s").completed)
+                {
+                    MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s").currentProgress++;
+                }
+
                 MissionsManager.instance.GetMissionByName("Scan objects").CheckCompletion();
-                Reward(other.gameObject);
+                MissionsManager.instance.GetMissionByName("Scan for radioactive materials").CheckCompletion();
+                Reward(scannedObj);
             }
 
-            foreach(Material mat in other.GetComponent<Renderer>().materials)
+            if(other.GetComponent<Renderer>() != null)
             {
-                if(mat.GetInt("_isScannable") == 1)
-                    mat.SetInt("_isHighlighted", 1);
+                foreach (Material mat in other.GetComponent<Renderer>().materials)
+                {
+                    if (mat.GetInt("_isScannable") == 1)
+                        mat.SetInt("_isHighlighted", 1);
+                }
             }
         }
     }
 
-    void Reward(GameObject other)
+    void Reward(Scannable other)
     {
-        GameObject text = Instantiate(UIManager.instance.scanTextPrefab, UIManager.instance.scanTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform);
+        GameObject text;
+        PoolManager.instance.SpawnScanText(UIManager.instance.scanTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform, out text);
         text.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+ " + other.transform.name + " scanned";
-        switch (other.GetComponent<Scannable>().rarity)
+        switch (other.rarity)
         {
-            case ScanRarity.COMMON:
+            case Rarity.COMMON:
                 AudioManager.instance.PlayOneShotWithParameters("RewardCommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[0];
-                StoreManager.instance.AddCredit(100);
                 break;
-            case ScanRarity.UNCOMMON:
+            case Rarity.UNCOMMON:
                 AudioManager.instance.PlayOneShotWithParameters("RewardUncommon", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[1];
-                StoreManager.instance.AddCredit(200);
                 break;
-            case ScanRarity.RARE:
+            case Rarity.RARE:
                 AudioManager.instance.PlayOneShotWithParameters("RewardRare", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[2];
-                StoreManager.instance.AddCredit(500);
                 break;
-            case ScanRarity.EXOTIC:
+            case Rarity.EXOTIC:
                 AudioManager.instance.PlayOneShotWithParameters("RewardExotic", transform);
                 text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().color = rarityColors[3];
-                StoreManager.instance.AddCredit(1000);
                 break;
         }
+        StoreManager.instance.AddCredit((int)(other.baseValue * ((float)other.rarity / 2)));
+    }
+
+    private void OnEnable()
+    {
+        transform.localScale = localScale;
+        fadeDuration = 1.0f;
+        timeElapsed = 0.0f;
+    }
+
+    private void OnDisable()
+    {
+        transform.localScale = localScale;
+        fadeDuration = 1.0f;
+        timeElapsed = 0.0f;
     }
 }

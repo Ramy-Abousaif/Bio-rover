@@ -22,7 +22,7 @@ public class AIController : MonoBehaviour
     private Vector3 moveDir;
 
     public GameObject smokeRing;
-    public GameObject explosion;
+
     private float explosionForce = 100f;
     private float explosionRadius = 30f;
     private float landSpeed;
@@ -82,9 +82,13 @@ public class AIController : MonoBehaviour
             return;
 
         float squaredDistance = (breakableTarget.transform.position - transform.position).sqrMagnitude;
-
-        if (squaredDistance <= explosionRadius)
+        Debug.Log(squaredDistance);
+        if (squaredDistance <= explosionRadius * 4.5f)
+        {
             Explode();
+            if(breakableTarget != null)
+                Destroy(breakableTarget);
+        }
     }
 
     void FixedUpdate()
@@ -213,7 +217,7 @@ public class AIController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (landSpeed > 9f || prevSpeed > 10f)
-            Instantiate(smokeRing, collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up, collision.contacts[0].normal));
+            PoolManager.instance.SpawnSmokeRing(collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up, collision.contacts[0].normal));
     }
 
     private void FindNewTarget()
@@ -262,8 +266,7 @@ public class AIController : MonoBehaviour
         if (!(GameManager.instance.explosionUpgrade >= 1))
             return;
 
-        if(explosion != null)
-            Instantiate(explosion, transform.position, Quaternion.identity);
+        PoolManager.instance.SpawnExplosion(transform.position, Quaternion.identity);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
@@ -285,7 +288,6 @@ public class AIController : MonoBehaviour
 
             float squaredDistance = (PlayerManager.instance.rc.transform.position - transform.position).sqrMagnitude;
 
-            Debug.Log(squaredDistance);
             if (squaredDistance <= explosionRadius * 20f)
                 PlayerManager.instance.rc.Shake(20f);
         }
