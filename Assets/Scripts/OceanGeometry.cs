@@ -7,7 +7,7 @@ public class OceanGeometry : MonoBehaviour
     [SerializeField]
     private GameObject water;
     private int count = 4;
-    private float distanceBetween = 508.5f;
+    private float distanceBetween = 507.5f;
     public float offset = 100;
 
     private void Start()

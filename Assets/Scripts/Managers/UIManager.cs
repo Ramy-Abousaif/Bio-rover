@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
 
     public void SetResolution()
     {
-        Screen.SetResolution(screenWidth, screenHeight, false);
+        Screen.SetResolution(screenWidth, screenHeight, true);
     }
 
     void Setup()
