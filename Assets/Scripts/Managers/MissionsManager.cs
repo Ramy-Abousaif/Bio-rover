@@ -67,12 +67,13 @@ public class MissionsManager : MonoBehaviour
         {
             string _color = "<color=white>";
             string tempObjective = availableMissions[selection].objectives[i].title;
-            if (availableMissions[selection].objectives[i].completed)
+            if (availableMissions[selection].objectives[i].currentProgress >= availableMissions[selection].objectives[i].targetProgress)
                 _color = "<color=green>";
             else
                 _color = "<color=white>";
 
-            if (availableMissions[selection] == GetMissionByName("Scan objects") && !availableMissions[selection].objectives[i].completed)
+            if (availableMissions[selection] == GetMissionByName("Scan objects") &&
+                !(availableMissions[selection].objectives[i].currentProgress >= availableMissions[selection].objectives[i].targetProgress))
             {
                 if (tempObjective.Contains("uncommon"))
                 {
