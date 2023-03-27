@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
                 expandUpgrade = 0;
                 StoreManager.instance.AddCredit(50);
                 MissionsManager.instance.Setup();
+                PlayerManager.instance.bc.transform.localPosition = Vector3.zero;
+                PlayerManager.instance.bc.transform.localEulerAngles = Vector3.zero;
                 break;
         }
     }

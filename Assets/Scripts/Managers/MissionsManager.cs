@@ -66,12 +66,34 @@ public class MissionsManager : MonoBehaviour
         for (int i = 0; i < availableMissions[selection].objectives.Count; i++)
         {
             string _color = "<color=white>";
+            string tempObjective = availableMissions[selection].objectives[i].title;
             if (availableMissions[selection].objectives[i].completed)
                 _color = "<color=green>";
             else
                 _color = "<color=white>";
 
-            missionText.text += _color + availableMissions[selection].objectives[i].title + ": " +
+            if (availableMissions[selection] == GetMissionByName("Scan objects") && !availableMissions[selection].objectives[i].completed)
+            {
+                if (tempObjective.Contains("uncommon"))
+                {
+                    tempObjective = tempObjective.Insert(5, "<color=green>");
+                    tempObjective = tempObjective.Insert(26, "<color=white>");
+                }
+
+                if (tempObjective.Contains("rare"))
+                {
+                    tempObjective = tempObjective.Insert(5, "<color=#00FFFF>");
+                    tempObjective = tempObjective.Insert(24, "<color=white>");
+                }
+
+                if (tempObjective.Contains("exotic"))
+                {
+                    tempObjective = tempObjective.Insert(5, "<color=orange>");
+                    tempObjective = tempObjective.Insert(25, "<color=white>");
+                }
+            }
+
+            missionText.text += _color + tempObjective + ": " +
                 availableMissions[selection].objectives[i].currentProgress + "/" + availableMissions[selection].objectives[i].targetProgress + "\n";
         }
     }
