@@ -7,6 +7,8 @@ public class OceanGeometry : MonoBehaviour
     [SerializeField]
     private GameObject water;
     private int count = 4;
+    private float distanceBetween = 507.5f;
+    public float offset = 100;
 
     private void Start()
     {
@@ -15,13 +17,15 @@ public class OceanGeometry : MonoBehaviour
         {
             for (int j = 0; j < count; j++)
             {
-                Instantiate(water, new Vector3(transform.position.x + (i * 512) - (192 * count), transform.position.y, transform.position.z + (j * 512) - (192 * count)), Quaternion.identity, transform);
+                Instantiate(water, new Vector3(transform.position.x + (i * distanceBetween) - (offset * count),
+                    transform.position.y, transform.position.z + (j * distanceBetween) - (offset * count)), Quaternion.identity, transform);
             }
         }
     }
 
     private void Update()
     {
-        transform.position = new Vector3(viewer.position.x, transform.position.y, viewer.position.z);
+        if ((transform.position - new Vector3(viewer.position.x, transform.position.y, viewer.position.z)).sqrMagnitude >= 512 * 512)
+            transform.position = new Vector3(viewer.position.x, transform.position.y, viewer.position.z);
     }
 }

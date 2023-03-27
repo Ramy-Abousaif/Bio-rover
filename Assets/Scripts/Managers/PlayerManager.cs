@@ -104,6 +104,7 @@ public class PlayerManager : MonoBehaviour
                 rc.enabled = false;
             }
 
+            arrow.SetActive(false);
             boatVCam.gameObject.SetActive(true);
             roverVCam.gameObject.SetActive(false);
         }
