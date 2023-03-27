@@ -25,8 +25,8 @@ public class DistributeSceneObjs : MonoBehaviour
         DistributeObjs(seaweed, 0f, seaweedCount, "Seaweed", true, true);
         DistributeObjs(rock, 0f, rockCount, "Rock", true, true);
         DistributeObjs(diamond, 0f, diamondCount, "Diamond", true, true);
-        DistributeObjs(barrel, 1f, barrelCount, "Radioactive Barrel", true, true);
-        DistributeObjs(seaMine, 10f, barrelCount, "Sea Mine", false, false);
+        DistributeObjs(barrel, 1.5f, barrelCount, "Radioactive Barrel", true, true);
+        DistributeObjs(seaMine, 10f, seaMineCount, "Sea Mine", false, false);
     }
 
     void DistributeObjs(GameObject prefab, float offset, int count, string name, bool useNormal, bool useRandomRot)

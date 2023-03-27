@@ -210,9 +210,10 @@ Material:
     - Vector4_C3B1A38B: {r: 1.22, g: 3.12, b: 1, a: 3}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorDeepPov: {r: 0, g: 0.4769048, b: 0.8962264, a: 1}
     - _DeepColor: {r: 0, g: 0.5333334, b: 0.8313726, a: 0.78039217}
-    - _DeepColor1: {r: 0, g: 1, b: 0.46160936, a: 0.36862746}
-    - _DeepColor2: {r: 0.21466702, g: 0.5166428, b: 0.6792453, a: 0.36862746}
+    - _DeepColor1: {r: 0, g: 0.9003701, b: 1, a: 0.5882353}
+    - _DeepColor2: {r: 0.21466696, g: 0.51664275, b: 0.6792453, a: 0.5882353}
     - _Direction1: {r: 0.01, g: 0, b: 0.02, a: 0}
     - _Direction2: {r: -0.03, g: 0, b: 0.02, a: 0}
     - _Direction3: {r: 0.05, g: 0, b: -0.08, a: 0}
@@ -220,7 +221,7 @@ Material:
     - _DirectionA: {r: -0.04, g: 0, b: 0.1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RippleColor: {r: 1.0927888, g: 1.6055588, b: 1.6055588, a: 0}
-    - _ShallowColor: {r: 0.8820755, g: 0.99487287, b: 1, a: 0.36862746}
+    - _ShallowColor: {r: 0.8820755, g: 0.99487287, b: 1, a: 0.5882353}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TilingMainNormal: {r: 5, g: 5, b: 0, a: 0}
     - _TilingSecondNormal: {r: 5, g: 5, b: 0, a: 0}

@@ -312,7 +312,7 @@ public class RoverController : MonoBehaviour
 
                     PlayerManager.instance.arrow.SetActive(true);
                     PlayerManager.instance.arrow.transform.position = hit.point;
-                    PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hit.normal);
+                    PlayerManager.instance.arrow.transform.up = hit.normal;
                 }
 
                 executeDefaultRaycast = false;
@@ -330,7 +330,7 @@ public class RoverController : MonoBehaviour
 
                     PlayerManager.instance.arrow.SetActive(true);
                     PlayerManager.instance.arrow.transform.position = hit.point;
-                    PlayerManager.instance.arrow.transform.rotation = Quaternion.FromToRotation(PlayerManager.instance.arrow.transform.up, hit.normal);
+                    PlayerManager.instance.arrow.transform.up = hit.normal;
                 }
             }
         }
