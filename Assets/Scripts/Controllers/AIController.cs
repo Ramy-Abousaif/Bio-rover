@@ -294,6 +294,7 @@ public class AIController : MonoBehaviour
 
         if (breakableTarget != null)
         {
+            PlayerManager.instance.arrow.SetActive(false);
             PoolManager.instance.SpawnPoof(breakableTarget.transform.position, Quaternion.identity);
             Destroy(breakableTarget);
         }

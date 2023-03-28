@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text creditsText;
     public TMP_Text storedRoversText;
     public TMP_Text activeRoversText;
+    public GameObject helpSprite;
 
     public GameObject scanTextPrefab;
     public Transform scanTextPos;
