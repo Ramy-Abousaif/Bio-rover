@@ -16,6 +16,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool leftArrow;
     public bool upArrow;
     public bool downArrow;
+    public bool help;
     public bool floating;
     public bool scan;
     public bool switchMode;
@@ -56,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
         leftArrow = Input.GetKeyDown(KeyCode.LeftArrow);
         upArrow = Input.GetKeyDown(KeyCode.UpArrow);
         downArrow = Input.GetKeyDown(KeyCode.DownArrow);
+        help = Input.GetKeyDown(KeyCode.H);
         floating = Input.GetKey(KeyCode.Space);
         scan = Input.GetKeyDown(KeyCode.Q);
         switchMode = Input.GetKeyDown(KeyCode.T);

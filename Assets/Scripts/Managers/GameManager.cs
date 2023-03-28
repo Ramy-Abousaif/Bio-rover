@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case Gamestate.MENU:
+                UIManager.instance.helpSprite.SetActive(false);
                 UIManager.instance.mainMenu.SetActive(true);
                 UIManager.instance.inGame.SetActive(false);
                 Cursor.lockState = CursorLockMode.None;
@@ -104,6 +105,9 @@ public class GameManager : MonoBehaviour
             case Gamestate.IN_GAME:
                 if (PlayerInputManager.instance.pause)
                     UIManager.instance.Pause();
+
+                if (PlayerInputManager.instance.help)
+                    UIManager.instance.helpSprite.SetActive(!UIManager.instance.helpSprite.activeSelf);
                 break;
         }
     }
