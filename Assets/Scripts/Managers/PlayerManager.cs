@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
 
                 ChangeRover();
 
-                if (PlayerInputManager.instance.switchMode && bc.activeRovers.Count > 0)
+                if (PlayerInputManager.instance.switchMode && bc.activeRovers.Count > 0 && !StoreManager.instance.inStore)
                     ChangePlayerState(PlayerState.ROVER);
 
                 break;
