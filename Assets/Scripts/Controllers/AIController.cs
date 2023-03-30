@@ -15,10 +15,9 @@ public class AIController : MonoBehaviour
     private Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
-    private bool ableToFloat;
+    private bool floatToSurface;
 
     public LayerMask ground;
-    private bool isGrounded = false;
     private Vector3 moveDir;
 
     public GameObject smokeRing;
@@ -66,6 +65,7 @@ public class AIController : MonoBehaviour
 
         if (PlayerInputManager.instance.upArrow)
         {
+            floatToSurface = true;
             floater.active = true;
             minimapMat.SetInt("_isSinking", 0);
             if (transform.position.y < 0f)
@@ -74,6 +74,7 @@ public class AIController : MonoBehaviour
 
         if (PlayerInputManager.instance.downArrow)
         {
+            floatToSurface = false;
             floater.active = false;
             minimapMat.SetInt("_isSinking", 1);
         }
@@ -93,8 +94,6 @@ public class AIController : MonoBehaviour
             return;
 
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
-
-        isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -208,6 +207,32 @@ public class AIController : MonoBehaviour
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
         ApplyForce(energyUsage, distanceToWaypoint);
+
+        // float to mine if close enough to blow up
+        if(breakableTarget != null)
+        {
+            if (breakableTarget.transform.position.y > transform.position.y)
+            {
+                if((new Vector3(breakableTarget.transform.position.x, 0, breakableTarget.transform.position.z)
+                    - new Vector3(transform.position.x, 0, transform.position.z)).sqrMagnitude < 120f)
+                {
+                    floater.active = true;
+                }
+                else
+                {
+                    floater.active = false;
+                }
+            }
+            else
+            {
+                floater.active = false;
+            }
+        }
+        else
+        {
+            if (!floatToSurface)
+                floater.active = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

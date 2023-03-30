@@ -11,25 +11,25 @@ public class DistributeSceneObjs : MonoBehaviour
     public GameObject diamond;
     public GameObject barrel;
     public GameObject seaMine;
-    private int seaweedCount = 70;
+    private int seaweedCount = 200;
     private int rockCount = 40;
     private int diamondCount = 10;
     private int barrelCount = 15;
-    private int seaMineCount = 30;
+    private int seaMineCount = 15;
     private GridGraph grid;
 
     void Start()
     {
         grid = AstarPath.active.data.gridGraph;
 
-        DistributeObjs(seaweed, 0f, seaweedCount, "Seaweed", true, true);
-        DistributeObjs(rock, 0f, rockCount, "Rock", true, true);
-        DistributeObjs(diamond, 0f, diamondCount, "Diamond", true, true);
-        DistributeObjs(barrel, 1.5f, barrelCount, "Radioactive Barrel", true, true);
-        DistributeObjs(seaMine, 10f, seaMineCount, "Sea Mine", false, false);
+        DistributeObjs(seaweed, 0f, 0f, seaweedCount, "Seaweed", true, true, false);
+        DistributeObjs(rock, 0f, 0f, rockCount, "Rock", true, true, false);
+        DistributeObjs(diamond, 0f, 0f, diamondCount, "Diamond", true, true, false);
+        DistributeObjs(barrel, 1.5f, 1.5f, barrelCount, "Radioactive Barrel", true, true, false);
+        DistributeObjs(seaMine, 40f, 5f, seaMineCount, "Sea Mine", false, false, true);
     }
 
-    void DistributeObjs(GameObject prefab, float offset, int count, string name, bool useNormal, bool useRandomRot)
+    void DistributeObjs(GameObject prefab, float defaultOffset, float lowestOffset, int count, string name, bool useNormal, bool useRandomRot, bool randomOffset)
     {
         if (prefab == null)
             return;
@@ -40,11 +40,15 @@ public class DistributeSceneObjs : MonoBehaviour
             float x = randomNode.RandomPointOnSurface().x / 2;
             float z = randomNode.RandomPointOnSurface().z / 2;
             float randomRot = Random.Range(0, 360);
+            float newOffset = defaultOffset;
+
+            if (randomOffset)
+                newOffset = Random.Range(lowestOffset, defaultOffset);
 
             RaycastHit hit;
             if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
             {
-                GameObject goInstance = Instantiate(prefab, new Vector3(hit.point.x, hit.point.y + offset, hit.point.z), useNormal ? Quaternion.LookRotation(hit.normal) : Quaternion.Euler(Vector3.zero));
+                GameObject goInstance = Instantiate(prefab, new Vector3(hit.point.x, hit.point.y + newOffset, hit.point.z), useNormal ? Quaternion.LookRotation(hit.normal) : Quaternion.Euler(Vector3.zero));
 
                 if(useRandomRot)
                     goInstance.transform.localEulerAngles = new Vector3(goInstance.transform.localEulerAngles.x, goInstance.transform.localEulerAngles.y, goInstance.transform.localEulerAngles.z + randomRot);
