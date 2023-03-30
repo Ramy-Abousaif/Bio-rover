@@ -13,6 +13,8 @@ public class Breakable : MonoBehaviour
         {
             MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s").GetObjectiveByTitle("Remove any nearby " +
                 transform.name.ToLower() + "s").currentProgress++;
+
+            MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s").CheckCompletion();
         }
     }
 }

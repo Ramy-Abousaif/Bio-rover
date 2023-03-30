@@ -41,8 +41,6 @@ public class Mission : ScriptableObject
 
     public bool CheckCompletion()
     {
-        MissionsManager.instance.UpdateMissionText();
-
         foreach (Objective objective in objectives)
         {
             if (objective.currentProgress >= objective.targetProgress)
@@ -52,13 +50,15 @@ public class Mission : ScriptableObject
                 return false;
         }
 
-        if(!completed)
+        if (!completed)
         {
             AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
             MissionsManager.instance.completedMissions.Add(this);
             StoreManager.instance.AddCredit(creditsReward);
             completed = true;
         }
+
+        MissionsManager.instance.UpdateMissionText();
 
         return true;
     }

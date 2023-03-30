@@ -34,6 +34,8 @@ public class BoatController : MonoBehaviour
     private float currentDrag = 6f;
     private float dragT = 0.5f;
     private float zRot;
+    private bool stopPressed = false;
+    private bool stopped = false;
     [SerializeField]
     private Motor motor;
     private Vector3 lastSavedPos;
@@ -53,18 +55,32 @@ public class BoatController : MonoBehaviour
 
     private void Update()
     {
-        this.RotateAnim();
+        RotateAnim();
 
         rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, transform.eulerAngles.y, rotation.eulerAngles.z);
-        if (PlayerInputManager.instance.inputY != 0f)
-            this.dragT += PlayerInputManager.instance.inputY * this.acceleration;
-        else if (this.dragT > 0.5f)
-            this.dragT -= this.acceleration;
-        else if (this.dragT < 0.5f)
-            this.dragT += this.acceleration;
+        if (PlayerInputManager.instance.inputY >= 0f)
+        {
+            dragT += PlayerInputManager.instance.inputY * acceleration;
+            stopPressed = false;
+        }
+        else if (dragT > 0.5f)
+        {
+            dragT -= acceleration;
+        }
 
-        this.dragT = Mathf.Clamp01(this.dragT);
-        this.motor.speed = Mathf.Lerp(this.motor.startSpeed / 2f, this.motor.startSpeed * 1.5f, this.dragT);
+        if (!(PlayerInputManager.instance.inputY >= 0f))
+        {
+            if (!stopPressed)
+            {
+                stopPressed = true;
+                stopped = !stopped;
+                motor.isSpinning = !stopped;
+                MotorEffect();
+            }
+        }
+
+        dragT = Mathf.Clamp01(dragT);
+        motor.speed = Mathf.Lerp(motor.startSpeed / 2f, motor.startSpeed * 1.5f, dragT);
 
         elapsedFrames = (elapsedFrames + 1) % (interpolationFramesCount + 1);
         boatCamFollow.position = transform.position;
@@ -88,33 +104,34 @@ public class BoatController : MonoBehaviour
     private void RotateAnim()
     {
         float interpolationRatio = ((float)elapsedFrames / interpolationFramesCount) * 0.025f;
-        this.zRot = Mathf.Clamp(PlayerInputManager.instance.inputX * this.angularSpeed * Time.deltaTime, -25f, 25f);
-        this.mesh.transform.localRotation = Quaternion.Slerp(this.mesh.transform.localRotation,
-            Quaternion.Euler(this.mesh.transform.localRotation.x, this.mesh.transform.localRotation.y, this.zRot), interpolationRatio);
+        zRot = Mathf.Clamp(PlayerInputManager.instance.inputX * angularSpeed * Time.deltaTime, -25f, 25f);
+        mesh.transform.localRotation = Quaternion.Slerp(mesh.transform.localRotation,
+            Quaternion.Euler(mesh.transform.localRotation.x, mesh.transform.localRotation.y, zRot), interpolationRatio);
     }
 
     private void LateUpdate()
     {
-        this.currentDrag = Mathf.Lerp(this.minDrag, this.maxDrag, this.dragT);
+        currentDrag = Mathf.Lerp(minDrag, maxDrag, dragT);
     }
 
     private void FixedUpdate()
     {
-        this.Rotation();
-        this.Movement();
+        Rotation();
+        Movement();
     }
 
     private void Movement()
     {
-        this.rb.velocity = Vector3.zero;
-        float d = (Mathf.Abs(PlayerInputManager.instance.inputX) > 0f) ? (this.speed * this.turningResponsiveness) : this.speed;
-        this.rb.AddForce(this.rotation.forward * d * this.currentDrag, ForceMode.VelocityChange);
+        rb.velocity = Vector3.zero;
+        float d = (Mathf.Abs(PlayerInputManager.instance.inputX) > 0f) ? (speed * turningResponsiveness) : speed;
+        if(!stopped)
+            rb.AddForce(rotation.forward * d * currentDrag, ForceMode.VelocityChange);
     }
 
     private void Rotation()
     {
-        if (Mathf.Sqrt((this.rb.velocity.x * this.rb.velocity.x) + (this.rb.velocity.z * this.rb.velocity.z)) > 20.0f)
-            this.rb.AddTorque(base.transform.up * this.angularSpeed * PlayerInputManager.instance.inputX);
+        if (Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z)) > 20.0f)
+            rb.AddTorque(transform.up * angularSpeed * PlayerInputManager.instance.inputX);
     }
 
     private void OnTriggerStay(Collider other)
@@ -166,17 +183,29 @@ public class BoatController : MonoBehaviour
         }
     }
 
+    private void MotorEffect()
+    {
+        if (motor.isSpinning)
+        {
+            motor.splash.Play();
+            motor.foam.Play();
+        }
+        else
+        {
+            motor.splash.Stop();
+            motor.foam.Stop();
+        }
+    }
+
     private void OnEnable()
     {
-        motor.isSpinning = true;
-        motor.splash.Play();
-        motor.foam.Play();
+        motor.isSpinning = !stopped;
+        MotorEffect();
     }
 
     private void OnDisable()
     {
         motor.isSpinning = false;
-        motor.splash.Stop();
-        motor.foam.Stop();
+        MotorEffect();
     }
 }
