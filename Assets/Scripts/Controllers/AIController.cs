@@ -7,7 +7,6 @@ public class AIController : MonoBehaviour
 {
     private Rigidbody rb;
     private SphereCollider sc;
-    public GameObject draw;
     public GameObject outline;
     public GameObject minimap;
     private Material minimapMat;
