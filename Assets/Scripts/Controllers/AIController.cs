@@ -66,9 +66,8 @@ public class AIController : MonoBehaviour
         {
             floatToSurface = true;
             floater.active = true;
+            StartCoroutine(Rise());
             minimapMat.SetInt("_isSinking", 0);
-            if (transform.position.y < 0f)
-                rb.AddForce(Vector3.up * 300f);
         }
 
         if (PlayerInputManager.instance.downArrow)
@@ -333,6 +332,16 @@ public class AIController : MonoBehaviour
         }
 
         Destroy(transform.parent.gameObject);
+    }
+
+    IEnumerator Rise()
+    {
+        while(floatToSurface && (transform.position.y < 0f))
+        {
+            rb.AddForce(Vector3.up * 70f * Mathf.Abs(0 - transform.position.y));
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return null;
     }
 
     private void OnEnable()
