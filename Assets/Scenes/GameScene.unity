@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.20235302, g: 0.21147138, b: 0.51870364, a: 1}
+  m_IndirectSpecularColor: {r: 0.19300562, g: 0.21277541, b: 0.5365871, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,7 +275,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28819204}
-  m_LocalRotation: {x: 0.11318471, y: -0.69847655, z: 0.11334712, w: 0.6974756}
+  m_LocalRotation: {x: 0.113184705, y: -0.6984765, z: 0.11334712, w: 0.6974757}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6651,10 +6651,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1418534921}
+    - target: {fileID: 1745265184812246427, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2136832075706681109, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1418534921}
+    - target: {fileID: 3343891442420442954, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343891442420442954, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343891442420442954, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343891442420442954, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3611023180741758646, guid: 935a8c0bc032bc741b60d3a0cac30542, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -10327,7 +10347,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371759, w: 0.6672781}
+  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371751, w: 0.6672782}
   m_LocalPosition: {x: -202.29999, y: 67.8, z: 31.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10389,7 +10409,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 1
+    m_Style: 0
     m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
@@ -10802,7 +10822,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860238965}
-  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371759, w: 0.6672781}
+  m_LocalRotation: {x: 0.22111627, y: -0.67512816, z: 0.22371751, w: 0.6672782}
   m_LocalPosition: {x: -202.29999, y: 67.8, z: 31.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

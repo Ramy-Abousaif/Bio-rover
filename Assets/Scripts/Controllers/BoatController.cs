@@ -130,6 +130,7 @@ public class BoatController : MonoBehaviour
     {
         storedRovers.Add(rover.transform.parent.gameObject);
         activeRovers.Remove(rover.transform.parent.gameObject);
+        rover.GetComponent<AIController>().FullRecharge();
         rover.transform.parent.gameObject.SetActive(false);
         UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";
         UIManager.instance.storedRoversText.text = storedRovers.Count + " Stored Rovers";

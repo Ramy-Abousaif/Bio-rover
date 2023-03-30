@@ -13,7 +13,8 @@ public class Marimo : MonoBehaviour
     private float rateGain = 20.0f;
     //private float rateLoss = 5.0f;
     public float energy = 0;
-    private float maxEnergy = 100.0f;
+    [HideInInspector]
+    public float maxEnergy = 100.0f;
     private Transform sunlight;
     public bool showUI = true;
 

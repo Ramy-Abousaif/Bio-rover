@@ -278,6 +278,14 @@ public class AIController : MonoBehaviour
         }
     }
 
+    public void FullRecharge()
+    {
+        foreach (var marimo in marimos)
+        {
+            marimo.energy = marimo.maxEnergy;
+        }
+    }
+
     private void Explode()
     {
         if (!(GameManager.instance.explosionUpgrade >= 1))
@@ -321,6 +329,7 @@ public class AIController : MonoBehaviour
             PlayerManager.instance.arrow.SetActive(false);
             PoolManager.instance.SpawnPoof(breakableTarget.transform.position, Quaternion.identity);
             Destroy(breakableTarget);
+            MissionsManager.instance.GetMissionByName("Remove any nearby sea mines").CheckCompletion();
         }
 
         Destroy(transform.parent.gameObject);

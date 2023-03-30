@@ -94,8 +94,15 @@ public class MissionsManager : MonoBehaviour
                 }
             }
 
-            missionText.text += _color + tempObjective + ": " +
-                availableMissions[selection].objectives[i].currentProgress + "/" + availableMissions[selection].objectives[i].targetProgress + "\n";
+            if(completedMissions.Count == availableMissions.Count)
+            {
+                missionText.text = "You're all done! You've finished all the missions available, you're free to explore to your heart's content";
+            }
+            else
+            {
+                missionText.text += _color + tempObjective + ": " +
+                    availableMissions[selection].objectives[i].currentProgress + "/" + availableMissions[selection].objectives[i].targetProgress + "\n";
+            }
         }
     }
 
