@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsButtons;
     public GameObject howToPlayScreen;
     public GameObject howToPlayButtons;
+    public GameObject aboutTitle;
+    public GameObject aboutButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
     public Slider masterSlider;
@@ -41,7 +43,7 @@ public class MainMenu : MonoBehaviour
 
     public void About()
     {
-        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
+        UIManager.instance.ChangeMenu(aboutTitle, aboutButtons, ref activeTitle, ref activeButtons);
     }
 
     private void UpdateSliders()
@@ -49,6 +51,16 @@ public class MainMenu : MonoBehaviour
         masterSlider.value = AudioManager.instance.masterVolume;
         bgSlider.value = AudioManager.instance.bgVolume;
         sfxSlider.value = AudioManager.instance.sfxVolume;
+    }
+
+    public void Notes1()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
+    }
+
+    public void Notes2()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-019-0200-5");
     }
 
     public void Back()
