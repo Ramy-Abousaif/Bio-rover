@@ -96,7 +96,7 @@ public class MissionsManager : MonoBehaviour
 
             if(completedMissions.Count == availableMissions.Count)
             {
-                missionText.text = "You're all done! You've finished all the missions available, you're free to explore to your heart's content";
+                missionText.text = "You're all done!\nYou've finished all the missions available.\nYou're free to explore to your heart's content";
             }
             else
             {
