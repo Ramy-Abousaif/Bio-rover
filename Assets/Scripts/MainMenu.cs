@@ -9,8 +9,13 @@ public class MainMenu : MonoBehaviour
     public GameObject mainButtons;
     public GameObject settingsTitle;
     public GameObject settingsButtons;
-    public GameObject howToPlayScreen;
+    public GameObject HTP1;
+    public GameObject HTP2;
+    public GameObject HTP3;
+    public GameObject HTP4;
     public GameObject howToPlayButtons;
+    public GameObject aboutTitle;
+    public GameObject aboutButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
     public Slider masterSlider;
@@ -34,14 +39,29 @@ public class MainMenu : MonoBehaviour
         UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
     }
 
-    public void HowToPlay()
+    public void HowToPlay1()
     {
-        UIManager.instance.ChangeMenu(howToPlayScreen, howToPlayButtons, ref activeTitle, ref activeButtons);
+        UIManager.instance.ChangeMenu(HTP1, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay2()
+    {
+        UIManager.instance.ChangeMenu(HTP2, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay3()
+    {
+        UIManager.instance.ChangeMenu(HTP3, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay4()
+    {
+        UIManager.instance.ChangeMenu(HTP4, howToPlayButtons, ref activeTitle, ref activeButtons);
     }
 
     public void About()
     {
-        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
+        UIManager.instance.ChangeMenu(aboutTitle, aboutButtons, ref activeTitle, ref activeButtons);
     }
 
     private void UpdateSliders()
@@ -49,6 +69,16 @@ public class MainMenu : MonoBehaviour
         masterSlider.value = AudioManager.instance.masterVolume;
         bgSlider.value = AudioManager.instance.bgVolume;
         sfxSlider.value = AudioManager.instance.sfxVolume;
+    }
+
+    public void Notes1()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-021-00279-0");
+    }
+
+    public void Notes2()
+    {
+        Application.OpenURL("https://jbioleng.biomedcentral.com/articles/10.1186/s13036-019-0200-5");
     }
 
     public void Back()

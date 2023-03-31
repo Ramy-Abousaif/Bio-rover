@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject boat;
     public RoverController rc;
     public BoatController bc;
+    private bool isChanging = false;
+    private Coroutine prevCoroutine;
 
     void Awake()
     {
@@ -54,14 +56,14 @@ public class PlayerManager : MonoBehaviour
 
                 ChangeRover();
 
-                if (PlayerInputManager.instance.switchMode && bc.activeRovers.Count > 0)
-                    ChangePlayerState(PlayerState.ROVER);
+                if (PlayerInputManager.instance.switchMode && bc.activeRovers.Count > 0 && !StoreManager.instance.inStore && !isChanging)
+                    StartCoroutine(ChangePlayerStateSmooth(1f, PlayerState.ROVER));
 
                 break;
             case PlayerState.ROVER:
 
-                if(PlayerInputManager.instance.switchMode)
-                    ChangePlayerState(PlayerState.BOAT);
+                if(PlayerInputManager.instance.switchMode && !isChanging)
+                    StartCoroutine(ChangePlayerStateSmooth(1f, PlayerState.BOAT));
 
                 break;
         }
@@ -81,10 +83,12 @@ public class PlayerManager : MonoBehaviour
     void SetUp()
     {
         playerCam = Camera.main;
-        ChangePlayerState(PlayerState.BOAT);
+        UIManager.instance.blackScreenSprite.color = new Color(0f, 0f, 0f, 0f);
+        UIManager.instance.blackScreenSprite.gameObject.SetActive(false);
+        ChangePlayerStateQuick(PlayerState.BOAT);
     }
 
-    void ChangePlayerState(PlayerState state)
+    void ChangePlayerStateQuick(PlayerState state)
     {
         playerState = state;
 
@@ -123,5 +127,48 @@ public class PlayerManager : MonoBehaviour
             boatVCam.gameObject.SetActive(false);
             roverVCam.gameObject.SetActive(true);
         }
+    }
+
+    IEnumerator ChangePlayerStateSmooth(float fadeDuration, PlayerState state)
+    {
+        isChanging = true;
+        UIManager.instance.blackScreenSprite.gameObject.SetActive(true);
+        // Fade out
+        {
+            Color initialColor = UIManager.instance.blackScreenSprite.color;
+            Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                UIManager.instance.blackScreenSprite.color = Color.Lerp(initialColor, targetColor, elapsedTime / fadeDuration);
+                yield return null;
+            }
+        }
+
+        yield return new WaitForSeconds(0.25f);
+        ChangePlayerStateQuick(state);
+
+        // Fade in
+        {
+            Color initialColor = UIManager.instance.blackScreenSprite.color;
+            Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                UIManager.instance.blackScreenSprite.color = Color.Lerp(initialColor, targetColor, elapsedTime / fadeDuration);
+                yield return null;
+            }
+        }
+
+        UIManager.instance.blackScreenSprite.gameObject.SetActive(false);
+        isChanging = false;
+
+        yield return null;
     }
 }

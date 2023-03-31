@@ -12,7 +12,7 @@ public class Motor : MonoBehaviour
 
     private void Start()
     {
-        this.startSpeed = this.speed;
+        startSpeed = speed;
     }
 
     private void Update()
@@ -22,6 +22,6 @@ public class Motor : MonoBehaviour
         if (!isSpinning)
             return;
 
-        base.transform.eulerAngles += Vector3.forward * this.speed * Time.deltaTime;
+        transform.eulerAngles += Vector3.forward * speed * Time.deltaTime;
     }
 }

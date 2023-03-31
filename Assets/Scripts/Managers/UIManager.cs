@@ -19,7 +19,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text storedRoversText;
     public TMP_Text activeRoversText;
     public GameObject helpSprite;
-
+    public Image blackScreenSprite;
+    private Coroutine prevCoroutine = null;
     public GameObject scanTextPrefab;
     public Transform scanTextPos;
     public GameObject creditAddTextPrefab;

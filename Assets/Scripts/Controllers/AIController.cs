@@ -7,7 +7,6 @@ public class AIController : MonoBehaviour
 {
     private Rigidbody rb;
     private SphereCollider sc;
-    public GameObject draw;
     public GameObject outline;
     public GameObject minimap;
     private Material minimapMat;
@@ -15,10 +14,9 @@ public class AIController : MonoBehaviour
     private Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
-    private bool ableToFloat;
+    private bool floatToSurface;
 
     public LayerMask ground;
-    private bool isGrounded = false;
     private Vector3 moveDir;
 
     public GameObject smokeRing;
@@ -66,14 +64,15 @@ public class AIController : MonoBehaviour
 
         if (PlayerInputManager.instance.upArrow)
         {
+            floatToSurface = true;
             floater.active = true;
+            StartCoroutine(Rise());
             minimapMat.SetInt("_isSinking", 0);
-            if (transform.position.y < 0f)
-                rb.AddForce(Vector3.up * 300f);
         }
 
         if (PlayerInputManager.instance.downArrow)
         {
+            floatToSurface = false;
             floater.active = false;
             minimapMat.SetInt("_isSinking", 1);
         }
@@ -93,8 +92,6 @@ public class AIController : MonoBehaviour
             return;
 
         float currentSpeed = Mathf.Sqrt((rb.velocity.x * rb.velocity.x) + (rb.velocity.z * rb.velocity.z));
-
-        isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - sc.radius, transform.position.z), 0.5f, ground);
 
         if (currentSpeed > 8f)
             prevSpeed = currentSpeed;
@@ -208,6 +205,32 @@ public class AIController : MonoBehaviour
         float[] energyUsage = CalculateEnergyUsage(moveDir.normalized);
 
         ApplyForce(energyUsage, distanceToWaypoint);
+
+        // float to mine if close enough to blow up
+        if(breakableTarget != null)
+        {
+            if (breakableTarget.transform.position.y > transform.position.y)
+            {
+                if((new Vector3(breakableTarget.transform.position.x, 0, breakableTarget.transform.position.z)
+                    - new Vector3(transform.position.x, 0, transform.position.z)).sqrMagnitude < 120f)
+                {
+                    floater.active = true;
+                }
+                else
+                {
+                    floater.active = false;
+                }
+            }
+            else
+            {
+                floater.active = false;
+            }
+        }
+        else
+        {
+            if (!floatToSurface)
+                floater.active = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -254,6 +277,14 @@ public class AIController : MonoBehaviour
         }
     }
 
+    public void FullRecharge()
+    {
+        foreach (var marimo in marimos)
+        {
+            marimo.energy = marimo.maxEnergy;
+        }
+    }
+
     private void Explode()
     {
         if (!(GameManager.instance.explosionUpgrade >= 1))
@@ -297,9 +328,20 @@ public class AIController : MonoBehaviour
             PlayerManager.instance.arrow.SetActive(false);
             PoolManager.instance.SpawnPoof(breakableTarget.transform.position, Quaternion.identity);
             Destroy(breakableTarget);
+            MissionsManager.instance.GetMissionByName("Remove any nearby sea mines").CheckCompletion();
         }
 
         Destroy(transform.parent.gameObject);
+    }
+
+    IEnumerator Rise()
+    {
+        while(floatToSurface && (transform.position.y < 0f))
+        {
+            rb.AddForce(Vector3.up * 70f * Mathf.Abs(0 - transform.position.y));
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return null;
     }
 
     private void OnEnable()
