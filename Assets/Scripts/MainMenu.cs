@@ -9,7 +9,10 @@ public class MainMenu : MonoBehaviour
     public GameObject mainButtons;
     public GameObject settingsTitle;
     public GameObject settingsButtons;
-    public GameObject howToPlayScreen;
+    public GameObject HTP1;
+    public GameObject HTP2;
+    public GameObject HTP3;
+    public GameObject HTP4;
     public GameObject howToPlayButtons;
     public GameObject aboutTitle;
     public GameObject aboutButtons;
@@ -36,9 +39,24 @@ public class MainMenu : MonoBehaviour
         UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
     }
 
-    public void HowToPlay()
+    public void HowToPlay1()
     {
-        UIManager.instance.ChangeMenu(howToPlayScreen, howToPlayButtons, ref activeTitle, ref activeButtons);
+        UIManager.instance.ChangeMenu(HTP1, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay2()
+    {
+        UIManager.instance.ChangeMenu(HTP2, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay3()
+    {
+        UIManager.instance.ChangeMenu(HTP3, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay4()
+    {
+        UIManager.instance.ChangeMenu(HTP4, howToPlayButtons, ref activeTitle, ref activeButtons);
     }
 
     public void About()
