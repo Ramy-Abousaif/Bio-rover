@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ExpandUpgrade
   m_EditorClassIdentifier: 
   title: Expand Upgrade
-  description: Upgrade your rovers so that they can expand to get over certain slopes
-    and obstacles
+  description: Upgrade all your rovers so that they can expand to get over certain
+    slopes and obstacles
   baseCost: 1000
+  currentProgress: 0
   capacity: 1
