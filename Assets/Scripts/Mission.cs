@@ -52,7 +52,7 @@ public class Mission : ScriptableObject
                 return false;
         }
 
-        if (!completed)
+        if (!completed && GameManager.instance.gameState == Gamestate.IN_GAME)
         {
             AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
             MissionsManager.instance.completedMissions.Add(this);
