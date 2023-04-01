@@ -1667,7 +1667,7 @@ MonoBehaviour:
 
     Yellow Blip = Rover While Floating
 
-    Magenta
+    Blue
     Blip = Rover While On Surface'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
