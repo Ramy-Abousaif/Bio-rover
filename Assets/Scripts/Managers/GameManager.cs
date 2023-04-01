@@ -13,7 +13,7 @@ public enum Gamestate
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-
+    
     public Gamestate gameState = Gamestate.MENU;
 
     public int credits = 0;

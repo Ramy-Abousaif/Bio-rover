@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.25122893, g: 0.20466198, b: 0.4252692, a: 1}
+  m_IndirectSpecularColor: {r: 0.25112525, g: 0.20467684, b: 0.42546427, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -524,6 +524,7 @@ Transform:
   - {fileID: 828823910}
   - {fileID: 548896988}
   - {fileID: 760151570}
+  - {fileID: 1523297794}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -541,7 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAAIexUyMxPcQIAACsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMFy2jAQ/RVG58LYBgzurQVCekjChHRy8UW21liDLHkkOUAy/HslWWDXOWH27b59+3btL0S5qiHXQm4lJU+CAPo5QvYZ/Rh14COc8UHwPf2EW847Jbq0SdjlvGJNhYmHtkyJCrSk+S9+YDY5MMGG00LIakMOsBJKKxMuMFNgICm0reYm9DVCZ19w8b+f9nd0NU85cA2yywqDZLKM43i69Onj2TyZLHzNeDGdLGZBlMxnrrrhOcNVDcRO0ZFMp9Hcl0fLoG3EzYw+y7LlgjGqvECkL7UzYF+XIME6QCg28zpl4cSSlUAPpbaM/eqXolCg/VQSX9ZUGuNaWvRbtG5WWB1bcR+YNbbRcho5US3p0zc8DBOHF1JUj7fGYRDYLrqk+fEVX3KsdM/wfnjdE+9cOmF2xBmD9xL4s9hK0XBiQC0bW9ooiNY9qvt0qxLyY5fXqh0Em/r7isNuxVc3/3nFaJVZZN7+3zPhHE9sCUizmz9Gr7sY5YlM1Gr4q+ANH/qn5YEHKpU2kO/HrbhMNNKmoo3zzM7S6JWQHFzYS66BY6YvO0OjhzscYL22A+QB25fIN/fY7d0YlLhwlx8EA2gnTvddqVKcnkCVL41mlEMn2gLPxqeV4Lw9sb4nt7J9Iwuc98oODSX/3xaCfDbFOF5EOA6iKAzHi4zMsoQk2SyGOEwy5G6PcjMnZrtWqLfHbI135Nyc2e3bMtpKXLtzJxKftvSzEj3LKS/EPpcA/KVluAsHaZqY95JsCDUG7UFryt2+0VeKmMiPQNI7Ueom3Zy1xGnHkqKafghtIylauS9Kimz4fsk7CR8UTrb5jeyKrv8AUEsDBBQAAAgIAAAAIezIFHUpbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSarKJcWKimblRopmBkZGhoa55UopJkmWKZZKJWaqZoWWSUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAAIexUyMxPcQIAACsFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAAIezIFHUpbQAAAHgAAAAJACQAAAAAAAAAAAAAAL4CAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAdgMAAAAA
+    dataString: UEsDBBQAAAgIAAAQIexUyMxPcQIAACsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMFy2jAQ/RVG58LYBgzurQVCekjChHRy8UW21liDLHkkOUAy/HslWWDXOWH27b59+3btL0S5qiHXQm4lJU+CAPo5QvYZ/Rh14COc8UHwPf2EW847Jbq0SdjlvGJNhYmHtkyJCrSk+S9+YDY5MMGG00LIakMOsBJKKxMuMFNgICm0reYm9DVCZ19w8b+f9nd0NU85cA2yywqDZLKM43i69Onj2TyZLHzNeDGdLGZBlMxnrrrhOcNVDcRO0ZFMp9Hcl0fLoG3EzYw+y7LlgjGqvECkL7UzYF+XIME6QCg28zpl4cSSlUAPpbaM/eqXolCg/VQSX9ZUGuNaWvRbtG5WWB1bcR+YNbbRcho5US3p0zc8DBOHF1JUj7fGYRDYLrqk+fEVX3KsdM/wfnjdE+9cOmF2xBmD9xL4s9hK0XBiQC0bW9ooiNY9qvt0qxLyY5fXqh0Em/r7isNuxVc3/3nFaJVZZN7+3zPhHE9sCUizmz9Gr7sY5YlM1Gr4q+ANH/qn5YEHKpU2kO/HrbhMNNKmoo3zzM7S6JWQHFzYS66BY6YvO0OjhzscYL22A+QB25fIN/fY7d0YlLhwlx8EA2gnTvddqVKcnkCVL41mlEMn2gLPxqeV4Lw9sb4nt7J9Iwuc98oODSX/3xaCfDbFOF5EOA6iKAzHi4zMsoQk2SyGOEwy5G6PcjMnZrtWqLfHbI135Nyc2e3bMtpKXLtzJxKftvSzEj3LKS/EPpcA/KVluAsHaZqY95JsCDUG7UFryt2+0VeKmMiPQNI7Ueom3Zy1xGnHkqKafghtIylauS9Kimz4fsk7CR8UTrb5jeyKrv8AUEsDBBQAAAgIAAAQIezIFHUpbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSarKJcWKimblRopmBkZGhoa55UopJkmWKZZKJWaqZoWWSUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAQIexUyMxPcQIAACsFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIezIFHUpbQAAAHgAAAAJACQAAAAAAAAAAAAAAL4CAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAdgMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -651,7 +652,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331968295}
-  m_LocalRotation: {x: 0.038601756, y: -0.04251638, z: -0.0047556683, w: 0.9983385}
+  m_LocalRotation: {x: 0.038601756, y: -0.04251641, z: -0.004755672, w: 0.99833846}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1786,6 +1787,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   water: {fileID: 2100000, guid: 366332488096c714d9cb04195f9bd0e2, type: 2}
+--- !u!1 &1523297793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523297794}
+  - component: {fileID: 1523297795}
+  m_Layer: 0
+  m_Name: Reflection Probe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1523297794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523297793}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -776.35675, y: 119.22284, z: 103.99123}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330354142}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!215 &1523297795
+ReflectionProbe:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523297793}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 1
+  m_RefreshMode: 0
+  m_TimeSlicingMode: 0
+  m_Resolution: 128
+  m_UpdateFrequency: 0
+  m_BoxSize: {x: 906.68646, y: 473.0881, z: 2106.4019}
+  m_BoxOffset: {x: -354.1122, y: -164.96931, z: -211.70386}
+  m_NearClip: 0.3
+  m_FarClip: 1000
+  m_ShadowDistance: 100
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 26329
+  m_IntensityMultiplier: 1
+  m_BlendDistance: 1
+  m_HDR: 1
+  m_BoxProjection: 0
+  m_RenderDynamicObjects: 0
+  m_UseOcclusionCulling: 1
+  m_Importance: 1
+  m_CustomBakedTexture: {fileID: 0}
 --- !u!1 &1535622278
 GameObject:
   m_ObjectHideFlags: 3
