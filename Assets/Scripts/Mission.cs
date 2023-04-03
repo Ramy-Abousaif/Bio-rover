@@ -46,7 +46,10 @@ public class Mission : ScriptableObject
         foreach (Objective objective in objectives)
         {
             if (objective.currentProgress >= objective.targetProgress)
+            {
+                objective.currentProgress = objective.targetProgress;
                 objective.completed = true;
+            }
 
             if (!objective.completed)
                 return false;
