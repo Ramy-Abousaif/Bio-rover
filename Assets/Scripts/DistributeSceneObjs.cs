@@ -53,17 +53,17 @@ public class DistributeSceneObjs : MonoBehaviour
         DistributeObjs(foliage, 0f, 0f, foliageCount, "Seaweed", true, true, false, false);
         DistributeObjs(rock, 0f, 0f, rockCount, "Rock", true, true, false, false);
         DistributeObjs(diamond, 0f, 0f, diamondCount, "Diamond", true, true, false, false);
-        DistributeObjs(acropora, 1.5f, 1.5f, acroporaCount, "Acropora", true, true, false, true);
-        DistributeObjs(barnacles, 40f, 5f, barnaclesCount, "Barnacles", true, true, false, true);
+        DistributeObjs(acropora, 0f, 0f, acroporaCount, "Acropora", true, true, false, true);
+        DistributeObjs(barnacles, 0.5f, 0.5f, barnaclesCount, "Barnacles", true, true, false, true);
         DistributeObjs(boneCoral, 0f, 0f, boneCoralCount, "Bone Coral", true, true, false, true);
         DistributeObjs(branchCoral1, 0f, 0f, branchCoral1Count, "Small Branch Coral", true, true, false, true);
         DistributeObjs(branchCoral2, 0f, 0f, branchCoral2Count, "Large Branch Coral", true, true, false, true);
         DistributeObjs(featherBush, 0f, 0f, featherBushCount, "Feather Bush", true, true, false, true);
         DistributeObjs(flower, 0f, 0f, flowerCount, "Flower", true, true, false, true);
-        DistributeObjs(tubeCorals, 1.5f, 1.5f, tubeCoralsCount, "Tube Corals", true, true, false, true);
-        DistributeObjs(vase1, 40f, 5f, vase1Count, "Small Sea Vase", true, true, false, true);
+        DistributeObjs(tubeCorals, 0f, 0f, tubeCoralsCount, "Tube Corals", true, true, false, true);
+        DistributeObjs(vase1, 0f, 0f, vase1Count, "Small Sea Vase", true, true, false, true);
         DistributeObjs(vase2, 0f, 0f, vase2Count, "Large Sea Vase", true, true, false, true);
-        DistributeObjs(barrel, 1.5f, 1.5f, barrelCount, "Radioactive Barrel", true, true, false, false);
+        DistributeObjs(barrel, 0f, 0f, barrelCount, "Radioactive Barrel", true, true, false, false);
         DistributeObjs(seaMine, 40f, 5f, seaMineCount, "Sea Mine", false, false, true, false);
     }
 
@@ -107,7 +107,12 @@ public class DistributeSceneObjs : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), Vector3.down, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
             {
-                GameObject goInstance = Instantiate(prefab, new Vector3(hit.point.x, hit.point.y + newOffset, hit.point.z), useNormal ? Quaternion.LookRotation(hit.normal) : Quaternion.Euler(Vector3.zero));
+                GameObject goInstance = Instantiate(prefab, new Vector3(hit.point.x, hit.point.y + newOffset, hit.point.z), prefab.transform.rotation);
+
+                if (useNormal)
+                    goInstance.transform.up = hit.normal;
+                else
+                    goInstance.transform.rotation = prefab.transform.rotation;
 
                 if(isOverrideColor)
                 {
@@ -120,8 +125,8 @@ public class DistributeSceneObjs : MonoBehaviour
                     }
                 }
 
-                if (useRandomRot)
-                    goInstance.transform.localEulerAngles = new Vector3(goInstance.transform.localEulerAngles.x, goInstance.transform.localEulerAngles.y, goInstance.transform.localEulerAngles.z + randomRot);
+                //if (useRandomRot)
+                    //goInstance.transform.localEulerAngles = new Vector3(goInstance.transform.localEulerAngles.x, goInstance.transform.localEulerAngles.y, goInstance.transform.localEulerAngles.z + randomRot);
 
                 goInstance.transform.SetParent(transform);
                 goInstance.name = name;
