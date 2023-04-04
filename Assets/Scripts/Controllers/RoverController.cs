@@ -367,7 +367,7 @@ public class RoverController : MonoBehaviour
         if (landSpeed > 9f || prevSpeed > 10f)
         {
             Shake(landSpeed);
-            PoolManager.instance.SpawnSmokeRing(collision.contacts[0].point, Quaternion.FromToRotation(smokeRing.transform.up, collision.contacts[0].normal));
+            PoolManager.instance.SpawnSmokeRing(collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
         }
 
         if (!isChangingSize)

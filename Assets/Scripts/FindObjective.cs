@@ -11,13 +11,18 @@ public class FindObjective : MonoBehaviour
     {
         if(other.CompareTag("Rover"))
         {
-            if (MissionsManager.instance.GetMissionByName(missionName).GetObjectiveByTitle(objectiveName) != null &&
-                !MissionsManager.instance.GetMissionByName(missionName).GetObjectiveByTitle(objectiveName).completed)
-            {
-                MissionsManager.instance.GetMissionByName(missionName).GetObjectiveByTitle(objectiveName).currentProgress++;
-            }
+            Mission findMission = MissionsManager.instance.GetMissionByName(missionName);
+            Mission.Objective findObjective = null;
 
-            MissionsManager.instance.GetMissionByName(missionName).CheckCompletion();
+            if (findMission != null)
+                findObjective = findMission.GetObjectiveByTitle(objectiveName);
+
+
+            if (findObjective != null && !findObjective.completed)
+                findObjective.currentProgress++;
+
+            if (findMission != null)
+                findMission.CheckCompletion();
         }
     }
 }

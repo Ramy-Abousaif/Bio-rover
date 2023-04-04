@@ -130,5 +130,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanned: 0
-  baseValue: 40
+  baseValue: 20
   rarity: 2

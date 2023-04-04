@@ -20,17 +20,17 @@ MonoBehaviour:
   - title: Scan common objects
     completed: 0
     currentProgress: 0
-    targetProgress: 20
+    targetProgress: 150
   - title: Scan uncommon objects
     completed: 0
     currentProgress: 0
-    targetProgress: 15
+    targetProgress: 100
   - title: Scan rare objects
     completed: 0
     currentProgress: 0
-    targetProgress: 10
+    targetProgress: 50
   - title: Scan exotic objects
     completed: 0
     currentProgress: 0
-    targetProgress: 5
+    targetProgress: 10
   completed: 0

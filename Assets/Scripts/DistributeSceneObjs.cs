@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+/*
+ * UPDATE WITH EVERY CHANGE!
+ * Current Rarity List:
+ * Name                 Rarity                  Count               Actual Count                Rarity Actual Count:
+ * Acropora             Rare                    15                  30                          Common: 336 = 336
+ * Barnacles            Uncommon                12                  36                          Uncommon: 162 = 3240
+ * Bone Coral           Uncommon                10                  30                          Rare: 72 = 4320
+ * Branch Coral 1       Uncommon                8                   24                          Exotic: 20 = 7500
+ * Branch Coral 2       Rare                    6                   12
+ * Diamond              Exotic                  10                  10
+ * Feather Bush         Rare                    7                   14
+ * Flower               Exotic                  10                  10
+ * Foliage              Common                  20                  80
+ * Leaves               Common                  30                  120
+ * Radioactive Waste    Rare                    8                   16
+ * Rock                 Common                  14                  56
+ * Seaweed              Common                  20                  80
+ * Tube Corals          Uncommon                10                  30
+ * Vase 1               Uncommon                8                   24
+ * Vase 2               Uncommon                6                   18
+ */
+
 public class DistributeSceneObjs : MonoBehaviour
 {
     public LayerMask ground;

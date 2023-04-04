@@ -47,22 +47,31 @@ public class Scanner : MonoBehaviour
             if(!scannedObj.scanned)
             {
                 scannedObj.scanned = true;
+                Mission scanAllMission = MissionsManager.instance.GetMissionByName("Scan objects");
+                Mission scanBarrelMission = MissionsManager.instance.GetMissionByName("Scan for radioactive materials");
+                Mission.Objective scanAllObjective = null;
+                Mission.Objective scanBarrelObjective = null;
+
+                if (scanAllMission != null)
+                    scanAllObjective = scanAllMission.GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects");
+
+                if (scanBarrelMission != null)
+                    scanBarrelObjective = scanBarrelMission.GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s");
+
                 // Rarity scan mission
-                if (MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects") != null &&
-                    !MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects").completed)
-                {
-                    MissionsManager.instance.GetMissionByName("Scan objects").GetObjectiveByTitle("Scan " + scannedObj.rarity.ToString().ToLower() + " objects").currentProgress++;
-                }
+                if (scanAllObjective != null && !scanAllObjective.completed)
+                    scanAllObjective.currentProgress++;
 
                 // Scan radioactive barrels mission
-                if (MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s") != null &&
-                    !MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s").completed)
-                {
-                    MissionsManager.instance.GetMissionByName("Scan for radioactive materials").GetObjectiveByTitle("Scan leaking " + scannedObj.name.ToLower() + "s").currentProgress++;
-                }
+                if (scanBarrelObjective != null && !scanBarrelObjective.completed)
+                    scanBarrelObjective.currentProgress++;
 
-                MissionsManager.instance.GetMissionByName("Scan objects").CheckCompletion();
-                MissionsManager.instance.GetMissionByName("Scan for radioactive materials").CheckCompletion();
+                if (scanAllMission != null)
+                    scanAllMission.CheckCompletion();
+
+                if (scanBarrelMission != null)
+                    scanBarrelMission.CheckCompletion();
+
                 Reward(scannedObj);
             }
 
@@ -80,7 +89,7 @@ public class Scanner : MonoBehaviour
     void Reward(Scannable other)
     {
         GameObject text;
-        PoolManager.instance.SpawnScanText(UIManager.instance.scanTextPos.position, Quaternion.identity, UIManager.instance.inGame.transform, out text);
+        PoolManager.instance.SpawnScanText(UIManager.instance.scanTextPos.position, UIManager.instance.inGame.transform, out text);
         text.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("UI");
         text.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+ " + other.transform.name + " scanned";
