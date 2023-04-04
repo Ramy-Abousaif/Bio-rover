@@ -57,7 +57,9 @@ public class Mission : ScriptableObject
 
         if (!completed && GameManager.instance.gameState == Gamestate.IN_GAME)
         {
-            AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
+            if(AudioManager.instance != null)
+                AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
+
             MissionsManager.instance.completedMissions.Add(this);
             StoreManager.instance.AddCredit(creditsReward);
             completed = true;

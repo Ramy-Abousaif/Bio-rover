@@ -210,7 +210,7 @@ Material:
     - Vector4_C3B1A38B: {r: 1.22, g: 3.12, b: 1, a: 3}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDeepPov: {r: 0, g: 0.4769048, b: 0.8962264, a: 1}
+    - _ColorDeepPov: {r: 0, g: 0.8980392, b: 0.8631976, a: 1}
     - _DeepColor: {r: 0, g: 0.5333334, b: 0.8313726, a: 0.78039217}
     - _DeepColor1: {r: 0, g: 0.9003701, b: 1, a: 0.5882353}
     - _DeepColor2: {r: 0.21466696, g: 0.51664275, b: 0.6792453, a: 0.5882353}

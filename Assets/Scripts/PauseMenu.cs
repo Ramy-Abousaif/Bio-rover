@@ -11,6 +11,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsButtons;
     private GameObject activeTitle;
     private GameObject activeButtons;
+    public GameObject howToPlayButtons;
+    public GameObject HTP1;
+    public GameObject HTP2;
+    public GameObject HTP3;
+    public GameObject HTP4;
     public Slider masterSlider;
     public Slider bgSlider;
     public Slider sfxSlider;
@@ -50,6 +55,27 @@ public class PauseMenu : MonoBehaviour
     {
         UpdateSliders();
         UIManager.instance.ChangeMenu(settingsTitle, settingsButtons, ref activeTitle, ref activeButtons);
+    }
+
+
+    public void HowToPlay1()
+    {
+        UIManager.instance.ChangeMenu(HTP1, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay2()
+    {
+        UIManager.instance.ChangeMenu(HTP2, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay3()
+    {
+        UIManager.instance.ChangeMenu(HTP3, howToPlayButtons, ref activeTitle, ref activeButtons);
+    }
+
+    public void HowToPlay4()
+    {
+        UIManager.instance.ChangeMenu(HTP4, howToPlayButtons, ref activeTitle, ref activeButtons);
     }
 
     private void UpdateSliders()
