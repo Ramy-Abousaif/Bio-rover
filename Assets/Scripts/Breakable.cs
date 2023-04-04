@@ -6,15 +6,16 @@ public class Breakable : MonoBehaviour
 {
     private void OnDestroy()
     {
-        if (MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s").GetObjectiveByTitle("Remove any nearby " +
-            transform.name.ToLower() + "s") != null && !MissionsManager.instance.GetMissionByName("Remove any nearby " +
-            transform.name.ToLower() + "s").GetObjectiveByTitle("Remove any nearby " +
-            transform.name.ToLower() + "s").completed)
-        {
-            MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s").GetObjectiveByTitle("Remove any nearby " +
-                transform.name.ToLower() + "s").currentProgress++;
+        Mission removeMission = MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s");
+        Mission.Objective removeObjective = null;
 
-            MissionsManager.instance.GetMissionByName("Remove any nearby " + transform.name.ToLower() + "s").CheckCompletion();
-        }
+        if (removeMission != null)
+            removeObjective = removeMission.GetObjectiveByTitle("Remove any nearby " + transform.name.ToLower() + "s");
+
+        if (removeObjective != null && !removeObjective.completed)
+            removeObjective.currentProgress++;
+
+        if (removeMission != null)
+            removeMission.CheckCompletion();
     }
 }

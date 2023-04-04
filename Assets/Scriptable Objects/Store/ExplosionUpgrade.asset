@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ExplosionUpgrade
   m_EditorClassIdentifier: 
   title: Explosion Upgrade
-  description: Upgrade your rovers so that you can control non-playable rovers to
-    explode them on your command
+  description: Upgrade all your non-playable rovers so that they can explode on breakable
+    objects such as sea mines when you direct them to said objects
   baseCost: 2000
+  currentProgress: 0
   capacity: 1

@@ -58,9 +58,13 @@ public class BoatController : MonoBehaviour
         RotateAnim();
 
         rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, transform.eulerAngles.y, rotation.eulerAngles.z);
-        if (PlayerInputManager.instance.inputY >= 0f)
+        if (PlayerInputManager.instance.inputY > 0f)
         {
             dragT += PlayerInputManager.instance.inputY * acceleration;
+            ResumeMovement();
+        }
+        else if (PlayerInputManager.instance.inputY == 0f)
+        {
             stopPressed = false;
         }
         else if (dragT > 0.5f)
@@ -68,7 +72,12 @@ public class BoatController : MonoBehaviour
             dragT -= acceleration;
         }
 
-        if (!(PlayerInputManager.instance.inputY >= 0f))
+        if(PlayerInputManager.instance.inputX != 0)
+        {
+            ResumeMovement();
+        }
+
+        if (PlayerInputManager.instance.inputY < 0f)
         {
             if (!stopPressed)
             {
@@ -151,6 +160,17 @@ public class BoatController : MonoBehaviour
         rover.transform.parent.gameObject.SetActive(false);
         UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";
         UIManager.instance.storedRoversText.text = storedRovers.Count + " Stored Rovers";
+    }
+
+    private void ResumeMovement()
+    {
+        stopPressed = false;
+        if (stopped)
+        {
+            stopped = false;
+            motor.isSpinning = true;
+            MotorEffect();
+        }
     }
 
     private IEnumerator SavePosAndRot(float duration)

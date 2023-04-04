@@ -46,13 +46,16 @@ public class Mission : ScriptableObject
         foreach (Objective objective in objectives)
         {
             if (objective.currentProgress >= objective.targetProgress)
+            {
+                objective.currentProgress = objective.targetProgress;
                 objective.completed = true;
+            }
 
             if (!objective.completed)
                 return false;
         }
 
-        if (!completed)
+        if (!completed && GameManager.instance.gameState == Gamestate.IN_GAME)
         {
             AudioManager.instance.PlayOneShotWithParameters("MissionComplete", AudioManager.instance.transform);
             MissionsManager.instance.completedMissions.Add(this);

@@ -68,6 +68,7 @@ public class PoolManager : MonoBehaviour
     {
         var scanner = scannerPool.Get();
         scanner.transform.position = pos;
+        scanner.transform.rotation = rot;
         StartCoroutine(DestroyScanner(scanner, scanner.GetComponent<Scanner>().duration + GameManager.instance.sonarUpgrade));
     }
 
@@ -82,6 +83,7 @@ public class PoolManager : MonoBehaviour
     {
         var smokeRing = smokeRingPool.Get();
         smokeRing.transform.position = pos;
+        smokeRing.transform.rotation = rot;
         StartCoroutine(DestroySmokeRing(smokeRing, 2.0f));
     }
 
@@ -96,6 +98,7 @@ public class PoolManager : MonoBehaviour
     {
         var explosion = explosionPool.Get();
         explosion.transform.position = pos;
+        explosion.transform.rotation = rot;
         StartCoroutine(DestroyExplosion(explosion, 3.0f));
     }
 
@@ -110,6 +113,7 @@ public class PoolManager : MonoBehaviour
     {
         var poof = poofPool.Get();
         poof.transform.position = pos;
+        poof.transform.rotation = rot;
         StartCoroutine(DestroyPoof(poof, 2.0f));
     }
 
@@ -120,7 +124,7 @@ public class PoolManager : MonoBehaviour
         yield return null;
     }
 
-    public void SpawnScanText(Vector3 pos, Quaternion rot, Transform parent, out GameObject text)
+    public void SpawnScanText(Vector3 pos, Transform parent, out GameObject text)
     {
         var scanText = scanTextPool.Get();
         scanText.transform.SetParent(parent);
@@ -136,7 +140,7 @@ public class PoolManager : MonoBehaviour
         yield return null;
     }
 
-    public void SpawnCreditText(Vector3 pos, Quaternion rot, Transform parent, out GameObject text)
+    public void SpawnCreditText(Vector3 pos, Transform parent, out GameObject text)
     {
         var creditText = creditTextPool.Get();
         creditText.transform.SetParent(parent);

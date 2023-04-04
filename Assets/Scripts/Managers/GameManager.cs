@@ -13,13 +13,26 @@ public enum Gamestate
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-
+    
     public Gamestate gameState = Gamestate.MENU;
 
     public int credits = 0;
     public int sonarUpgrade = 0;
     public int explosionUpgrade = 0;
     public int expandUpgrade = 0;
+
+    private string[] facts = {
+        "Nature has evolved photosynthesis to harness solar energy, which is utilised by nearly all organisms",
+        "The maximum theoretical efficiency of photosynthesis is 36%",
+        "PV panels typically have a conversion efficiency of around 15%",
+        "Combining photosynthesis with human engineering is biomimicry which enables novel devices to be prototyped",
+        "Marimo are balls of intertwined algal filaments",
+        "Using photosynthesis to directly power movement has several advantages",
+        "Bio-rover can be  integrated with conventional sensors and cameras",
+        "Bio-rover is electromagnetically silent",
+        "Bio-rover can automatically become positively buoyant, and rise, to bypass obstacles",
+        "The spherical shape of the bio-rover aids it ability to traverse challenging environments"
+    };
 
     void Awake()
     {
@@ -62,8 +75,8 @@ public class GameManager : MonoBehaviour
                 sonarUpgrade = 0;
                 explosionUpgrade = 0;
                 expandUpgrade = 0;
-                StoreManager.instance.AddCredit(50);
                 MissionsManager.instance.Setup();
+                StoreManager.instance.AddCredit(50);
                 PlayerManager.instance.bc.transform.localPosition = Vector3.zero;
                 PlayerManager.instance.bc.transform.localEulerAngles = Vector3.zero;
                 break;
@@ -75,6 +88,7 @@ public class GameManager : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         UIManager.instance.progressBar.fillAmount = 0;
+        UIManager.instance.factText.text = facts[Random.Range(0, facts.Length)].ToUpper();
         gameState = Gamestate.LOADING;
 
         UIManager.instance.loadingScreen.SetActive(true);

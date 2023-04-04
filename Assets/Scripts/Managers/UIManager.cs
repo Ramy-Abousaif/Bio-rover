@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject loadingScreen;
+    public TMP_Text factText;
     public Image progressBar;
     public GameObject pauseMenu;
     public GameObject inGame;
