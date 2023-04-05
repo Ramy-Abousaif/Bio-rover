@@ -143,7 +143,7 @@ public class DistributeSceneObjs : MonoBehaviour
                     foreach (var mat in mats)
                     {
                         mat.SetVector("_TintColor1", colorPicked);
-                        mat.SetVector("_TintColor2", colorPicked);
+                        mat.SetVector("_TintColor2", new Color(colorPicked.r - 0.3f, colorPicked.g - 0.3f, colorPicked.b - 0.3f, colorPicked.a));
                     }
                 }
 

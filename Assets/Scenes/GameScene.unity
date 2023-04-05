@@ -275,7 +275,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28819204}
-  m_LocalRotation: {x: 0.11318471, y: -0.69847655, z: 0.11334712, w: 0.6974756}
+  m_LocalRotation: {x: 0.113184705, y: -0.6984765, z: 0.11334712, w: 0.6974757}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6385,21 +6385,21 @@ MonoBehaviour:
   overrideColor:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.88489205, b: 0, a: 1}
-    key2: {r: 0.05724919, g: 1, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 1, g: 0.40839225, b: 0, a: 1}
+    key2: {r: 1, g: 0.88489205, b: 0, a: 0}
+    key3: {r: 0.84739745, g: 0.9811321, b: 0.35542893, a: 0}
+    key4: {r: 0.6264151, g: 1, b: 0.9899447, a: 0}
+    key5: {r: 0, g: 0.46657705, b: 1, a: 0}
+    key6: {r: 0.99643254, g: 0.32452828, b: 1, a: 0}
+    key7: {r: 0.49575615, g: 0, b: 1, a: 0}
     ctime0: 0
-    ctime1: 32768
-    ctime2: 65535
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
+    ctime1: 11049
+    ctime2: 21466
+    ctime3: 29674
+    ctime4: 41985
+    ctime5: 51771
+    ctime6: 60137
+    ctime7: 65535
     atime0: 0
     atime1: 65535
     atime2: 0
@@ -6409,7 +6409,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 8
     m_NumAlphaKeys: 2
   seaweed: {fileID: 5525131197524251200, guid: 3903fb72967983345974aa8059eb7f24, type: 3}
   leaves: {fileID: 3433417545964800000, guid: c6b8d223a8f8662448c298401b9c6c39, type: 3}
