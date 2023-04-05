@@ -63,16 +63,12 @@ public class BoatController : MonoBehaviour
             dragT += PlayerInputManager.instance.inputY * acceleration;
             ResumeMovement();
         }
-        else if (PlayerInputManager.instance.inputY == 0f)
-        {
-            stopPressed = false;
-        }
         else if (dragT > 0.5f)
         {
             dragT -= acceleration;
         }
 
-        if(PlayerInputManager.instance.inputX != 0)
+        if (PlayerInputManager.instance.inputX != 0)
         {
             ResumeMovement();
         }
@@ -86,6 +82,10 @@ public class BoatController : MonoBehaviour
                 motor.isSpinning = !stopped;
                 MotorEffect();
             }
+        }
+        else if (PlayerInputManager.instance.inputY == 0f)
+        {
+            stopPressed = false;
         }
 
         dragT = Mathf.Clamp01(dragT);

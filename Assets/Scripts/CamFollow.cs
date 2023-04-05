@@ -15,9 +15,15 @@ public class CamFollow : MonoBehaviour
     void Update()
     {
         if ((Camera.main.transform.position.y <= WaveManager.instance.getHeight(transform.position.x, transform.position.z)))
+        {
             waterLens.SetActive(true);
+            RenderSettings.fog = false;
+        }
         else
+        {
             waterLens.SetActive(false);
+            RenderSettings.fog = true;
+        }
 
         switch (PlayerManager.instance.playerState)
         {
