@@ -75,9 +75,6 @@ public class DayNightCycle : MonoBehaviour
         }
     };
 
-    [Header("Stars")]
-    public float starsSpeed = 8;
-
     [Header("Fog")]
     public Gradient fogColor = new Gradient()
     {
@@ -99,7 +96,7 @@ public class DayNightCycle : MonoBehaviour
     private float sunAngle;
     private Light moonLight1;
     private float moonAngle;
-
+    private float accelTime = 1f;
 
     void Awake()
     {
@@ -125,11 +122,11 @@ public class DayNightCycle : MonoBehaviour
             RotateSun();
             RotateMoon();
         }
+
         SetSunBrightness();
         SetMoonBrightness();
         SetSunColor();
         SetSkyColor();
-        MoveStars();
         SetFogColor();
     }
 
@@ -137,13 +134,13 @@ public class DayNightCycle : MonoBehaviour
     void RotateSun()
     {
         // Rotate 360 degrees every cycleInMinutes minutes.
-        sun1.Rotate(Vector3.right * Time.deltaTime * 6 / cycleInMinutes);
+        sun1.Rotate(Vector3.right * Time.deltaTime * 6 * accelTime / cycleInMinutes);
     }
 
     void RotateMoon()
     {
         // Rotate 360 degrees every cycleInMinutes minutes.
-        moon1.Rotate(Vector3.right * Time.deltaTime * 6 / cycleInMinutes);
+        moon1.Rotate(Vector3.right * Time.deltaTime * 6 * accelTime / cycleInMinutes);
     }
 
     void SetSunBrightness()
@@ -188,20 +185,18 @@ public class DayNightCycle : MonoBehaviour
         if (sunAngle >= 0.25f && sunAngle < 0.75f)
         {
             RenderSettings.skybox.SetColor("_SkyColor2", skyColorDay.Evaluate(sunAngle * 2f - 0.5f));
+            accelTime = 1f;
         }
         else if (sunAngle > 0.75f)
         {
             RenderSettings.skybox.SetColor("_SkyColorNight2", skyColorNight.Evaluate(sunAngle * 2f - 1.5f));
+            accelTime = 2f;
         }
         else
         {
             RenderSettings.skybox.SetColor("_SkyColorNight2", skyColorNight.Evaluate(sunAngle * 2f + 0.5f));
+            accelTime = 2f;
         }
-    }
-
-    void MoveStars()
-    {
-        RenderSettings.skybox.SetFloat("_StarsOffset", (sunAngle * starsSpeed));
     }
 
     void SetFogColor()

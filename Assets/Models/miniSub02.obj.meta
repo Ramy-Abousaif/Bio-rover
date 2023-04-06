@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: 8925774ae404d714a84fed7b81307b35
+timeCreated: 1491354830
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ant_1
+    100002: ant_2
+    100004: beacon
+    100006: bubble
+    100008: engine
+    100010: hull
+    100012: hull_2
+    100014: hull_3
+    100016: light_1
+    100018: light_2
+    100020: //RootNode
+    100022: prop
+    100024: shroud
+    100026: sm_tank_003
+    100028: sm_tank_004
+    100030: sm_tank_1
+    100032: sm_tank_2
+    100034: tank_1
+    100036: tank_2
+    400000: ant_1
+    400002: ant_2
+    400004: beacon
+    400006: bubble
+    400008: engine
+    400010: hull
+    400012: hull_2
+    400014: hull_3
+    400016: light_1
+    400018: light_2
+    400020: //RootNode
+    400022: prop
+    400024: shroud
+    400026: sm_tank_003
+    400028: sm_tank_004
+    400030: sm_tank_1
+    400032: sm_tank_2
+    400034: tank_1
+    400036: tank_2
+    2300000: ant_1
+    2300002: ant_2
+    2300004: beacon
+    2300006: bubble
+    2300008: engine
+    2300010: hull
+    2300012: hull_2
+    2300014: hull_3
+    2300016: light_1
+    2300018: light_2
+    2300020: prop
+    2300022: shroud
+    2300024: sm_tank_003
+    2300026: sm_tank_004
+    2300028: sm_tank_1
+    2300030: sm_tank_2
+    2300032: tank_1
+    2300034: tank_2
+    3300000: ant_1
+    3300002: ant_2
+    3300004: beacon
+    3300006: bubble
+    3300008: engine
+    3300010: hull
+    3300012: hull_2
+    3300014: hull_3
+    3300016: light_1
+    3300018: light_2
+    3300020: prop
+    3300022: shroud
+    3300024: sm_tank_003
+    3300026: sm_tank_004
+    3300028: sm_tank_1
+    3300030: sm_tank_2
+    3300032: tank_1
+    3300034: tank_2
+    4300000: ant_1
+    4300002: ant_2
+    4300004: beacon
+    4300006: bubble
+    4300008: engine
+    4300010: hull
+    4300012: hull_2
+    4300014: hull_3
+    4300016: light_1
+    4300018: light_2
+    4300020: prop
+    4300022: shroud
+    4300024: sm_tank_003
+    4300026: sm_tank_004
+    4300028: sm_tank_1
+    4300030: sm_tank_2
+    4300032: tank_1
+    4300034: tank_2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

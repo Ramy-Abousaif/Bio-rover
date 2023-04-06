@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8193778288892416380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8193778288892416371}
+  - component: {fileID: 8193778288892416370}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8193778288892416371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8193778288892416380}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8193778288892416370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8193778288892416380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0d5ac5600b90c45b5a55d7923002ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolume: 0.5
+  bgVolume: 0.5
+  sfxVolume: 0.5
+  ambienceEvent:
+    Guid:
+      Data1: 1123967436
+      Data2: 1230386916
+      Data3: -45974373
+      Data4: 446357541
+    Path: event:/Background/Ambience
+  musicEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  sfxObjectsList:
+  - Name: BallLand
+    sfxPath:
+      Guid:
+        Data1: 308804758
+        Data2: 1262715010
+        Data3: -2131632467
+        Data4: -1450443960
+      Path: event:/SFX/BallLand
+  - Name: Inflate
+    sfxPath:
+      Guid:
+        Data1: -1540779112
+        Data2: 1318625713
+        Data3: 597895082
+        Data4: -735229225
+      Path: event:/SFX/Inflate
+  - Name: Deflate
+    sfxPath:
+      Guid:
+        Data1: -1921745923
+        Data2: 1226743815
+        Data3: 1432738221
+        Data4: -360439618
+      Path: event:/SFX/Deflate
+  - Name: Sonar
+    sfxPath:
+      Guid:
+        Data1: 1645208377
+        Data2: 1212578793
+        Data3: 1753195920
+        Data4: -207545243
+      Path: event:/SFX/Sonar
+  - Name: RewardCommon
+    sfxPath:
+      Guid:
+        Data1: 39522736
+        Data2: 1207803049
+        Data3: -383062
+        Data4: -1084607509
+      Path: event:/SFX/RewardCommon
+  - Name: RewardUncommon
+    sfxPath:
+      Guid:
+        Data1: -264602253
+        Data2: 1263246052
+        Data3: -666905459
+        Data4: 660766051
+      Path: event:/SFX/RewardUncommon
+  - Name: RewardRare
+    sfxPath:
+      Guid:
+        Data1: -1665595773
+        Data2: 1191228315
+        Data3: -1912425323
+        Data4: 486154694
+      Path: event:/SFX/RewardRare
+  - Name: RewardExotic
+    sfxPath:
+      Guid:
+        Data1: -1192206604
+        Data2: 1261272874
+        Data3: -1052630596
+        Data4: 777063834
+      Path: event:/SFX/RewardExotic
+  - Name: MissionComplete
+    sfxPath:
+      Guid:
+        Data1: -301558939
+        Data2: 1231642930
+        Data3: 683070122
+        Data4: 284733803
+      Path: event:/SFX/MissionComplete
+  - Name: Explosion
+    sfxPath:
+      Guid:
+        Data1: 708094224
+        Data2: 1191109437
+        Data3: 667178407
+        Data4: 957045023
+      Path: event:/SFX/Explosion
+  - Name: MouseClick
+    sfxPath:
+      Guid:
+        Data1: -1085927680
+        Data2: 1330365053
+        Data3: 1764133311
+        Data4: -858478693
+      Path: event:/SFX/MouseClick

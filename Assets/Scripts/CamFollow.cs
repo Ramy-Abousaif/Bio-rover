@@ -4,23 +4,39 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
-    private Camera cam;
-    public GameObject rover;
+    private GameObject boat;
     public GameObject waterLens;
 
     private void Start()
     {
-        cam = Camera.main;
+        boat = PlayerManager.instance.boat;
     }
 
     void Update()
     {
-        transform.position = rover.transform.position;
-        transform.eulerAngles = new Vector3(0, cam.transform.eulerAngles.y, 0);
-
-        if ((cam.transform.position.y <= WaveManager.instance.getHeight(transform.position.x, transform.position.z)))
+        if ((Camera.main.transform.position.y <= WaveManager.instance.getHeight(transform.position.x, transform.position.z)))
+        {
             waterLens.SetActive(true);
+            RenderSettings.fog = false;
+        }
         else
+        {
             waterLens.SetActive(false);
+            RenderSettings.fog = true;
+        }
+
+        switch (PlayerManager.instance.playerState)
+        {
+            case PlayerState.BOAT:
+                transform.position = boat.transform.position;
+                break;
+            case PlayerState.ROVER:
+                transform.position = PlayerManager.instance.currentRover.transform.position;
+                PlayerManager.instance.rc.followCam = transform;
+                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y, 0);
+                break;
+            default:
+                break;
+        }
     }
 }

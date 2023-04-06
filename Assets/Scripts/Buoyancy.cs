@@ -13,7 +13,7 @@ public class Buoyancy : MonoBehaviour
     public bool active = true;
 
     #region Private Fields
-    int floaters;
+    private int floaters;
     [HideInInspector]
     public Rigidbody rb;
     #endregion
