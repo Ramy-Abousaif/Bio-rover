@@ -100,6 +100,10 @@ public class BoatController : MonoBehaviour
             storedRovers[selection].transform.GetChild(0).position = dropPoint.position;
             storedRovers[selection].SetActive(true);
             storedRovers[selection].transform.GetChild(0).GetComponent<AIController>().enabled = true;
+            for (int i = 0; i < storedRovers[selection].transform.GetChild(0).GetComponent<AIController>().marimos.Length; i++)
+            {
+                storedRovers[selection].transform.GetChild(0).GetComponent<AIController>().marimos[i].restartphoto();
+            }
             activeRovers.Add(storedRovers[selection]);
             storedRovers.Remove(storedRovers[selection]);
             UIManager.instance.activeRoversText.text = activeRovers.Count + " Active Rovers";

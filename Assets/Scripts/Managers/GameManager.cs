@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public int sonarUpgrade = 0;
     public int explosionUpgrade = 0;
     public int expandUpgrade = 0;
+    public int rovertype = 0;
+    public Material typematt;
 
     private string[] facts = {
         "Nature has evolved photosynthesis to harness solar energy, which is utilised by nearly all organisms",
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
                 credits = 0;
                 sonarUpgrade = 0;
                 explosionUpgrade = 0;
-                expandUpgrade = 0;
+                expandUpgrade = 1;
                 MissionsManager.instance.Setup();
                 StoreManager.instance.AddCredit(50);
                 PlayerManager.instance.bc.transform.localPosition = Vector3.zero;

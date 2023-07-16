@@ -13,6 +13,7 @@ public class RoverController : MonoBehaviour
     public GameObject UIBall;
     public Transform followCam;
     public GameObject draw;
+    public GameObject frame;
     public List<AIController> aiRovers = new List<AIController>();
     [SerializeField]
     private Marimo[] marimos;
@@ -31,8 +32,8 @@ public class RoverController : MonoBehaviour
     private Vector3 torqueDir;
     private Vector3 moveDir;
     private float maxSlope = 45f;
-    private float minSlope = 12.5f;
-    private float slopeLimit = 12.5f;
+    private float minSlope = 20f;
+    private float slopeLimit = 20f;
 
     private float initialRadius = 1.5f;
     private float targetRadius = 3f;
@@ -49,6 +50,8 @@ public class RoverController : MonoBehaviour
     private float sumEnergy = 0;
     public TMP_Text energyLevels;
 
+    public int roverType;
+
     private void Start()
     {
         energyLevels = GameObject.Find("EnergyTxt").GetComponent<TMP_Text>();
@@ -62,6 +65,7 @@ public class RoverController : MonoBehaviour
         // Fixes weird glitch that makes it so that ball's collider goes through floor if inflated without moving at the start of the game
         if (followCam != null)
             rb.AddTorque(followCam.transform.forward * 25.0f);
+        roverType = GameObject.Find("MainBaseCanvas").GetComponent<ResearchBaseManager>().playerRoverType;
     }
 
     void Update()
@@ -210,6 +214,11 @@ public class RoverController : MonoBehaviour
 
                 // Apply the thrust force to the ball
                 rb.AddTorque(torque);
+                // fast rover active
+                if (roverType == 3)
+                {
+                    rb.AddForce(moveDir.normalized * 1f);
+                }
 
                 if (!isGrounded && transform.position.y < WaveManager.instance.getHeight(transform.position.x, transform.position.z))
                     rb.AddForce(moveDir.normalized * 0.3f);
@@ -372,5 +381,14 @@ public class RoverController : MonoBehaviour
 
         if (!isChangingSize)
             AudioManager.instance.PlayOneShotWithParameters("BallLand", transform, ("Underwater", (transform.position.y > WaveManager.instance.getHeight(transform.position.x, transform.position.z)) ? 0f : 1f));
+    }
+
+    public void ChangeRoverType(int index)
+    {
+        roverType = index;
+        if (index != 0)
+        {
+            frame.GetComponent<MeshRenderer>().material = GameManager.instance.typematt;
+        }
     }
 }

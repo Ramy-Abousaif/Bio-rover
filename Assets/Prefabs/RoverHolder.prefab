@@ -181,7 +181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1040304749289534181
 Transform:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 370481562979772511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2.178, y: 2.178, z: 2.178}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1664270833218437875}
@@ -800,6 +800,7 @@ MonoBehaviour:
   UIBall: {fileID: 370481562979772511}
   followCam: {fileID: 0}
   draw: {fileID: 3521490357930426531}
+  frame: {fileID: 8149026012225732493}
   aiRovers: []
   marimos:
   - {fileID: 2673469575727044636}
@@ -827,6 +828,7 @@ MonoBehaviour:
     m_Bits: 16384
   smokeRing: {fileID: 9169060408857036460, guid: 094e337468072ab44a960b54b3243338, type: 3}
   energyLevels: {fileID: 0}
+  roverType: 0
 --- !u!114 &2673469575641101230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,7 +907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf65b7200723e44fb4023ea02f00a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draw: {fileID: 3521490357930426531}
   outline: {fileID: 199431692850005090}
   minimap: {fileID: 8768444916644576680}
   marimos:
@@ -1069,6 +1070,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469575727044638
 GameObject:
@@ -1148,6 +1150,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469575750913029
 GameObject:
@@ -1227,6 +1230,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469575870532584
 GameObject:
@@ -1306,6 +1310,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469575889095411
 GameObject:
@@ -1385,6 +1390,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469576057680630
 GameObject:
@@ -1464,6 +1470,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469576183225210
 GameObject:
@@ -1543,6 +1550,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469576452390813
 GameObject:
@@ -1622,6 +1630,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469576530786100
 GameObject:
@@ -1701,6 +1710,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469576648710153
 GameObject:
@@ -1830,6 +1840,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469577235304066
 GameObject:
@@ -1909,6 +1920,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2673469577387296797
 GameObject:
@@ -1988,6 +2000,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 713
   energy: 100
+  maxEnergy: 100
   showUI: 1
 --- !u!1 &2899029622306422774
 GameObject:

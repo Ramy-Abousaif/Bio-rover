@@ -11,7 +11,7 @@ public class AIController : MonoBehaviour
     public GameObject minimap;
     private Material minimapMat;
     [SerializeField]
-    private Marimo[] marimos;
+    public Marimo[] marimos;
     [SerializeField]
     private Buoyancy floater;
     private bool floatToSurface;

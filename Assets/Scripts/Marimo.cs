@@ -28,6 +28,11 @@ public class Marimo : MonoBehaviour
         StartCoroutine(Photosynthesis());
     }
 
+    public void restartphoto()
+    {
+        StartCoroutine(Photosynthesis());
+    }
+
     IEnumerator Photosynthesis()
     {
         while(true)

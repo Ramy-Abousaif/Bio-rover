@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     public Camera playerCam;
     public CinemachineVirtualCamera boatVCam;
     public CinemachineFreeLook roverVCam;
-    private int roverIndex = 0;
+    public int roverIndex = 0;
     public GameObject currentRover;
     public GameObject boat;
     public RoverController rc;
@@ -126,6 +126,7 @@ public class PlayerManager : MonoBehaviour
             rc.UIBall.SetActive(true);
             boatVCam.gameObject.SetActive(false);
             roverVCam.gameObject.SetActive(true);
+            rc.ChangeRoverType(GameManager.instance.rovertype);
         }
     }
 

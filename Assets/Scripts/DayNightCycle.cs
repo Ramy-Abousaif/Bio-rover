@@ -110,10 +110,13 @@ public class DayNightCycle : MonoBehaviour
         moon1.rotation = Quaternion.Euler(180, 0, 0);
         sunLight1 = sun1.GetComponent<Light>();
         moonLight1 = moon1.GetComponent<Light>();
+
+
     }
 
     void Update()
     {
+
         UpdateSunAngle();
         UpdateMoonAngle();
 
@@ -182,6 +185,12 @@ public class DayNightCycle : MonoBehaviour
 
     void SetSkyColor()
     {
+
+        if (RenderSettings.skybox == null)
+        {
+            RenderSettings.skybox = new Material(Shader.Find("Skybox/Procedural"));
+        }
+
         if (sunAngle >= 0.25f && sunAngle < 0.75f)
         {
             RenderSettings.skybox.SetColor("_SkyColor2", skyColorDay.Evaluate(sunAngle * 2f - 0.5f));
